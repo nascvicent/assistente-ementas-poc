@@ -1,0 +1,34 @@
+# Tesauro FICTÍCIO para testes. Não é o Tesauro de Contas Nacional.
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix ex:   <http://exemplo.invalid/tesauro/?tema=> .
+
+ex:1 a skos:Concept ; skos:prefLabel "Administração pública"@pt ;
+  skos:narrower ex:2, ex:5, ex:9 .
+
+ex:2 a skos:Concept ; skos:prefLabel "Saúde"@pt ; skos:broader ex:1 ; skos:narrower ex:3 .
+
+ex:3 a skos:Concept ; skos:prefLabel "Vacinação"@pt ; skos:altLabel "Imunização"@pt ;
+  skos:broader ex:2 ; skos:narrower ex:4 .
+
+ex:4 a skos:Concept ; skos:prefLabel "Rede de frio"@pt ;
+  skos:scopeNote "Armazenamento, conservação e transporte de vacinas e imunobiológicos."@pt ;
+  skos:broader ex:3 .
+
+ex:5 a skos:Concept ; skos:prefLabel "Licitação"@pt ; skos:broader ex:1 ; skos:narrower ex:6 .
+
+ex:6 a skos:Concept ; skos:prefLabel "Contratação direta"@pt ;
+  skos:altLabel "Contratação sem licitação"@pt ;
+  skos:broader ex:5 ; skos:narrower ex:7, ex:8 .
+
+ex:7 a skos:Concept ; skos:prefLabel "Dispensa de licitação"@pt ; skos:broader ex:6 ;
+  skos:scopeNote "Hipóteses em que a licitação é dispensável ou dispensada."@pt .
+
+ex:8 a skos:Concept ; skos:prefLabel "Inexigibilidade de licitação"@pt ; skos:broader ex:6 ;
+  skos:related ex:7 .
+
+ex:9 a skos:Concept ; skos:prefLabel "Pessoal"@pt ; skos:broader ex:1 ; skos:narrower ex:10, ex:11 .
+
+ex:10 a skos:Concept ; skos:prefLabel "Admissão de pessoal"@pt ; skos:broader ex:9 ; skos:related ex:11 .
+
+ex:11 a skos:Concept ; skos:prefLabel "Concurso público"@pt ; skos:broader ex:9 ;
+  skos:prefLabel "Public competition"@en .
