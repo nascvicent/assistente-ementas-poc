@@ -23,7 +23,7 @@ estruturada e conferida por código. Detalhes em `docs/` e em `CLAUDE.md`.
 | `harness/` máquina de estados e roteador escolha × pergunta | feito |
 | `modelo/gateway.py` interface do gateway + implementação falsa para testes | feito (provedor real pendente, P5) |
 | Etapas com modelo (extração, teses, ranqueamento, redação, alerta, conversa) | próximo passo |
-| Frontend | Fase 3 |
+| Frontend | protótipo navegável em `frontend/prototipo/` (dados simulados); React na Fase 3 |
 
 ## Como rodar
 

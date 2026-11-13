@@ -9,7 +9,8 @@ DOCUMENTOS DE REFERÊNCIA (ler antes de propor ou escrever código)
 - docs/02-regras-ementa-tcepe.md: estrutura da ementa, enumerações, linter, pendências.
 - docs/03-instrucoes-e-backlog.md: instruções, roteiro e pendências.
 - docs/04-prompts.md: prompts por etapa e prompt único adaptado para o AuroraChat.
-- Protótipo de interface: assistente-ementas-prototipo.html (referência visual e de fluxo).
+- Protótipo de interface: frontend/prototipo/index.html (referência visual e de fluxo);
+  correspondência com o backend em docs/contrato-interface.md.
 (As versões mais atuais vivem no Projeto "plataforma semelhante - tcepe" do Claude.)
 
 REGRAS DE ARQUITETURA (não negociáveis)
