@@ -173,7 +173,7 @@
 
   // ------------------------------------------------- sessões salvas
   // Cada pessoa vê só as suas (data/users/<id>/ é privado no armazenamento da página).
-  let db = null, uid = null, pararLista = null, filaGravacao = Promise.resolve(), temporizador = null;
+  let db = null, uid = null, pararLista = null, filaGravacao = Promise.resolve(), temporizador = null, ultimaLista = null;
   const persistenciaP = (async () => {
     if (!window.claude) return;
     try {
@@ -198,7 +198,7 @@
       ponto: S.ponto ? S.ponto.id : null, teses: S.teses, semTese: S.semTese, teseAtual: S.teseAtual === undefined ? null : S.teseAtual,
       termos: S.termos || null, ementa: S.ementa, alertas: S.alertas, lintCodigos: S.lintCodigos || [], modeloOk: S.modeloOk !== false,
       ciencia: S.ciencia, referencias: S.referencias, indiceDispensar: S.indiceDispensar ?? null, tela: S.tela || "",
-      avaliacao: { ...S.avaliacao, rodandoUnico: false }, reg: S.reg, eventos: S.eventos,
+      avaliacao: { ...S.avaliacao, rodandoUnico: false }, reg: S.reg.map(([t, tipo, txt]) => ({ t, tipo, txt })), eventos: S.eventos,
     };
   }
   function salvar() {
@@ -225,12 +225,19 @@
     const t = setTimeout(() => { if (!$("listaSessoes").dataset.ok) $("listaSessoes").innerHTML = `<p class="nota" style="padding:0 10px">Carregando sessões…</p>`; }, 10000);
     pararLista = colSessoes().orderBy("atualizado", "desc").limit(30).onSnapshot((snap) => {
       clearTimeout(t); $("listaSessoes").dataset.ok = "1";
-      const itens = snap.docs.filter((d) => d.exists && d.data().tipo === "sessao" && (!S || d.id !== S.id));
+      ultimaLista = snap.docs;
+      desenharLista();
+    }, () => { clearTimeout(t); $("listaSessoes").innerHTML = `<p class="nota" style="padding:0 10px">As sessões salvas não puderam ser carregadas.</p>`; });
+  }
+  function desenharLista() {
+    if (!ultimaLista) return;
+    {
+      const itens = ultimaLista.filter((d) => d.exists && d.data().tipo === "sessao" && (!S || d.id !== S.id));
       $("listaSessoes").innerHTML = itens.length ? `<h2>Anteriores</h2>` + itens.map((d) => {
         const x = d.data();
         return `<div class="sess"><button data-sessao="${esc(d.id)}"><b>${esc(x.nome)}</b><span>${esc(x.situacao)} · ${esc(new Date(x.atualizado).toLocaleDateString("pt-BR"))}</span></button><button class="mini apaga" data-apaga="${esc(d.id)}" title="Excluir sessão" aria-label="Excluir sessão">×</button></div>`;
       }).join("") : "";
-    }, () => { clearTimeout(t); $("listaSessoes").innerHTML = `<p class="nota" style="padding:0 10px">As sessões salvas não puderam ser carregadas.</p>`; });
+    }
   }
   $("listaSessoes").addEventListener("click", async (e) => {
     const ap = e.target.closest("[data-apaga]");
@@ -252,10 +259,16 @@
     let snap, pags;
     try { [snap, pags] = await Promise.all([ref.get(), ref.collection("paginas").get()]); } catch (e) { return; }
     if (!snap.exists) return;
-    const x = snap.data(), dd = x.dados;
+    // O armazenamento devolve objetos congelados (somente leitura): trabalhar sobre uma cópia.
+    const x = JSON.parse(JSON.stringify(snap.data())), dd = x.dados;
+    // Registro gravado como objetos; sessões antigas podem ter vindo em outro formato.
+    const comoLista = (v) => (Array.isArray(v) ? v : v && typeof v === "object" ? Object.keys(v).sort((a, b) => a - b).map((k) => v[k]) : []);
+    dd.reg = comoLista(dd.reg).map((r) => (Array.isArray(r) ? r : r && "tipo" in r ? [r.t, r.tipo, r.txt] : comoLista(r))).filter((r) => r.length === 3);
+    for (const k of ["itens", "eventos", "alertas", "lintCodigos", "problemas"]) dd[k] = comoLista(dd[k]);
     inicio();
     col.innerHTML = "";
-    const paginas = pags.docs.map((p) => p.data()).sort((a, b) => a.numero - b.numero);
+    try {
+    const paginas = pags.docs.map((p) => ({ ...p.data() })).sort((a, b) => a.numero - b.numero);
     Object.assign(S, dd, { id, criado: x.criado, paginasSalvas: true, t0: Date.now() });
     S.doc = { ...dd.doc, paginas };
     const oc = (i) => (S.ficha ? S.ficha.ocorrencias.find((o) => o.id === i) : null);
@@ -264,6 +277,7 @@
     S.teseAtual = dd.teseAtual === null && dd.estado !== "BUSCANDO_TERMOS" && dd.estado !== "AGUARDANDO_TERMO" ? undefined : dd.teseAtual;
     $("atualNome").textContent = x.nome; $("abaAvaliacao").hidden = false; $("abaGabarito").hidden = !S.doc.bloco;
     reg("sessão", "Sessão retomada");
+    desenharLista();
     pinta();
     bot(`<p>Sessão retomada: <b>${esc(x.nome)}</b>. ${esc(x.situacao)}.</p>` + (S.ficha ? `<details><summary>Ficha do caso</summary>${fichaHTML(S.ficha)}</details>` : ""));
     const continuar = {
@@ -272,6 +286,10 @@
       MONTANDO: () => monta(), AGUARDANDO_MAIS_OCORRENCIA: () => perguntaMais(), VERIFICANDO: () => verifica(), CONCLUIDA: () => mostrarFinal(),
     }[S.estado];
     if (continuar) continuar();
+    } catch (e) {
+      console.error(e);
+      bot(`<div class="erro"><b>Não consegui retomar esta sessão.</b>${esc(e && e.message ? e.message : String(e))}</div><p class="nota">Use "Nova ementa" para recomeçar com o mesmo voto.</p>`);
+    }
     ouvirSessoes();
   }
 
@@ -947,7 +965,7 @@
   }
 
   $("copiar").onclick = (e) => copia(e.target);
-  $("nova").onclick = () => { if (S.ctl) S.ctl.abort(); inicio(); if (pararLista) { pararLista(); pararLista = null; ouvirSessoes(); } };
+  $("nova").onclick = () => { if (S.ctl) S.ctl.abort(); inicio(); desenharLista(); };
   $("arq").onchange = (e) => { const f = e.target.files[0]; if (f) receber(f, f.name); e.target.value = ""; };
   $("tema").onclick = (e) => { const d = document.documentElement, n = d.dataset.theme === "dark" ? "light" : "dark"; d.dataset.theme = n; e.target.textContent = n === "dark" ? "Claro" : "Escuro"; };
   let f = 15.5;

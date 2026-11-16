@@ -70,15 +70,22 @@ const resp = %s;
 // armazenamento simulado (capacidade db)
 const store = new Map(); const ouvintes = [];
 const avisa = () => ouvintes.forEach((f) => f());
+function semListaAninhada(v, dentroDeLista) {
+  if (Array.isArray(v)) { const r = v.map((x) => semListaAninhada(x, true)); return dentroDeLista ? Object.fromEntries(r.map((x, i) => [i, x])) : r; }
+  if (v && typeof v === "object") return Object.fromEntries(Object.entries(v).map(([k, x]) => [k, semListaAninhada(x, false)]));
+  return v;
+}
+const congela = (v) => { if (v && typeof v === "object") { Object.values(v).forEach(congela); Object.freeze(v); } return v; };
+const copia = (v) => congela(JSON.parse(JSON.stringify(v)));
 function docRef(path){ return { id: path.split("/").pop(), path,
-  get: async () => ({ id: path.split("/").pop(), exists: store.has(path), data: () => store.get(path) }),
-  set: async (d) => { store.set(path, JSON.parse(JSON.stringify(d))); avisa(); },
+  get: async () => ({ id: path.split("/").pop(), exists: store.has(path), data: () => copia(store.get(path)) }),
+  set: async (d) => { store.set(path, semListaAninhada(JSON.parse(JSON.stringify(d)))); avisa(); },
   delete: async () => { store.delete(path); avisa(); },
   collection: (sub) => colRef(path + "/" + sub) }; }
 function colRef(path){ let ord = null, lim = 1000;
   const snap = () => { const n = path.split("/").length + 1;
     let docs = [...store.keys()].filter((k) => k.startsWith(path + "/") && k.split("/").length === n)
-      .map((k) => ({ id: k.split("/").pop(), exists: true, data: () => store.get(k) }));
+      .map((k) => ({ id: k.split("/").pop(), exists: true, data: () => copia(store.get(k)) }));
     if (ord) docs.sort((a, b) => (a.data()[ord[0]] < b.data()[ord[0]] ? -1 : 1) * (ord[1] === "desc" ? -1 : 1));
     docs = docs.slice(0, lim); return { docs, size: docs.length, empty: !docs.length }; };
   const q = { doc: (id) => docRef(path + "/" + id), orderBy: (f, d) => { ord = [f, d]; return q; }, limit: (n) => { lim = n; return q; },
@@ -132,6 +139,16 @@ async def main():
 
         await ops().locator(".op[data-i='0']").click()                      # ponto 1
         await pg.wait_for_selector("text=Escrever ou editar a tese")
+        await pg.wait_for_timeout(1200)                                      # gravação da sessão
+        await pg.click("#nova")
+        await pg.wait_for_selector("[data-sessao]")
+        await pg.click("[data-sessao]")
+        await pg.wait_for_selector("text=Sessão retomada", timeout=8000)
+        await pg.wait_for_selector("text=Escrever ou editar a tese", timeout=8000)
+        assert "Tese" in await pg.inner_text("[aria-current=step]"), "trilha deveria estar na Tese"
+        assert await pg.locator("[data-sessao]").count() == 0, "a sessão retomada não deveria aparecer em Anteriores"
+        assert "Parou na tese" in await pg.inner_text("#atualSit") or "tese" in (await pg.inner_text("#atualSit")).lower()
+        await pg.screenshot(path=str(SAIDA / "e2e_retomada.png"))
         await ops().locator(".op[data-i='3']").click()                      # editar
         await pg.fill("textarea.cola >> nth=-1", "Em Vila Serena, vacinas não podem ficar em refrigeradores domésticos.")
         await pg.click("button.ok >> nth=-1")
@@ -141,19 +158,19 @@ async def main():
         await ops().locator(".op[data-i='2']").click()                      # digitar termo
         await pg.fill("textarea.cola >> nth=-1", "Vacinação > Rede de frio")
         await pg.click("button.ok >> nth=-1")
-        await pg.wait_for_function("document.querySelectorAll('.ops').length >= 4")
+        await pg.wait_for_function("document.querySelectorAll('.ops').length >= 3")
         await pg.fill("#txt", "sim"); await pg.press("#txt", "Enter")
-        await pg.wait_for_function("document.querySelectorAll('.ops').length >= 5")
+        await pg.wait_for_function("document.querySelectorAll('.ops').length >= 4")
         await ops().locator(".op[data-i='0']").click()                      # ponto 2
-        await pg.wait_for_function("document.querySelectorAll('.ops').length >= 6")
+        await pg.wait_for_function("document.querySelectorAll('.ops').length >= 5")
         await pg.fill("#txt", "dispensar a tese"); await pg.press("#txt", "Enter")
-        await pg.wait_for_function("document.querySelectorAll('.ops').length >= 7")
+        await pg.wait_for_function("document.querySelectorAll('.ops').length >= 6")
         await ops().locator(".op[data-i='1']").click()                      # Controle de estoque
-        await pg.wait_for_function("document.querySelectorAll('.ops').length >= 8")
+        await pg.wait_for_function("document.querySelectorAll('.ops').length >= 7")
         await ops().locator(".op[data-i='2']").click()                      # retirar
-        await pg.wait_for_function("document.querySelectorAll('.ops').length >= 9")
+        await pg.wait_for_function("document.querySelectorAll('.ops').length >= 8")
         await ops().locator(".op[data-i='1']").click()                      # tira o ponto 2
-        await pg.wait_for_function("document.querySelectorAll('.ops').length >= 10")
+        await pg.wait_for_function("document.querySelectorAll('.ops').length >= 9")
         ementa = await pg.inner_text("#conteudo")
         assert "CONTROLE DE ESTOQUE" not in ementa and "REDE DE FRIO" in ementa, ementa[:300]
         await ops().locator(".op[data-i='1']").click()                      # concluir
