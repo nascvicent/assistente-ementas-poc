@@ -2,6 +2,7 @@
 // o resultado do núcleo JavaScript (frontend/demo/nucleo.js).
 const path = require("path");
 const N = require(path.resolve(__dirname, "../../frontend/demo/nucleo.js"));
+const AV = require(path.resolve(__dirname, "../../frontend/demo/avaliacao.js"));
 
 let entrada = "";
 process.stdin.on("data", (d) => (entrada += d));
@@ -26,6 +27,12 @@ process.stdin.on("end", () => {
         const cab = N.montarCabecalho(c.ficha, c.termos);
         return { dispositivo: disp, ementa: N.montarEmenta({ cabecalho: cab, caso: c.caso, razoes: c.razoes, dispositivo: disp.texto, teses: c.teses }) };
       }
+      case "montar_ref":
+        return N.montarReferencias(c.ficha, c.ids);
+      case "comparar":
+        return AV.comparar(c.gerada, c.referencia, {});
+      case "texto_livre":
+        return AV.extrairDoTextoLivre(c.texto);
       case "tese":
         return N.verificarTese(c.tese, c.ficha, c.textoVoto);
       default:

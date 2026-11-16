@@ -17,7 +17,7 @@ from pathlib import Path
 RAIZ = Path(__file__).resolve().parents[1]
 DEMO = RAIZ / "frontend" / "demo"
 PROMPTS = RAIZ / "backend" / "app" / "prompts"
-ARQUIVOS = ["index.html", "nucleo.js", "leitura.js", "fluxo.js"]
+ARQUIVOS = ["index.html", "nucleo.js", "avaliacao.js", "leitura.js", "fluxo.js"]
 
 
 def carregar_prompts() -> dict:

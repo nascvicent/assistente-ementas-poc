@@ -266,3 +266,22 @@ def test_ordenacao_por_gravidade():
     achados = verificar(texto)
     assert achados[0].gravidade is Gravidade.ALTA
     assert achados[-1].gravidade is Gravidade.BAIXA
+
+
+# --- bloco opcional de referências (art. 10, § 1º) -------------------------
+
+REFERENCIAS = "\nReferências normativas: RDC ANVISA nº 197/2017.\nPrecedentes citados: Acórdão T.C. nº 9999/2025.\n"
+
+
+def test_referencias_fora_das_secoes():
+    e = analisar(EMENTA_VALIDA + REFERENCIAS)
+    assert [i.numero for s in e.secoes for i in s.itens] == [1, 2, 3, 4, 5]
+    assert "Precedentes citados" not in e.secoes[-1].itens[-1].texto
+    assert e.rodape.startswith("Referências normativas")
+    assert verificar(EMENTA_VALIDA + REFERENCIAS) == []
+
+
+def test_referencias_conferidas_no_voto():
+    texto = EMENTA_VALIDA + "\nReferências normativas: Lei nº 8.666/1993.\n"
+    e12 = [a for a in verificar(texto, ContextoLinter(texto_voto=voto_texto())) if a.codigo == "E12"]
+    assert [a.referencia for a in e12] == ["Lei nº 8.666/1993"]

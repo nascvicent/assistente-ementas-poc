@@ -17,6 +17,29 @@ compartilhada). Só funciona aberta pelo Claude, porque usa a conta de quem abre
 | Alerta | código + Claude | linter E01–E21, evidências não confirmadas, dispositivo A DEFINIR; prompt `verificacao_final` com trechos conferidos; ciência obrigatória nos alertas altos |
 | Conversa | Claude | prompt `conversa`, com as páginas mais relacionadas à pergunta; não avança a etapa |
 
+Também na tela: nova tentativa focada (`corrigir_evidencias`) quando um trecho da
+ficha não é achado no voto; escrever ou editar a tese (passa pelo mesmo
+verificador); digitar um termo próprio ("genérico > termo"); retirar um ponto já
+incluído (ação `RETIRAR_OCORRENCIA`, também no backend); incluir ao final as
+referências normativas e os precedentes (art. 10, § 1º), montadas por código.
+
+## Avaliação
+
+A aba **Avaliação** compara, por código (`avaliacao.js`), a ementa do fluxo e a do
+**prompt único do AuroraChat** (`prompt_unico_aurorachat`, documento 04, Parte A,
+rodado sobre o mesmo voto sem a ementa publicada) com a **publicada**: semelhança
+geral e por seção, termos do cabeçalho em comum, mesmo resultado no dispositivo,
+pontos do linter, normas e valores sem suporte no voto, quantidade de itens. Tem
+nota do revisor (1 a 5) para cada lado e "Copiar resumo da avaliação", em colunas
+separadas por tabulação, para colar numa planilha.
+
+## Sessões salvas
+
+Cada ementa fica gravada no armazenamento da página, em área privada de quem a
+fez (`data/users/<id>/`, que nem o dono da página lê), com o texto do voto. A barra
+lateral lista as anteriores com onde pararam ("Parou na tese", "Ementa concluída")
+e permite retomar ou excluir.
+
 A aba **Publicada** mostra a ementa que já vinha no inteiro teor, para comparar
 com a gerada. A aba **Registro** lista cada chamada (prompt e versão), verificação
 e escolha; "Exportar a conversa" baixa tudo, com a ficha em JSON.
@@ -28,7 +51,8 @@ e escolha; "Exportar a conversa" baixa tudo, com a ficha em JSON.
   `backend/app/prompts/`, embutidos pelo script de geração.
 - **Sem base do TCN (pendência P4).** Os termos são sugestões do Claude, sempre
   marcadas como fora do tesauro e confirmadas pelo usuário (art. 4º, III).
-- **Sem banco.** O registro de eventos vive na página; exporta-se em arquivo.
+- **Sem banco do Tribunal.** As sessões e o registro de eventos ficam no
+  armazenamento da página, não na tabela `evento`; exporta-se em arquivo.
 - **Núcleo duplicado em JavaScript.** `nucleo.js` é porte do Python; a paridade é
   testada em `backend/tests/test_paridade_js.py`. Mudou uma regra, mude os dois.
 - A montagem do cabeçalho e do dispositivo existe só em JavaScript por enquanto;
@@ -43,8 +67,20 @@ navegador; só o texto vai ao Claude.
 ## Atualizar
 
 ```bash
-python scripts/gerar_demo.py          # gera frontend/demo/dist/
-cd backend && pytest                  # inclui a paridade JS × Python
+python scripts/gerar_demo.py               # gera frontend/demo/dist/
+cd backend && pytest                       # inclui a paridade JS × Python
+python frontend/demo/testes/e2e_demo.py    # navegador, Claude e armazenamento simulados
 ```
 
 Depois, republicar os arquivos de `dist/` no mesmo endereço.
+
+## Tesauro do IRB
+
+O TCN tem serviço web aberto do TemaTres em
+`https://tesauro.irbcontas.org.br/vocab/services.php`, feito para integração com
+sistemas. Em 16/11/2026 o endereço estava atrás de uma verificação anti-robô da
+Cloudflare: acesso por programa recebe "Just a moment…" (HTTP 403). Isso vale
+para esta página e também para o servidor do Tribunal. Caminhos: o IRB liberar o
+acesso do servidor do Tribunal ao serviço, ou fornecer a exportação SKOS completa
+para carga local (`scripts/carregar_tesauro.py`), que é o que a arquitetura já
+prevê (índice local, documento 01, seção 4).

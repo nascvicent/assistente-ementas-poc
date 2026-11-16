@@ -126,8 +126,8 @@ th{font-weight:400;color:var(--suave);width:34%}
 
 /* painel */
 .painel{background:var(--fundo);border-left:1px solid var(--linha);display:flex;flex-direction:column;min-height:0}
-.abas{display:flex;gap:2px;padding:14px 16px 10px;align-items:center}
-.abas [data-aba]{border:0;background:none;padding:5px 11px;border-radius:6px;color:var(--suave);font-weight:500;font-size:.9rem}
+.abas{display:flex;flex-wrap:wrap;gap:2px;padding:14px 16px 10px;align-items:center}
+.abas [data-aba]{border:0;background:none;padding:5px 9px;border-radius:6px;color:var(--suave);font-weight:500;font-size:.9rem}
 .abas [data-aba]:hover{color:var(--tinta)}
 .abas [data-aba][aria-selected="true"]{color:var(--tinta);background:var(--sup2)}
 .abas .copiar{margin-left:auto}
@@ -177,6 +177,10 @@ th{font-weight:400;color:var(--suave);width:34%}
 .parar{margin-top:6px}
 .btn:disabled{opacity:.4;cursor:default}
 .folha .ad{color:var(--vermelho)}
+.sess{display:flex;align-items:center}.sess [data-sessao]{flex:1;min-width:0}
+.sess .apaga{visibility:hidden;padding:2px 6px}.sess:hover .apaga,.sess .apaga:focus,.sess .apaga[data-confirma="1"]{visibility:visible}
+details summary{cursor:pointer;color:var(--suave);font-size:.88rem;margin:4px 0}
+select{font:inherit;border:1px solid var(--linha);border-radius:6px;background:var(--sup);color:var(--tinta);padding:2px 6px}
 .lista-oc td,.lista-oc th{font-size:.84rem}
 
 </style>
@@ -193,6 +197,7 @@ th{font-weight:400;color:var(--suave);width:34%}
     <nav class="hist">
       <h2>Esta sessão</h2>
       <button class="ativa" id="atual"><b id="atualNome">Nova ementa</b><span id="atualSit">Aguardando o voto</span></button>
+      <div id="listaSessoes"></div>
     </nav>
     <div class="pe">
       <span class="quem">Usuário</span>
@@ -221,6 +226,7 @@ th{font-weight:400;color:var(--suave);width:34%}
       <button role="tab" aria-selected="false" data-aba="ficha">Ficha</button>
       <button role="tab" aria-selected="false" data-aba="registro">Registro</button>
       <button role="tab" aria-selected="false" data-aba="gabarito" id="abaGabarito" hidden>Publicada</button>
+      <button role="tab" aria-selected="false" data-aba="avaliacao" id="abaAvaliacao" hidden>Avaliação</button>
       <button class="mini copiar" id="copiar">Copiar</button>
       <button class="mini copiar so-estreito" id="fechaPainel" style="margin-left:6px">Fechar</button>
     </div>
@@ -232,6 +238,7 @@ th{font-weight:400;color:var(--suave);width:34%}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <script src="nucleo.js"></script>
+<script src="avaliacao.js"></script>
 <script src="leitura.js"></script>
 <script src="prompts.js"></script>
 <script src="exemplo.js"></script>

@@ -160,3 +160,34 @@ def test_verificar_tese():
         {"op": "tese", "tese": "O armazenamento de vacinas deve observar a RDC ANVISA nº 197/2017.", "ficha": ficha.model_dump(mode="json"), "textoVoto": voto},
     ])
     assert len(casos[0]) == 4 and casos[1] == []
+
+
+def test_montagem_com_referencias_passa_no_linter_python():
+    ficha = criar_ficha()
+    r = rodar_js([{"op": "montar_ref", "ficha": ficha.model_dump(mode="json"), "ids": ["oc1"]}])[0]
+    assert r == ["Referências normativas: RDC ANVISA nº 197/2017."]
+    base = _montar(ficha, [], ["O armazenamento de vacinas em refrigeradores domésticos viola as normas sanitárias da rede de frio."])["ementa"]
+    texto = base + "\n\n" + "\n".join(r)
+    ctx = linter_ementa.ContextoLinter(ficha=ficha, texto_voto="\n".join(VOTO_FICTICIO.values()))
+    assert linter_ementa.verificar(texto, ctx) == []
+
+
+# --- avaliação (frontend/demo/avaliacao.js) --------------------------------
+
+def test_avaliacao_compara_com_a_publicada():
+    from tests.conftest import EMENTA_VALIDA
+    sem_termo = EMENTA_VALIDA.replace("VACINAÇÃO. ", "")
+    trocada = EMENTA_VALIDA.replace("regularidade com ressalvas do objeto", "irregularidade do objeto")
+    igual, menos, outra = rodar_js([
+        {"op": "comparar", "gerada": EMENTA_VALIDA, "referencia": EMENTA_VALIDA},
+        {"op": "comparar", "gerada": sem_termo, "referencia": EMENTA_VALIDA},
+        {"op": "comparar", "gerada": trocada, "referencia": EMENTA_VALIDA},
+    ])
+    assert igual["geral"] == 1 and igual["dispositivo"]["mesmoResultado"]
+    assert menos["termos"]["soReferencia"] == ["VACINAÇÃO"] and menos["secoes"]["caso"] == 1 and menos["secoes"]["cabecalho"] < 1
+    assert not outra["dispositivo"]["mesmoResultado"]
+
+
+def test_avaliacao_extrai_ementa_do_texto_livre():
+    r = rodar_js([{"op": "texto_livre", "texto": "Segue:\n\n**EMENTA:** CONSULTA. X.\nI. CASO EM EXAME\n1. a.\n\nPARA CONFERIR\na) nada a registrar"}])[0]
+    assert r == {"ementa": "EMENTA: CONSULTA. X.\nI. CASO EM EXAME\n1. a.", "paraConferir": "a) nada a registrar"}

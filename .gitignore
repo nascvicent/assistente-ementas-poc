@@ -11,3 +11,4 @@ dados/
 !backend/tests/fixtures/**
 node_modules/
 dist/
+frontend/demo/testes/vendor/

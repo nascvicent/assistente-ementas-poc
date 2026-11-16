@@ -67,6 +67,7 @@ class Acao(StrEnum):
     PEDIR_NOVAS_TESES = "PEDIR_NOVAS_TESES"
     ADICIONAR_OCORRENCIA = "ADICIONAR_OCORRENCIA"
     ENCERRAR = "ENCERRAR"              # "não" a "adicionar outra ocorrência?"
+    RETIRAR_OCORRENCIA = "RETIRAR_OCORRENCIA"  # tira um ponto já incluído e remonta a ementa
     PERGUNTAR = "PERGUNTAR"            # conversa sobre o caso: não muda de estado
     VOLTAR = "VOLTAR"
     CANCELAR = "CANCELAR"
@@ -115,6 +116,7 @@ TRANSICOES: dict[tuple[Estado, Acao], Destino] = {
     (Estado.MONTANDO, Acao.CONCLUIR): _apos_montagem,
     (Estado.AGUARDANDO_MAIS_OCORRENCIA, Acao.ADICIONAR_OCORRENCIA): Estado.AGUARDANDO_OCORRENCIA,
     (Estado.AGUARDANDO_MAIS_OCORRENCIA, Acao.ENCERRAR): Estado.VERIFICANDO,
+    (Estado.AGUARDANDO_MAIS_OCORRENCIA, Acao.RETIRAR_OCORRENCIA): Estado.MONTANDO,
     (Estado.VERIFICANDO, Acao.CONCLUIR): Estado.CONCLUIDA,
     # voltar uma etapa
     (Estado.AGUARDANDO_OCORRENCIA, Acao.VOLTAR): Estado.AGUARDANDO_VOTO,

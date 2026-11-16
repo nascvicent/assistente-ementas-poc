@@ -70,6 +70,8 @@ _RE_TITULO_SECAO = re.compile(
 )
 _RE_ITEM = re.compile(r"^\s*(?P<numero>\d+)\s*[.)]\s+(?P<resto>.*)$")
 _RE_NUMERO_DUPLICADO = re.compile(r"^\s*(\d+)\s*\.\s+(\d+)\s*\.\s")
+# Bloco final opcional (Portaria 322/2026, art. 10, § 1º): fica fora das seções numeradas.
+_RE_RODAPE = re.compile(r"^\s*(Refer[êe]ncias normativas|Precedentes citados)\s*:.*$", re.MULTILINE | re.IGNORECASE)
 
 
 @dataclass
@@ -97,6 +99,7 @@ class EmentaAnalisada:
     tem_prefixo: bool
     cabecalho: str
     secoes: list[Secao]
+    rodape: str = ""
 
     @property
     def segmentos(self) -> list[str]:
@@ -115,6 +118,8 @@ def analisar(texto: str) -> EmentaAnalisada:
     texto = texto.replace("\r\n", "\n").strip()
     tem_prefixo = texto.startswith("EMENTA:")
     corpo = texto[len("EMENTA:"):] if tem_prefixo else texto
+    rodape = " ".join(m.group(0).strip() for m in _RE_RODAPE.finditer(corpo))
+    corpo = _RE_RODAPE.sub("", corpo)
 
     titulos = list(_RE_TITULO_SECAO.finditer(corpo))
     cabecalho = corpo[: titulos[0].start()] if titulos else corpo
@@ -144,7 +149,7 @@ def analisar(texto: str) -> EmentaAnalisada:
         secao.texto_solto = " ".join(soltos)
         secoes.append(secao)
 
-    return EmentaAnalisada(texto, tem_prefixo, cabecalho, secoes)
+    return EmentaAnalisada(texto, tem_prefixo, cabecalho, secoes, rodape)
 
 
 # ---------------------------------------------------------------------------
@@ -436,7 +441,7 @@ def _e10(e: EmentaAnalisada, ctx: ContextoLinter, cfg: ConfigLinter) -> list[Ach
             achados.append(_a("E10", Gravidade.ALTA, f"Tese {item.numero} cita valor em reais; a tese deve ser abstrata.", item.texto[:60]))
         if _RE_PROCESSO.search(item.texto):
             achados.append(_a("E10", Gravidade.ALTA, f"Tese {item.numero} cita número de processo.", item.texto[:60]))
-        for k, original in proibidos.items():
+        for k, original in sorted(proibidos.items()):
             if k and re.search(rf"\b{re.escape(k)}\b", chave):
                 achados.append(_a("E10", Gravidade.ALTA, f"Tese {item.numero} cita nome próprio do caso.", original))
     return achados
@@ -459,7 +464,7 @@ def _e12(e: EmentaAnalisada, ctx: ContextoLinter) -> list[Achado]:
     if not ctx.texto_voto:
         return []
     voto = _sem_milhar(_chave(ctx.texto_voto))
-    corpo = " ".join(s.texto for s in e.secoes)
+    corpo = " ".join([s.texto for s in e.secoes] + [e.rodape])
     achados, vistos = [], set()
     for m in _RE_NORMA.finditer(corpo):
         base = _tipo_base(m["tipo"])
@@ -478,7 +483,7 @@ def _e13(e: EmentaAnalisada, ctx: ContextoLinter) -> list[Achado]:
         return []
     voto = re.sub(r"\s+", " ", ctx.texto_voto)
     voto_compacto = voto.replace(" ", "")
-    corpo = " ".join(s.texto for s in e.secoes)
+    corpo = " ".join([s.texto for s in e.secoes] + [e.rodape])
     achados = []
     for m in _RE_VALOR.finditer(corpo):
         v = m["v"]
@@ -515,7 +520,7 @@ def _e14_e21(e: EmentaAnalisada, ctx: ContextoLinter) -> list[Achado]:
 
 
 def _e15(e: EmentaAnalisada) -> list[Achado]:
-    corpo = " ".join(s.texto for s in e.secoes)
+    corpo = " ".join([s.texto for s in e.secoes] + [e.rodape])
     achados = [
         _a("E15", Gravidade.BAIXA, 'Use "nº" na citação de normas.', m.group(0))
         for m in _RE_NUMERO_MAL_FORMATADO.finditer(corpo)

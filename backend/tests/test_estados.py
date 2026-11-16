@@ -173,3 +173,12 @@ def test_roteador_comandos():
     assert classificar("dispensar a tese", Estado.AGUARDANDO_TESE, 4).acao is Acao.DISPENSAR_TESE
     # "sim" fora da pergunta do laço é só uma pergunta/fala comum
     assert classificar("sim", Estado.AGUARDANDO_TERMO, 5).tipo is TipoEntrada.PERGUNTA
+
+
+def test_retirar_ponto_remonta():
+    m = maquina()
+    percorrer(m, [Acao.ENVIAR_VOTO, Acao.CONCLUIR, Acao.ESCOLHER, Acao.CONCLUIR, Acao.ESCOLHER, Acao.CONCLUIR, Acao.ESCOLHER, Acao.CONCLUIR])
+    assert m.estado is Estado.AGUARDANDO_MAIS_OCORRENCIA
+    assert m.disparar(Acao.RETIRAR_OCORRENCIA) is Estado.MONTANDO
+    with pytest.raises(TransicaoInvalida):
+        maquina().disparar(Acao.RETIRAR_OCORRENCIA)

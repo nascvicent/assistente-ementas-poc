@@ -11,7 +11,7 @@
  */
 (function () {
   "use strict";
-  const N = window.Nucleo, L = window.Leitura, PROMPTS = window.PROMPTS;
+  const N = window.Nucleo, L = window.Leitura, PROMPTS = window.PROMPTS, AV = window.Avaliacao;
   const SOL = '<svg viewBox="0 0 24 24" aria-hidden="true"><polygon fill="#FFB300" points="12,0 13.6,5.9 18,1.6 16.5,7.5 22.4,6 18.1,10.4 24,12 18.1,13.6 22.4,18 16.5,16.5 18,22.4 13.6,18.1 12,24 10.4,18.1 6,22.4 7.5,16.5 1.6,18 5.9,13.6 0,12 5.9,10.4 1.6,6 7.5,7.5 6,1.6 10.4,5.9"/></svg>';
   const PASSOS = ["Voto", "Ficha", "Ponto", "Tese", "Tesauro", "Ementa", "Alerta"];
   const LIMITE_VOTO = 180000;
@@ -30,6 +30,7 @@
     "MONTANDO|CONCLUIR": (c) => (c.unica || c.restantes === 0 ? "VERIFICANDO" : "AGUARDANDO_MAIS_OCORRENCIA"),
     "AGUARDANDO_MAIS_OCORRENCIA|ADICIONAR_OCORRENCIA": "AGUARDANDO_OCORRENCIA",
     "AGUARDANDO_MAIS_OCORRENCIA|ENCERRAR": "VERIFICANDO",
+    "AGUARDANDO_MAIS_OCORRENCIA|RETIRAR_OCORRENCIA": "MONTANDO",
     "VERIFICANDO|CONCLUIR": "CONCLUIDA",
     "AGUARDANDO_OCORRENCIA|VOLTAR": "AGUARDANDO_VOTO",
     "AGUARDANDO_TESE|VOLTAR": (c) => (c.unica ? "AGUARDANDO_VOTO" : "AGUARDANDO_OCORRENCIA"),
@@ -49,6 +50,7 @@
     S.estado = d;
     S.fim = d === "CONCLUIDA";
     pinta();
+    salvar();
     return d;
   }
 
@@ -169,6 +171,110 @@
     sit("Parado: " + msg.toLowerCase().slice(0, 40));
   }
 
+  // ------------------------------------------------- sessões salvas
+  // Cada pessoa vê só as suas (data/users/<id>/ é privado no armazenamento da página).
+  let db = null, uid = null, pararLista = null, filaGravacao = Promise.resolve(), temporizador = null;
+  const persistenciaP = (async () => {
+    if (!window.claude) return;
+    try {
+      const [d, u] = await Promise.all([window.claude.use("db"), window.claude.use("user")]);
+      const id = u ? await u.id() : null;
+      if (d && id) { db = d; uid = id; ouvirSessoes(); }
+    } catch (e) { db = null; }
+    if (!db) $("listaSessoes").innerHTML = `<p class="nota" style="padding:0 10px">As sessões não ficam salvas nesta visualização.</p>`;
+  })();
+  const colSessoes = () => db.collection("data/users/" + uid);
+  const SITUACAO = {
+    AGUARDANDO_VOTO: "Aguardando o voto", EXTRAINDO: "Parou na leitura do voto", AGUARDANDO_OCORRENCIA: "Parou na escolha do ponto",
+    PROPONDO_TESES: "Parou na tese", AGUARDANDO_TESE: "Parou na tese", BUSCANDO_TERMOS: "Parou no termo", AGUARDANDO_TERMO: "Parou no termo",
+    MONTANDO: "Parou na montagem", AGUARDANDO_MAIS_OCORRENCIA: "Ementa em montagem", VERIFICANDO: "Parou na verificação", CONCLUIDA: "Ementa concluída",
+  };
+  const situacao = () => SITUACAO[S.estado] + (S.itens.length && S.estado !== "AGUARDANDO_VOTO" ? `, ${S.itens.length} ponto(s)` : "");
+  function serializar() {
+    return {
+      estado: S.estado, ctx: S.ctx, fim: S.fim, nomeExibido: S.nomeExibido,
+      doc: { nome: S.doc.nome, hash: S.doc.hash, bloco: S.doc.bloco, avisos: S.doc.avisos, paginacaoReal: S.doc.paginacaoReal, nPaginas: S.doc.paginas.length },
+      ficha: S.ficha, problemas: S.problemas || [], itens: S.itens.map((x) => ({ oc: x.oc.id, tese: x.tese, termo: x.termo })),
+      ponto: S.ponto ? S.ponto.id : null, teses: S.teses, semTese: S.semTese, teseAtual: S.teseAtual === undefined ? null : S.teseAtual,
+      termos: S.termos || null, ementa: S.ementa, alertas: S.alertas, lintCodigos: S.lintCodigos || [], modeloOk: S.modeloOk !== false,
+      ciencia: S.ciencia, referencias: S.referencias, indiceDispensar: S.indiceDispensar ?? null, tela: S.tela || "",
+      avaliacao: { ...S.avaliacao, rodandoUnico: false }, reg: S.reg, eventos: S.eventos,
+    };
+  }
+  function salvar() {
+    if (!db || !S || !S.id || !S.doc) return;
+    clearTimeout(temporizador);
+    const sessao = S;
+    temporizador = setTimeout(() => {
+      filaGravacao = filaGravacao.then(async () => {
+        const ref = colSessoes().doc(sessao.id);
+        if (!sessao.paginasSalvas) {
+          for (const p of sessao.doc.paginas) await ref.collection("paginas").doc(String(p.numero)).set({ numero: p.numero, texto: p.texto, secao: p.secao || null });
+          sessao.paginasSalvas = true;
+        }
+        await ref.set({ tipo: "sessao", versao: 1, nome: sessao.nomeExibido || sessao.doc.nome, situacao: situacaoDe(sessao),
+          criado: sessao.criado, atualizado: new Date().toISOString(), dados: JSON.parse(JSON.stringify(serializarDe(sessao))) });
+      }).catch((e) => { if (S === sessao) reg("aviso", "Não foi possível salvar a sessão" + (e && e.code === "quota_exceeded" ? " (espaço esgotado; exclua sessões antigas)" : "")); });
+    }, 600);
+  }
+  const situacaoDe = (x) => { const a = S; S = x; try { return situacao(); } finally { S = a; } };
+  const serializarDe = (x) => { const a = S; S = x; try { return serializar(); } finally { S = a; } };
+
+  function ouvirSessoes() {
+    if (pararLista) return;
+    const t = setTimeout(() => { if (!$("listaSessoes").dataset.ok) $("listaSessoes").innerHTML = `<p class="nota" style="padding:0 10px">Carregando sessões…</p>`; }, 10000);
+    pararLista = colSessoes().orderBy("atualizado", "desc").limit(30).onSnapshot((snap) => {
+      clearTimeout(t); $("listaSessoes").dataset.ok = "1";
+      const itens = snap.docs.filter((d) => d.exists && d.data().tipo === "sessao" && (!S || d.id !== S.id));
+      $("listaSessoes").innerHTML = itens.length ? `<h2>Anteriores</h2>` + itens.map((d) => {
+        const x = d.data();
+        return `<div class="sess"><button data-sessao="${esc(d.id)}"><b>${esc(x.nome)}</b><span>${esc(x.situacao)} · ${esc(new Date(x.atualizado).toLocaleDateString("pt-BR"))}</span></button><button class="mini apaga" data-apaga="${esc(d.id)}" title="Excluir sessão" aria-label="Excluir sessão">×</button></div>`;
+      }).join("") : "";
+    }, () => { clearTimeout(t); $("listaSessoes").innerHTML = `<p class="nota" style="padding:0 10px">As sessões salvas não puderam ser carregadas.</p>`; });
+  }
+  $("listaSessoes").addEventListener("click", async (e) => {
+    const ap = e.target.closest("[data-apaga]");
+    if (ap) {
+      if (ap.dataset.confirma !== "1") { ap.dataset.confirma = "1"; ap.textContent = "Excluir?"; setTimeout(() => { ap.dataset.confirma = ""; ap.textContent = "×"; }, 3000); return; }
+      ap.disabled = true;
+      const ref = colSessoes().doc(ap.dataset.apaga);
+      try { const ps = await ref.collection("paginas").get(); for (const p of ps.docs) await ref.collection("paginas").doc(p.id).delete(); await ref.delete(); } catch (err) { ap.disabled = false; }
+      return;
+    }
+    const b = e.target.closest("[data-sessao]");
+    if (b) retomar(b.dataset.sessao);
+  });
+
+  async function retomar(id) {
+    if (!db) return;
+    if (S && S.ctl) S.ctl.abort();
+    const ref = colSessoes().doc(id);
+    let snap, pags;
+    try { [snap, pags] = await Promise.all([ref.get(), ref.collection("paginas").get()]); } catch (e) { return; }
+    if (!snap.exists) return;
+    const x = snap.data(), dd = x.dados;
+    inicio();
+    col.innerHTML = "";
+    const paginas = pags.docs.map((p) => p.data()).sort((a, b) => a.numero - b.numero);
+    Object.assign(S, dd, { id, criado: x.criado, paginasSalvas: true, t0: Date.now() });
+    S.doc = { ...dd.doc, paginas };
+    const oc = (i) => (S.ficha ? S.ficha.ocorrencias.find((o) => o.id === i) : null);
+    S.itens = (dd.itens || []).map((i) => ({ ...i, oc: oc(i.oc) })).filter((i) => i.oc);
+    S.ponto = dd.ponto ? oc(dd.ponto) : null;
+    S.teseAtual = dd.teseAtual === null && dd.estado !== "BUSCANDO_TERMOS" && dd.estado !== "AGUARDANDO_TERMO" ? undefined : dd.teseAtual;
+    $("atualNome").textContent = x.nome; $("abaAvaliacao").hidden = false; $("abaGabarito").hidden = !S.doc.bloco;
+    reg("sessão", "Sessão retomada");
+    pinta();
+    bot(`<p>Sessão retomada: <b>${esc(x.nome)}</b>. ${esc(x.situacao)}.</p>` + (S.ficha ? `<details><summary>Ficha do caso</summary>${fichaHTML(S.ficha)}</details>` : ""));
+    const continuar = {
+      EXTRAINDO: () => extrair(), AGUARDANDO_OCORRENCIA: () => pedePonto("Qual ponto entra agora?"), PROPONDO_TESES: () => propoeTeses(),
+      AGUARDANDO_TESE: () => mostrarTeses(), BUSCANDO_TERMOS: () => buscaTermos(), AGUARDANDO_TERMO: () => mostrarTermos(),
+      MONTANDO: () => monta(), AGUARDANDO_MAIS_OCORRENCIA: () => perguntaMais(), VERIFICANDO: () => verifica(), CONCLUIDA: () => mostrarFinal(),
+    }[S.estado];
+    if (continuar) continuar();
+    ouvirSessoes();
+  }
+
   // ------------------------------------------------------------ texto
   function votoPaginado() {
     let t = S.doc.paginas.map((p) => `[[p. ${p.numero}]]\n${p.texto}`).join("\n\n");
@@ -197,8 +303,9 @@
   function inicio() {
     S = { estado: "AGUARDANDO_VOTO", ctx: { unica: false, restantes: null }, fim: false, t0: Date.now(), reg: [], eventos: [],
       doc: null, ficha: null, itens: [], ponto: null, teses: null, teseAtual: undefined, ementa: null, alertas: [], novo: null,
-      ciencia: true, aguardandoOrientacao: false, ctl: null };
-    pend = null; col.innerHTML = ""; aba = "ementa"; $("abaGabarito").hidden = true;
+      ciencia: true, aguardandoOrientacao: false, ctl: null, referencias: false,
+      avaliacao: { nota: null, comentario: "", unico: null, rodandoUnico: false } };
+    pend = null; col.innerHTML = ""; aba = "ementa"; $("abaGabarito").hidden = true; $("abaAvaliacao").hidden = true;
     col.innerHTML = `<div class="vazio"><h2>Do voto à ementa, uma decisão de cada vez</h2>
       <p>O Claude lê o voto e monta a ficha; você escolhe o ponto decidido, a tese e o termo de indexação. Cada trecho citado é conferido no voto, e a ementa final passa pelas regras da Portaria Normativa TC nº 322/2026.</p>
       <label class="sigilo"><input type="checkbox" id="sigilo"><span>Confirmo que o voto que vou enviar é <b>fictício ou já publicado</b>. Esta demonstração roda fora da rede do Tribunal.</span></label>
@@ -226,6 +333,8 @@
 
   // -------------------------------------------------- 1–2. voto e ficha
   async function receber(origem, nome) {
+    S.id = "s" + Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+    S.criado = new Date().toISOString(); S.nomeExibido = nome; S.paginasSalvas = false;
     eu("Voto enviado: " + nome);
     disparar("ENVIAR_VOTO");
     sit("Lendo o voto"); dica("Lendo o voto…");
@@ -243,8 +352,10 @@
       pr.fim(); bot(`<div class="erro"><b>O PDF não tem texto.</b>Ele parece digitalizado. Envie uma versão com texto pesquisável.</div>`);
       S.estado = "AGUARDANDO_VOTO"; pinta(); return;
     }
+    $("abaAvaliacao").hidden = false;
     if (S.doc.bloco) { $("abaGabarito").hidden = false; reg("ingestão", `Ementa publicada removida do texto (${paginas(S.doc.bloco)}) e guardada para comparação`); }
     $("atualNome").textContent = nome;
+    salvar();
     extrair(pr);
   }
 
@@ -261,7 +372,33 @@
     const ficha = sanear(bruta);
     if (!ficha) { pr.fim(); return falha({ code: "formato", detalhe: " Faltou o processo ou o julgamento." }, () => extrair()); }
     pr.linha("Conferindo cada trecho citado contra a página de origem");
-    const problemas = N.conferirFicha(ficha, new N.TextoPaginado(Object.fromEntries(S.doc.paginas.map((p) => [p.numero, p.texto]))));
+    const tp = new N.TextoPaginado(Object.fromEntries(S.doc.paginas.map((p) => [p.numero, p.texto])));
+    let problemas = N.conferirFicha(ficha, tp);
+    const falhas = problemas.filter((p) => p.status === "nao_confirmada");
+    if (falhas.length) {
+      pr.linha(`Pedindo ao Claude que corrija ${falhas.length} trecho(s) não localizado(s)`);
+      try {
+        const r = await chamar("corrigir_evidencias", {
+          itens: falhas.map((f) => ({ caminho: f.caminho, trecho_citado: f.trecho, pagina_indicada: f.pagina_indicada })),
+          voto_paginado: votoPaginado(),
+        }, { signal: pr.signal });
+        const porCaminho = new Map([...N.evidencias(ficha)]);
+        let corrigidos = 0, removidos = 0;
+        for (const c of (r && r.correcoes) || []) {
+          const ev = porCaminho.get(String(c.caminho));
+          if (!ev) continue;
+          if (c.remover) { ev.__remover = true; removidos++; }
+          else if (c.trecho) { ev.trecho = String(c.trecho); ev.pagina = Number(c.pagina) || ev.pagina; corrigidos++; }
+        }
+        for (const oc of ficha.ocorrencias) for (const k of ["fundamentos", "normas", "precedentes"]) oc[k] = oc[k].filter((x) => !(x.evidencia && x.evidencia.__remover));
+        problemas = N.conferirFicha(ficha, tp);
+        reg("verificação", `Nova tentativa: ${corrigidos} trecho(s) corrigido(s), ${removidos} item(ns) sem suporte retirado(s) da ficha`);
+      } catch (e) {
+        if (e && e.code === "descartado") return;
+        if (e && e.code === "cancelled") { pr.fim(); return falha(e, () => extrair()); }
+        reg("aviso", "Correção dos trechos não foi possível; eles ficam marcados");
+      }
+    }
     const total = [...N.evidencias(ficha)].length;
     const div = problemas.filter((p) => p.status === "pagina_divergente").length, nao = problemas.filter((p) => p.status === "nao_confirmada").length;
     reg("verificação", `${total} evidências: ${total - div - nao} confirmadas, ${div} em outra página, ${nao} não localizadas`);
@@ -378,16 +515,49 @@
     const ts = S.teses;
     const lista = ts.map((t) => `${esc(t.texto)}<span class="mais">Nível ${esc(t.nivel)}${t.acrescentou ? " · " + esc(t.acrescentou) : ""}</span>` +
       (t.problemas.length ? `<span class="aviso-op">Atenção: ${esc(t.problemas.join("; "))}</span>` : ""));
+    const iEditar = ts.length, iDispensar = ts.length + 1;
+    lista.push(`<b>Escrever ou editar a tese</b><small>Parte de uma das redações acima ou de um texto seu.</small>`);
     lista.push(`<b>Dispensar a tese deste ponto</b><small>Portaria Normativa TC nº 322/2026, art. 8º, parágrafo único</small>`);
     lista.push(`<b>Gerar outras redações</b><small>Você pode dar uma orientação, como "mais curta" ou "sem citar a LRF".</small>`);
+    S.indiceDispensar = iDispensar;
     S.tela = "Teses propostas: " + ts.map((t, i) => `${i + 1}. ${t.texto}`).join(" ");
     bot((S.semTese ? `<div class="alerta"><b>O Claude sugere dispensar a tese</b>${esc(S.semTese)}</div>` : "") +
       `<p>Redações para o ponto <b>${esc(S.ponto.titulo)}</b>, da mais geral à mais completa:</p>` +
       opcoes(lista, (k) => {
         if (k < ts.length) { S.teseAtual = ts[k].texto; reg("escolha", `Tese ${k + 1} (nível ${ts[k].nivel})`); disparar("ESCOLHER"); buscaTermos(); }
-        else if (k === ts.length) { S.teseAtual = null; reg("escolha", "Tese dispensada"); disparar("DISPENSAR_TESE"); buscaTermos(); }
+        else if (k === iEditar) editarTese();
+        else if (k === iDispensar) { S.teseAtual = null; reg("escolha", "Tese dispensada"); disparar("DISPENSAR_TESE"); buscaTermos(); }
         else { S.aguardandoOrientacao = true; dica("Escreva a orientação, ou \"seguir\" para gerar sem orientação"); bot(`<p>Qual orientação devo seguir? Escreva abaixo, ou "seguir" para gerar sem orientação.</p>`); }
       }) + `<div class="chips"><button class="chip">Por que a tese 4 acrescenta um elemento que as outras não têm?</button></div>`);
+  }
+
+  /** Editor de texto livre para tese ou termo, com verificação antes de aceitar. */
+  function editor({ titulo, valor, linhas, verificar, aceitar, cancelar, rotuloOk }) {
+    const d = bot(`<p>${titulo}</p><textarea class="cola" rows="${linhas}" style="min-height:${linhas * 26}px">${esc(valor)}</textarea>
+      <div class="avisos"></div><div class="acoes" style="margin-top:8px"><button class="btn ok">${rotuloOk}</button><button class="btn sec cancela">Voltar às opções</button></div>`);
+    const ta = d.querySelector("textarea"), ok = d.querySelector(".ok"), av = d.querySelector(".avisos");
+    let confirmado = null;
+    ta.focus();
+    ta.oninput = () => { confirmado = null; ok.textContent = rotuloOk; av.innerHTML = ""; };
+    ok.onclick = () => {
+      const v = ta.value.trim().replace(/\s+/g, " ");
+      if (!v) return;
+      const probs = verificar(v);
+      if (probs.length && confirmado !== v) { confirmado = v; av.innerHTML = `<span class="aviso-op">Atenção: ${esc(probs.join("; "))}</span>`; ok.textContent = "Usar mesmo assim"; return; }
+      ok.disabled = true; d.querySelector(".cancela").disabled = true; ta.disabled = true;
+      aceitar(v, probs);
+    };
+    d.querySelector(".cancela").onclick = () => { d.remove(); cancelar(); };
+  }
+  function editarTese() {
+    const base = (S.teses.find((t) => t.nivel === 2) || S.teses[0] || { texto: "" }).texto;
+    editor({
+      titulo: "Escreva a tese ou ajuste a redação abaixo. Ela passa pelas mesmas verificações antes de entrar na ementa.",
+      valor: base, linhas: 4, rotuloOk: "Usar esta tese",
+      verificar: (v) => { const p = N.verificarTese(v, S.ficha, textoVoto()); if (!/[.!?]$/.test(v)) p.push("termine com ponto final"); return p; },
+      aceitar: (v, probs) => { S.teseAtual = v; eu(v.slice(0, 140)); reg("escolha", "Tese escrita ou editada pelo usuário" + (probs.length ? ` (com ${probs.length} aviso[s])` : "")); disparar("ESCOLHER"); buscaTermos(); },
+      cancelar: () => mostrarTeses(),
+    });
   }
 
   // ------------------------------------------------------ 5. termo
@@ -414,13 +584,38 @@
     S.tela = "Termos sugeridos: " + ts.map((t, i) => `${i + 1}. ${t.rotulo}`).join("; ");
     bot(`<p>Termos sugeridos para este ponto. Ao escolher, você confirma o uso como termo fora do tesauro (art. 4º, III).</p>` +
       opcoes(ts.map((t) => `<b>${esc(t.rotulo)}</b><span class="fora">fora do tesauro</span><small>Termo genérico: ${esc(t.generico || "—")} · ${esc(t.justificativa)}</small>`)
-        .concat([`<b>Seguir sem termo para este ponto</b><small>O cabeçalho fica só com a modalidade, os termos dos outros pontos e o resultado.</small>`]), (k) => {
+        .concat([`<b>Digitar outro termo</b><small>Também entra como fora do tesauro.</small>`,
+          `<b>Seguir sem termo para este ponto</b><small>O cabeçalho fica só com a modalidade, os termos dos outros pontos e o resultado.</small>`]), (k) => {
+        if (k === ts.length) return digitarTermo();
         const termo = k < ts.length ? ts[k] : null;
         S.itens.push({ oc: S.ponto, tese: S.teseAtual, termo });
         S.novo = S.ponto.id;
         reg("escolha", termo ? `Termo: ${termo.rotulo} (fora do tesauro, confirmado)` : "Sem termo");
         disparar("ESCOLHER"); monta();
       }) + `<p class="nota">A base do Tesauro de Contas Nacional ainda não está carregada nesta demonstração: os termos são sugestões do Claude e precisam ser conferidos no TCN. Na versão definitiva o Claude só escolhe entre termos que existem na base.</p>`);
+  }
+
+  function digitarTermo() {
+    editor({
+      titulo: "Digite o termo de indexação (nominal, sem verbo, até 6 palavras). Para indicar o termo genérico, use \"genérico > termo\".",
+      valor: "", linhas: 1, rotuloOk: "Usar este termo",
+      verificar: (v) => {
+        const p = [], rot = v.split(">").pop().trim();
+        if (rot.split(" ").length > 6) p.push("mais de 6 palavras");
+        if (N.verificar(`EMENTA: CONSULTA. ${rot.toUpperCase()}.`).some((a) => a.codigo === "E18")) p.push("parece conter verbo ou oração (art. 4º, II)");
+        return p;
+      },
+      aceitar: (v) => {
+        const partes = v.split(">").map((x) => x.trim()).filter(Boolean);
+        const termo = { rotulo: partes.pop(), generico: partes.pop() || "", justificativa: "digitado pelo usuário" };
+        eu(termo.rotulo);
+        S.itens.push({ oc: S.ponto, tese: S.teseAtual, termo });
+        S.novo = S.ponto.id;
+        reg("escolha", `Termo digitado: ${termo.rotulo} (fora do tesauro, confirmado)`);
+        disparar("ESCOLHER"); monta();
+      },
+      cancelar: () => mostrarTermos(),
+    });
   }
 
   // ----------------------------------------------------- 6. montagem
@@ -455,16 +650,34 @@
     }
     sit(`Ementa com ${S.itens.length} ponto(s)`); dica("Responda 1 ou 2, ou pergunte sobre o caso");
     S.tela = "Pergunta: adicionar outro ponto?";
+    perguntaMais();
+  }
+  function perguntaMais() {
+    sit(`Ementa com ${S.itens.length} ponto(s)`); dica("Responda com o número da opção, ou pergunte sobre o caso");
+    const ops = [`<b>Sim, adicionar outro ponto</b><small>Restam ${S.ctx.restantes}. A ficha é reaproveitada.</small>`, `<b>Não, concluir a ementa</b><small>Segue para a verificação final.</small>`];
+    if (S.itens.length > 1) ops.push(`<b>Retirar um ponto já incluído</b><small>A ementa é remontada sem ele.</small>`);
     bot(`<p>A ementa foi atualizada no painel ao lado, com o trecho novo destacado. Deseja adicionar outro ponto?</p>` +
-      opcoes([`<b>Sim, adicionar outro ponto</b><small>Restam ${S.ctx.restantes}. A ficha é reaproveitada.</small>`, `<b>Não, concluir a ementa</b><small>Segue para a verificação final.</small>`], (k) => {
+      opcoes(ops, (k) => {
+        if (k === 2) return retirarPonto();
         reg("escolha", k ? "Concluir" : "Adicionar outro ponto");
         if (k === 0) { disparar("ADICIONAR_OCORRENCIA"); pedePonto("Qual ponto entra agora?"); } else { disparar("ENCERRAR"); verifica(); }
       }));
   }
+  function retirarPonto() {
+    bot(`<p>Qual ponto sai da ementa?</p>` + opcoes(S.itens.map((x) => `<b>${esc(x.oc.titulo)}</b><small>${x.tese ? "Com tese" : "Tese dispensada"}${x.termo ? " · termo " + esc(x.termo.rotulo) : ""}</small>`)
+      .concat([`<b>Nenhum, voltar</b>`]), (k) => {
+      if (k === S.itens.length) return perguntaMais();
+      const [x] = S.itens.splice(k, 1);
+      reg("escolha", "Ponto retirado: " + x.oc.titulo);
+      S.novo = null;
+      disparar("RETIRAR_OCORRENCIA"); monta();
+    }));
+  }
 
   function textoEmenta() {
     const E = S.ementa;
-    return N.montarEmenta({ cabecalho: E.cab, caso: E.caso, razoes: E.razoes.map((r) => r.texto), dispositivo: E.disp.texto, teses: E.teses.map((t) => t.texto) });
+    return N.montarEmenta({ cabecalho: E.cab, caso: E.caso, razoes: E.razoes.map((r) => r.texto), dispositivo: E.disp.texto, teses: E.teses.map((t) => t.texto),
+      referencias: S.referencias ? N.montarReferencias(S.ficha, S.itens.map((x) => x.oc.id)) : [] });
   }
   const termosCabecalho = () => S.itens.filter((x) => x.termo).map((x) => ({ rotulo: x.termo.rotulo, fora_do_tesauro: true, confirmado_pelo_usuario: true }));
 
@@ -516,21 +729,29 @@
     }
     pr.fim();
     S.alertas = alertas;
+    S.lintCodigos = [...new Set(lint.map((a) => a.codigo))];
+    S.modeloOk = modeloOk;
+    S.ciencia = !alertas.some((a) => a.gravidade === "alta");
     disparar("CONCLUIR");
+    mostrarFinal();
+  }
+  function mostrarFinal() {
+    const alertas = S.alertas, modeloOk = S.modeloOk;
     const altas = alertas.filter((a) => a.gravidade === "alta").length;
-    S.ciencia = altas === 0;
     sit(`Ementa concluída, ${S.itens.length} ponto(s)`); dica("Pergunte sobre o caso ou comece uma nova ementa");
-    const codigos = new Set(lint.map((a) => a.codigo));
+    const codigos = new Set(S.lintCodigos || []);
     const atendidas = Object.entries(NOMES_REGRAS).filter(([c]) => !codigos.has(c)).map(([, n]) => `<li>${n}</li>`).join("");
     const d = bot(`<h3>Ementa concluída</h3><p>${alertas.length ? `Confira antes de usar: ${alertas.length} ponto(s).` : "Nenhum ponto a conferir."}</p>` +
       alertas.map((a) => `<div class="alerta ${a.gravidade === "alta" ? "alta" : ""}"><b>${esc(a.titulo)}</b>${a.detalhe ? esc(a.detalhe) : ""}<small>gravidade ${a.gravidade === "media" ? "média" : a.gravidade}</small></div>`).join("") +
       (modeloOk ? "" : `<p class="nota">A comparação entre fundamentação e parte dispositiva pelo Claude não pôde ser feita; as regras por código foram aplicadas.</p>`) +
       `<div class="passou">Regras atendidas<ul>${atendidas}</ul></div>` +
-      (altas ? `<label class="ciencia"><input type="checkbox" id="ciente"> Li e conferi os ${altas} ponto(s) de gravidade alta.</label>` : "") +
-      (S.doc.bloco ? `<p class="nota">O voto trazia a ementa publicada: compare na aba <b>Publicada</b> do painel.</p>` : "") +
-      `<div class="acoes" style="margin-top:18px"><button class="btn" id="copiaFinal" ${altas ? "disabled" : ""}>Copiar a ementa final</button><button class="btn sec" id="exportar">Exportar a conversa</button><button class="btn sec" id="novaFinal">Começar nova ementa</button></div>`);
+      (altas ? `<label class="ciencia"><input type="checkbox" id="ciente" ${S.ciencia ? "checked" : ""}> Li e conferi os ${altas} ponto(s) de gravidade alta.</label>` : "") +
+      `<label class="ciencia"><input type="checkbox" id="refs" ${S.referencias ? "checked" : ""}> Incluir ao final as referências normativas e os precedentes citados (art. 10, § 1º).</label>` +
+      `<p class="nota">Na aba <b>Avaliação</b> do painel, compare esta ementa ${S.doc.bloco ? "com a publicada e " : ""}com a do prompt único do AuroraChat, e dê sua nota.</p>` +
+      `<div class="acoes" style="margin-top:18px"><button class="btn" id="copiaFinal" ${S.ciencia ? "" : "disabled"}>Copiar a ementa final</button><button class="btn sec" id="exportar">Exportar a conversa</button><button class="btn sec" id="novaFinal">Começar nova ementa</button></div>`);
     const ciente = d.querySelector("#ciente");
-    if (ciente) ciente.onchange = () => { S.ciencia = ciente.checked; d.querySelector("#copiaFinal").disabled = !ciente.checked; if (ciente.checked) reg("escolha", "Ciência dos pontos de gravidade alta"); };
+    if (ciente) ciente.onchange = () => { S.ciencia = ciente.checked; d.querySelector("#copiaFinal").disabled = !ciente.checked; if (ciente.checked) reg("escolha", "Ciência dos pontos de gravidade alta"); salvar(); };
+    d.querySelector("#refs").onchange = (e) => { S.referencias = e.target.checked; reg("escolha", S.referencias ? "Incluir referências normativas" : "Sem referências normativas"); painel(); salvar(); };
     d.querySelector("#copiaFinal").onclick = (e) => copia(e.target);
     d.querySelector("#exportar").onclick = exporta;
     d.querySelector("#novaFinal").onclick = inicio;
@@ -594,11 +815,82 @@
       if (["sim", "s", "adicionar"].includes(k)) { eu(v); escolhe(0); return; }
       if (["nao", "não", "n", "concluir", "encerrar"].includes(k)) { eu(v); escolhe(1); return; }
     }
-    if (S.estado === "AGUARDANDO_TESE" && pend && /^dispensar( a)? tese$|^dispensar$/.test(k)) { eu(v); escolhe(S.teses.length); return; }
+    if (S.estado === "AGUARDANDO_TESE" && pend && /^dispensar( a)? tese$|^dispensar$/.test(k)) { eu(v); escolhe(S.indiceDispensar); return; }
     const m = k.match(/^(?:op[cç][aã]o|alternativa|n[uú]mero|item)?\s*(\d{1,2})\s*[.)]?$/);
     if (m && pend) { eu(v); if (!escolhe(Number(m[1]) - 1)) bot(`<p>Não há opção ${esc(m[1])}. Escolha de 1 a ${pend.n}.</p>`); return; }
     perguntar(v);
   };
+
+  // --------------------------------------------------------- avaliação
+  const pct = (x) => (x == null ? "—" : Math.round(x * 100) + "%");
+  function dadosAvaliacao() {
+    const ref = S.doc && S.doc.bloco ? S.doc.bloco.texto : null;
+    const ctx = { ficha: S.ficha || undefined, textoVoto: textoVoto() };
+    const cols = [["Fluxo em etapas", S.ementa ? textoEmenta() : null], ["Prompt único", S.avaliacao.unico ? S.avaliacao.unico.ementa : null]];
+    if (ref) cols.push(["Publicada", ref]);
+    const comp = cols.map(([n, t]) => (t && ref && n !== "Publicada" ? AV.comparar(t, ref, ctx) : null));
+    const lint = cols.map(([, t]) => (t ? AV.resumoLinter(t, ctx) : null));
+    const parte = cols.map(([, t]) => (t ? AV.partes(t) : null));
+    const linhas = [];
+    if (ref) {
+      linhas.push(["Semelhança com a publicada", comp.map((c) => (c ? pct(c.geral) : "—"))]);
+      for (const [k, rot] of [["cabecalho", "cabeçalho"], ["caso", "caso em exame"], ["razoes", "razões de decidir"], ["dispositivo", "dispositivo"], ["teses", "tese"]])
+        linhas.push([`· ${rot}`, comp.map((c) => (c ? pct(c.secoes[k]) : "—"))]);
+      linhas.push(["Termos do cabeçalho em comum", comp.map((c) => (c ? `${c.termos.comuns.length} de ${c.termos.comuns.length + c.termos.soReferencia.length}` : "—"))]);
+      linhas.push(["Mesmo resultado no dispositivo", comp.map((c) => (c ? (c.dispositivo.mesmoResultado ? "sim" : "não") : "—"))]);
+    }
+    linhas.push(["Pontos do linter (alta · média · baixa)", lint.map((l) => (l ? `${l.alta} · ${l.media} · ${l.baixa}` : "—"))]);
+    linhas.push(["Normas sem suporte no voto", lint.map((l) => (l ? String(l.normasSemSuporte.length) : "—"))]);
+    linhas.push(["Valores ou datas sem suporte", lint.map((l) => (l ? String(l.valoresSemSuporte.length) : "—"))]);
+    linhas.push(["Itens nas razões · teses", parte.map((x) => (x ? `${x.itensRazoes} · ${x.teses.length}` : "—"))]);
+    return { cols: cols.map(([n]) => n), linhas, lint };
+  }
+  function resumoAvaliacao() {
+    const d = dadosAvaliacao(), a = S.avaliacao;
+    return ["Avaliação — " + (S.doc ? S.doc.nome : ""), ["Critério", ...d.cols].join("\t"), ...d.linhas.map(([r, v]) => [r, ...v].join("\t")),
+      `Nota do revisor (fluxo): ${a.nota || "—"}`, `Nota do revisor (prompt único): ${a.notaUnico || "—"}`, `Comentário: ${a.comentario || "—"}`].join("\n");
+  }
+  function painelAvaliacao(c) {
+    if (!S.doc) { c.innerHTML = `<p class="nota">A avaliação aparece aqui depois da leitura do voto.</p>`; return; }
+    const d = dadosAvaliacao(), a = S.avaliacao;
+    const nota = (nome, v) => `<select data-nota="${nome}"><option value="">—</option>${[1, 2, 3, 4, 5].map((n) => `<option ${String(v) === String(n) ? "selected" : ""}>${n}</option>`).join("")}</select>`;
+    c.innerHTML = `<p class="nota">Medidas por código (documento 01, seção 9). ${S.doc.bloco ? "A publicada é a ementa que já vinha no inteiro teor; ela não foi enviada ao Claude." : "Este voto não trazia ementa publicada; só o linter é comparado."}</p>
+      <table><tr><th style="width:auto">Critério</th>${d.cols.map((n) => `<th style="width:auto">${n}</th>`).join("")}</tr>
+      ${d.linhas.map(([r, v]) => `<tr><td>${esc(r)}</td>${v.map((x) => `<td>${esc(x)}</td>`).join("")}${d.cols.length > v.length ? "<td>—</td>" : ""}</tr>`).join("")}</table>
+      ${!S.ementa ? `<p class="nota">A coluna do fluxo é preenchida quando a ementa for montada.</p>` : ""}
+      <h4 style="margin:18px 0 6px">Prompt único do AuroraChat</h4>
+      <p class="nota">O mesmo voto, sem a ementa publicada, no prompt adaptado da Fase 0 (documento 04, Parte A). Uma chamada.</p>
+      ${a.unico ? `<details><summary>Ver a ementa do prompt único</summary><div class="folha" style="white-space:pre-wrap;margin-top:8px">${esc(a.unico.ementa)}</div>${a.unico.paraConferir ? `<p class="nota" style="white-space:pre-wrap">PARA CONFERIR\n${esc(a.unico.paraConferir)}</p>` : ""}</details>` : ""}
+      ${a.erroUnico ? `<div class="erro"><b>${esc(a.erroUnico)}</b></div>` : ""}
+      <div class="acoes" style="margin:10px 0 18px"><button class="btn sec" id="rodaUnico" ${a.rodandoUnico ? "disabled" : ""}>${a.rodandoUnico ? "Rodando o prompt único…" : a.unico ? "Rodar de novo" : "Rodar o prompt único"}</button></div>
+      <h4 style="margin:0 0 6px">Nota do revisor (1 a 5)</h4>
+      <p>Fluxo em etapas ${nota("nota", a.nota)} &nbsp; Prompt único ${nota("notaUnico", a.notaUnico)}</p>
+      <textarea class="cola" id="comentario" rows="3" style="min-height:70px" placeholder="Comentário: o que precisou corrigir, o que faltou">${esc(a.comentario)}</textarea>
+      <div class="acoes" style="margin-top:8px"><button class="btn sec" id="copiaAval">Copiar resumo da avaliação</button></div>`;
+    c.querySelector("#rodaUnico").onclick = () => rodarPromptUnico(!!a.unico);
+    c.querySelectorAll("[data-nota]").forEach((sel) => (sel.onchange = () => { a[sel.dataset.nota] = sel.value || null; reg("escolha", `Nota do revisor (${sel.dataset.nota === "nota" ? "fluxo" : "prompt único"}): ${sel.value || "—"}`); salvar(); }));
+    c.querySelector("#comentario").onchange = (e) => { a.comentario = e.target.value; reg("escolha", "Comentário do revisor registrado"); salvar(); };
+    c.querySelector("#copiaAval").onclick = (e) => {
+      const b = e.target, o = b.textContent;
+      (navigator.clipboard ? navigator.clipboard.writeText(resumoAvaliacao()) : Promise.reject()).then(() => (b.textContent = "Resumo copiado")).catch(() => (b.textContent = "Não foi possível copiar"));
+      setTimeout(() => (b.textContent = o), 1600);
+    };
+  }
+  async function rodarPromptUnico(refazer) {
+    const a = S.avaliacao;
+    if (a.rodandoUnico) return;
+    a.rodandoUnico = true; a.erroUnico = null; painel();
+    try {
+      const r = await chamar("prompt_unico_aurorachat", { texto_integral: S.doc.paginas.map((p) => p.texto).join("\n\n").slice(0, LIMITE_VOTO) },
+        { json: false, cache: refazer ? false : undefined });
+      a.unico = { ...AV.extrairDoTextoLivre(r.text), bruto: r.text };
+      reg("avaliação", "Prompt único executado sobre o mesmo voto");
+    } catch (e) {
+      if (e && e.code === "descartado") return;
+      a.erroUnico = ERROS[e && e.code] || "Falha na chamada ao Claude.";
+    }
+    a.rodandoUnico = false; aba = "avaliacao"; painel(); salvar();
+  }
 
   // --------------------------------------------------------- painel
   function abre(a) { aba = a; painel(); }
@@ -610,6 +902,7 @@
       c.innerHTML = S.reg.length ? `<div class="reg">${S.reg.map((r) => `<div class="${r[1] === "escolha" ? "escolha" : ""}"><time>${r[0]}</time><em>${esc(r[1])}</em><span>${esc(r[2])}</span></div>`).join("")}</div><p class="nota" style="margin-top:12px">Cada chamada ao Claude, verificação e escolha fica registrada com a versão do prompt.</p>` : `<p class="nota">Nenhum evento ainda.</p>`;
       return;
     }
+    if (aba === "avaliacao") { painelAvaliacao(c); return; }
     if (aba === "gabarito") {
       if (!S.doc || !S.doc.bloco) { c.innerHTML = `<p class="nota">O voto enviado não trazia ementa.</p>`; return; }
       const lint = N.verificar(S.doc.bloco.texto, { textoVoto: textoVoto() });
@@ -624,7 +917,8 @@
     c.innerHTML = `<div class="folha"><p class="cab">${esc(E.cab)}</p><h4>I. CASO EM EXAME</h4>${E.caso.map((x) => `<p>${n++}. ${esc(x)}</p>`).join("")}
       <h4>II. RAZÕES DE DECIDIR</h4>${E.razoes.map((r) => `<p>${n++}. <span${m(r.oc)}>${esc(r.texto)}</span></p>`).join("")}
       <h4>III. DISPOSITIVO</h4><p>${n++}. <span${E.disp.a_definir ? ' class="ad"' : ""}>${esc(E.disp.texto)}</span></p>
-      ${E.teses.length ? `<h4>IV. TESE DE JULGAMENTO</h4>` + E.teses.map((t) => `<p>${n++}. <span${m(t.oc)}>${esc(t.texto)}</span></p>`).join("") : `<p class="falta">Tese de julgamento dispensada (art. 8º, parágrafo único).</p>`}</div>`;
+      ${E.teses.length ? `<h4>IV. TESE DE JULGAMENTO</h4>` + E.teses.map((t) => `<p>${n++}. <span${m(t.oc)}>${esc(t.texto)}</span></p>`).join("") : `<p class="falta">Tese de julgamento dispensada (art. 8º, parágrafo único).</p>`}
+      ${S.referencias ? N.montarReferencias(S.ficha, S.itens.map((x) => x.oc.id)).map((l) => `<p style="margin-top:12px">${esc(l)}</p>`).join("") : ""}</div>`;
   }
   document.querySelectorAll(".abas [data-aba]").forEach((b) => (b.onclick = () => abre(b.dataset.aba)));
 
@@ -641,6 +935,8 @@
     const t = (S.ementa ? textoEmenta() : "(ementa não montada)") +
       "\n\n--- PONTOS A CONFERIR ---\n" + (S.alertas.map((a) => `[${a.gravidade}] ${a.titulo}${a.detalhe ? " — " + a.detalhe : ""}`).join("\n") || "nenhum") +
       "\n\n--- REGISTRO ---\n" + S.reg.map((r) => r.join("  ")).join("\n") +
+      "\n\n--- AVALIAÇÃO ---\n" + (S.doc ? resumoAvaliacao() : "—") +
+      (S.avaliacao.unico ? "\n\n--- PROMPT ÚNICO (saída completa) ---\n" + S.avaliacao.unico.bruto : "") +
       "\n\n--- EVENTOS ---\n" + JSON.stringify(S.eventos, null, 1) +
       "\n\n--- FICHA ---\n" + JSON.stringify(S.ficha, null, 1);
     try {
@@ -651,7 +947,7 @@
   }
 
   $("copiar").onclick = (e) => copia(e.target);
-  $("nova").onclick = () => { if (S.ctl) S.ctl.abort(); inicio(); };
+  $("nova").onclick = () => { if (S.ctl) S.ctl.abort(); inicio(); if (pararLista) { pararLista(); pararLista = null; ouvirSessoes(); } };
   $("arq").onchange = (e) => { const f = e.target.files[0]; if (f) receber(f, f.name); e.target.value = ""; };
   $("tema").onclick = (e) => { const d = document.documentElement, n = d.dataset.theme === "dark" ? "light" : "dark"; d.dataset.theme = n; e.target.textContent = n === "dark" ? "Claro" : "Escuro"; };
   let f = 15.5;

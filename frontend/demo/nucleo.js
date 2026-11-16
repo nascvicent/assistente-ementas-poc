@@ -266,11 +266,15 @@
   const RE_TITULO_SECAO = /^\s*(?<numeral>I{1,3}|IV|V|VI)\s*[.\-–]\s*(?<titulo>[A-ZÀ-Ý][A-ZÀ-Ý ]+?)\s*:?\s*$/gm;
   const RE_ITEM = /^\s*(?<numero>\d+)\s*[.)]\s+(?<resto>.*)$/;
   const RE_NUMERO_DUPLICADO = /^\s*(\d+)\s*\.\s+(\d+)\s*\.\s/;
+  // Bloco final opcional (Portaria 322/2026, art. 10, § 1º): fica fora das seções numeradas.
+  const RE_RODAPE = /^\s*(Refer[êe]ncias normativas|Precedentes citados)\s*:.*$/gim;
 
   function analisar(texto) {
     texto = texto.replace(/\r\n/g, "\n").trim();
     const temPrefixo = texto.startsWith("EMENTA:");
-    const corpo = temPrefixo ? texto.slice("EMENTA:".length) : texto;
+    let corpo = temPrefixo ? texto.slice("EMENTA:".length) : texto;
+    const rodape = [...corpo.matchAll(RE_RODAPE)].map((m) => m[0].trim()).join(" ");
+    corpo = corpo.replace(RE_RODAPE, "");
     const titulos = [...corpo.matchAll(RE_TITULO_SECAO)];
     let cabecalho = titulos.length ? corpo.slice(0, titulos[0].index) : corpo;
     cabecalho = cabecalho.replace(/\s+/g, " ").trim();
@@ -297,7 +301,7 @@
     const cab = cabecalho.trim().replace(/\.+$/, "").trim();
     const segmentos = cab ? cab.split(/\.\s+/).map((s) => s.trim()).filter(Boolean) : [];
     const secao = (t) => { const ts = Array.isArray(t) ? t : [t]; return secoes.find((s) => ts.includes(s.titulo)) || null; };
-    return { texto, temPrefixo, cabecalho, secoes, segmentos, secao, textoSecao };
+    return { texto, temPrefixo, cabecalho, secoes, segmentos, secao, textoSecao, rodape };
   }
 
   const ABREV = "(?:art|arts|inc|incs|al|p|pp|fl|fls|n|nº|sr|sra|dr|dra|ex|min|cons|proc|res|aux|v|cf|c\\.c|etc|lc|ec)";
@@ -357,7 +361,7 @@
   function verificar(texto, ctx = {}, cfg = CONFIG) {
     const e = analisar(texto);
     const r = [];
-    const corpo = e.secoes.map(e.textoSecao).join(" ");
+    const corpo = [...e.secoes.map(e.textoSecao), e.rodape].join(" ");
     const tese = e.secao(cfg.titulosTeseAceitos);
 
     // E01
@@ -448,7 +452,8 @@
         const k = chave(item.texto);
         if (k.includes("r$")) r.push(A("E10", "alta", `Tese ${item.numero} cita valor em reais; a tese deve ser abstrata.`, item.texto.slice(0, 60)));
         if (RE_PROCESSO.test(item.texto)) r.push(A("E10", "alta", `Tese ${item.numero} cita número de processo.`, item.texto.slice(0, 60)));
-        for (const p of new Set(proibidos)) { const kp = chave(p); if (kp && new RegExp(`\\b${escapar(kp)}\\b`).test(k)) r.push(A("E10", "alta", `Tese ${item.numero} cita nome próprio do caso.`, p)); }
+        const porChave = new Map(); for (const p of proibidos) porChave.set(chave(p), p);
+        for (const kp of [...porChave.keys()].sort()) { if (kp && new RegExp(`\\b${escapar(kp)}\\b`).test(k)) r.push(A("E10", "alta", `Tese ${item.numero} cita nome próprio do caso.`, porChave.get(kp))); }
       }
       for (const item of tese.itens) {
         const k = chave(item.texto);
@@ -574,12 +579,24 @@
     return "EMENTA: " + [...segs, ...meio.slice(0, vagas), ...resultado].join(". ") + ".";
   }
 
+  /** Bloco opcional do art. 10, § 1º: normas e precedentes dos pontos escolhidos, como estão na ficha. */
+  function montarReferencias(ficha, idsOcorrencias) {
+    const ocs = (ficha.ocorrencias || []).filter((o) => idsOcorrencias.includes(o.id));
+    const uniq = (xs) => [...new Set(xs.map((x) => (x.citacao || "").trim()).filter(Boolean))];
+    const normas = uniq(ocs.flatMap((o) => o.normas || [])), precedentes = uniq(ocs.flatMap((o) => o.precedentes || []));
+    const linhas = [];
+    if (normas.length) linhas.push("Referências normativas: " + normas.join("; ") + ".");
+    if (precedentes.length) linhas.push("Precedentes citados: " + precedentes.join("; ") + ".");
+    return linhas;
+  }
+
   /** Ementa completa: numeração contínua e títulos por código. */
-  function montarEmenta({ cabecalho, caso, razoes, dispositivo, teses }) {
+  function montarEmenta({ cabecalho, caso, razoes, dispositivo, teses, referencias = [] }) {
     let n = 1;
     const linhas = [cabecalho, "", "I. CASO EM EXAME", ...[].concat(caso).map((c) => `${n++}. ${c}`), "", "II. RAZÕES DE DECIDIR",
       ...razoes.map((r) => `${n++}. ${r}`), "", "III. DISPOSITIVO", `${n++}. ${dispositivo}`];
     if (teses.length) linhas.push("", "IV. TESE DE JULGAMENTO", ...teses.map((t) => `${n++}. ${t}`));
+    if (referencias.length) linhas.push("", ...referencias);
     return linhas.join("\n");
   }
 
@@ -604,7 +621,7 @@
     semAcento, normalizar, normalizarParaBusca, limpar, removerCabecalhoRodape, juntarHifenizacao,
     removerEmenta, detectarSecoes, TextoPaginado, conferirTrecho, conferirFicha, evidencias, nomesDePessoas,
     MODALIDADES, RESULTADOS, PROVIDENCIAS, ROTULOS_MODALIDADE, modalidadePorRotulo, resultadosNoTexto,
-    analisar, contarFrases, verificar, montarDispositivo, montarCabecalho, montarEmenta, verificarTese, CONFIG,
+    analisar, contarFrases, verificar, montarDispositivo, montarCabecalho, montarEmenta, montarReferencias, verificarTese, CONFIG,
   };
   if (typeof module !== "undefined" && module.exports) module.exports = api;
   else raiz.Nucleo = api;
