@@ -13,11 +13,6 @@ A correspondência com o backend está em `docs/contrato-interface.md`.
 
 ## Versão online
 
-Página privada em https://claude.ai/artifact/58CuCxJuv7zo79EuJzozHC (só o dono vê
-até compartilhar). É gerada por `scripts/gerar_prototipo_online.py`, que troca o
-logotipo oficial por uma marca neutra e usa o download da hospedagem no
-"Exportar a conversa". Atualizações: editar `index.html`, gerar e republicar no
-mesmo endereço.
-
-Não enviar voto real não publicado para a versão online: ela fica fora da rede do
-Tribunal (documento 01, seção 8).
+O endereço que hospedava este protótipo passou a hospedar a demonstração com o
+Claude (`frontend/demo/`). `scripts/gerar_prototipo_online.py` continua gerando a
+versão só com dados simulados, se for preciso.

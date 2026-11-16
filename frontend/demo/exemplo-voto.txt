@@ -1,0 +1,58 @@
+DOCUMENTO FICTÍCIO PARA DEMONSTRAÇÃO — nomes, município e número de processo inventados.
+
+PROCESSO TCE-PE Nº 99000003-1
+MODALIDADE: AUDITORIA ESPECIAL
+TIPO: CONFORMIDADE
+EXERCÍCIOS: 2024 e 2025
+UNIDADE JURISDICIONADA: Secretaria de Saúde do Município de Vila Serena
+INTERESSADO: Fulano de Tal, Secretário de Saúde
+RELATOR: Conselheiro Ciclano Exemplo
+ÓRGÃO JULGADOR: PRIMEIRA CÂMARA
+
+RELATÓRIO
+
+Trata-se de Auditoria Especial de Conformidade realizada na Secretaria de Saúde do Município de Vila Serena, com o objetivo de avaliar as condições de armazenamento e o controle de estoque de vacinas na rede municipal de imunização, nos exercícios de 2024 e 2025.
+
+A equipe de auditoria inspecionou as doze salas de vacina do município e apontou duas ocorrências no Relatório de Auditoria: (i) uso de refrigeradores domésticos para armazenamento de vacinas em sete salas, sem controle contínuo de temperatura; e (ii) ausência de registro de entradas e saídas de imunobiológicos no sistema de informação, o que impediu conciliar o estoque físico com o registrado.
+
+Notificado, o Secretário de Saúde, Sr. Fulano de Tal, apresentou defesa. Informou que adquiriu cinco câmaras refrigeradas científicas durante a auditoria e juntou plano de ação para substituir os equipamentos restantes até o fim de 2025. Quanto ao estoque, alegou falta de pessoal treinado.
+O Ministério Público de Contas, em parecer, opinou pela regularidade com ressalvas do objeto da auditoria, com determinações, por considerar que as providências adotadas no curso da fiscalização demonstram boa-fé e reduzem o risco à população.
+
+É o relatório.
+
+VOTO DO RELATOR
+
+1. Armazenamento de vacinas em refrigeradores domésticos
+
+A Resolução RDC ANVISA nº 197/2017 exige que os serviços de vacinação mantenham equipamento de refrigeração exclusivo para imunobiológicos, com monitoramento contínuo de temperatura. O uso de geladeiras domésticas, sem registro diário de temperatura, expõe as vacinas a variações térmicas que podem comprometer sua eficácia e, por isso, contraria a norma sanitária.
+
+A aquisição de câmaras refrigeradas durante a auditoria e o plano de ação apresentado demonstram a adoção de providências corretivas. Conforme entendimento desta Corte no Acórdão T.C. nº 9999/2025 (fictício), a correção da falha no curso da fiscalização afasta a aplicação de multa, sem prejuízo de determinação para concluir a substituição dos equipamentos.
+
+2. Ausência de controle de estoque de imunobiológicos
+
+A falta de registro das movimentações de vacinas no sistema de informação impede a rastreabilidade dos lotes e a conciliação entre o estoque físico e o registrado. O controle de estoque é dever do gestor da rede de frio e não pode ser afastado pela alegada falta de pessoal, que não foi comprovada nos autos. A falha enseja ressalva e determinação, mas não compromete, por si só, a regularidade do objeto, porque não houve perda de doses demonstrada.
+EMENTA: AUDITORIA ESPECIAL. CONFORMIDADE. SAÚDE. VACINAÇÃO. REDE DE FRIO. CONTROLE DE ESTOQUE. REGULARIDADE COM RESSALVAS.
+I. CASO EM EXAME
+1. Auditoria Especial de Conformidade realizada na Secretaria de Saúde de município, nos exercícios de 2024 e 2025, sobre armazenamento e controle de estoque de vacinas.
+II. RAZÕES DE DECIDIR
+2. O armazenamento de vacinas em refrigeradores domésticos, sem monitoramento contínuo de temperatura, contraria a Resolução RDC ANVISA nº 197/2017.
+3. A correção da falha no curso da fiscalização afasta a aplicação de multa.
+4. A ausência de registro das movimentações de imunobiológicos impede a rastreabilidade dos lotes e enseja ressalva.
+III. DISPOSITIVO
+5. Julgamento pela regularidade com ressalvas do objeto da Auditoria Especial, com expedição de determinações.
+IV. TESE DE JULGAMENTO
+6. O armazenamento de vacinas em refrigeradores domésticos, sem monitoramento contínuo de temperatura, contraria a Resolução RDC ANVISA nº 197/2017.
+7. A correção de falha no curso da fiscalização pode afastar a aplicação de multa, sem prejuízo de determinações.
+
+Ante o exposto, VOTO pelo que segue:
+
+JULGAR REGULAR COM RESSALVAS o objeto da presente Auditoria Especial de Conformidade, realizada na Secretaria de Saúde do Município de Vila Serena, relativa aos exercícios de 2024 e 2025.
+
+DETERMINAR ao atual Secretário de Saúde, ou a quem o suceder, que:
+a) conclua, em até 180 dias, a substituição dos refrigeradores domésticos por equipamentos exclusivos para imunobiológicos, com monitoramento contínuo de temperatura;
+b) implante, em até 90 dias, o registro de todas as entradas e saídas de imunobiológicos no sistema de informação.
+
+É como voto.
+
+RESULTADO DO JULGAMENTO
+Acompanharam o voto do Relator os demais Conselheiros presentes. Decisão unânime.

@@ -30,8 +30,7 @@ def ev(trecho: str, pagina: int) -> Evidencia:
     return Evidencia(trecho=trecho, pagina=pagina)
 
 
-@pytest.fixture
-def ficha() -> Ficha:
+def criar_ficha() -> Ficha:
     return Ficha(
         processo=Processo(
             numero="99000001-0",
@@ -60,3 +59,8 @@ def ficha() -> Ficha:
             evidencia=ev("JULGAR regular com ressalvas o objeto da presente Auditoria Especial", 3),
         ),
     )
+
+
+@pytest.fixture
+def ficha() -> Ficha:
+    return criar_ficha()

@@ -47,6 +47,7 @@ class Processo(Base):
     relator: str | None = None
     unidade_jurisdicionada: str | None = None
     exercicios: list[int] = []
+    objeto: str | None = None  # objeto do processo, base do caso em exame
     evidencia: Evidencia | None = None
 
 

@@ -22,8 +22,10 @@ estruturada e conferida por código. Detalhes em `docs/` e em `CLAUDE.md`.
 | `tesauro/` leitura SKOS, índice lexical, validação de IDs, ordem amplo→específico | feito (busca vetorial pendente) |
 | `harness/` máquina de estados e roteador escolha × pergunta | feito |
 | `modelo/gateway.py` interface do gateway + implementação falsa para testes | feito (provedor real pendente, P5) |
-| Etapas com modelo (extração, teses, ranqueamento, redação, alerta, conversa) | próximo passo |
-| Frontend | protótipo navegável em `frontend/prototipo/` (dados simulados); React na Fase 3 |
+| Etapas com modelo no backend (via gateway) | próximo passo (Fase 2) |
+| Prompts por etapa em `backend/app/prompts/` | feito (v0.1, ainda sem conjunto de avaliação) |
+| Demonstração online com Claude (`frontend/demo/`) | feita: lê o voto real e percorre o fluxo inteiro; ver `frontend/demo/README.md` |
+| Frontend definitivo | React na Fase 3; protótipo de referência em `frontend/prototipo/` |
 
 ## Como rodar
 

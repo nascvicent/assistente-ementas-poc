@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Assistente de Ementas · demonstração</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600&family=Literata:opsz,wght@7..72,400;7..72,600&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --vermelho:#C1423E; --amarelo:#FFB300; --verde:#00A94A; --azul:#2F55A4;
+  --fundo:#FFFFFF; --lado:#F6F6F7; --sup:#FFFFFF; --sup2:#F1F1F3; --tinta:#1B1B1D; --suave:#6E6E76; --linha:#E6E6E9;
+  --acao:#1B1B1D; --acao-txt:#FFFFFF; --marca:#FFE7A3;
+  --ui:"Geist","Helvetica Neue",Helvetica,Arial,sans-serif;
+  --doc:"Literata",Georgia,"Times New Roman",serif;
+}
+[data-theme="dark"]{
+  --azul:#5F8BEA;
+  --fundo:#1F2023; --lado:#18191B; --sup:#26272B; --sup2:#2C2D32; --tinta:#EDEDEF; --suave:#9C9DA6; --linha:#34353B;
+  --acao:#EDEDEF; --acao-txt:#18191B; --marca:#5C4708;
+}
+*{box-sizing:border-box}
+html{font-size:15px}
+body{margin:0;background:var(--fundo);color:var(--tinta);font-family:var(--ui);line-height:1.5;height:100vh;overflow:hidden;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:2px solid var(--tinta);outline-offset:2px;border-radius:4px}
+.so-claro{display:block}.so-escuro{display:none}
+[data-theme="dark"] .so-claro{display:none}[data-theme="dark"] .so-escuro{display:block}
+.app{display:grid;grid-template-columns:248px minmax(0,1fr) 430px;height:100vh}
+
+/* barra lateral */
+.lado{background:var(--lado);display:flex;flex-direction:column;min-height:0}
+.marca{padding:20px 18px 6px}
+.marca svg{width:34px;height:34px}
+.marca h1{font-weight:600;font-size:.95rem;margin:16px 0 0;letter-spacing:-.01em}
+.marca p{margin:0;color:var(--suave);font-size:.8rem}
+.nova{margin:14px 10px 6px;padding:7px 10px;border:0;background:none;border-radius:6px;text-align:left;font-weight:500;display:flex;gap:9px;align-items:center}
+.nova:hover{background:var(--sup2)}
+.hist{flex:1;overflow:auto;padding:0 10px 12px}
+.hist h2{font-size:.76rem;font-weight:400;color:var(--suave);margin:16px 10px 4px}
+.hist button{display:block;width:100%;text-align:left;border:0;background:none;padding:6px 10px;border-radius:6px}
+.hist button:hover,.hist button.ativa{background:var(--sup2)}
+.hist b{display:block;font-weight:400;font-size:.9rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hist span{font-size:.76rem;color:var(--suave)}
+.pe{padding:10px 12px 14px;display:flex;align-items:center;gap:4px;font-size:.82rem}
+.pe .quem{flex:1;color:var(--suave);padding-left:8px}
+.mini{border:0;background:none;border-radius:6px;padding:4px 8px;font-size:.82rem;color:var(--suave)}
+.mini:hover{background:var(--sup2);color:var(--tinta)}
+
+/* centro */
+.centro{display:flex;flex-direction:column;min-width:0;min-height:0}
+.trilha{padding:18px 32px 14px;border-bottom:1px solid var(--linha)}
+.trilha>div{max-width:720px;margin:0 auto}
+.barra{position:relative;height:3px;border-radius:3px;background:linear-gradient(90deg,var(--vermelho),var(--amarelo) 34%,var(--verde) 67%,var(--azul))}
+.barra i{position:absolute;right:0;top:0;bottom:0;background:var(--linha);border-radius:0 3px 3px 0;transition:width .5s cubic-bezier(.2,.7,.2,1)}
+.barra svg{position:absolute;top:-7px;width:17px;height:17px;margin-left:-8px;transition:left .5s cubic-bezier(.2,.7,.2,1)}
+.trilha ol{display:grid;grid-template-columns:repeat(7,1fr);margin:9px 0 0;padding:0;list-style:none}
+.passo{font-size:.78rem;color:var(--suave);text-align:center;white-space:nowrap}
+.passo.feito{color:var(--tinta)}
+.passo.agora{color:var(--tinta);font-weight:600}
+.fio{flex:1;overflow:auto;padding:30px 32px 10px;scroll-behavior:smooth}
+.col{max-width:720px;margin:0 auto}
+.vazio{margin:11vh 0 0}
+.vazio h2{font-weight:600;font-size:1.7rem;line-height:1.2;letter-spacing:-.025em;margin:0 0 8px}
+.vazio p{color:var(--suave);margin:0 0 26px;max-width:54ch}
+.solta{border:1px dashed var(--linha);border-radius:12px;padding:22px}
+.solta.sobre{border-color:var(--tinta);background:var(--sup2)}
+.solta small{display:block;color:var(--suave);margin-top:12px;font-size:.8rem}
+.btn{background:var(--acao);color:var(--acao-txt);border:1px solid var(--acao);border-radius:8px;padding:8px 14px;font-weight:500}
+.btn:hover{opacity:.86}
+.btn.sec{background:none;color:var(--tinta);border-color:var(--linha)}
+.btn.sec:hover{opacity:1;background:var(--sup2)}
+.acoes{display:flex;gap:8px;flex-wrap:wrap}
+
+.msg{margin:0 0 26px;animation:entra .22s ease-out}
+@keyframes entra{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.msg{animation:none}.fio{scroll-behavior:auto}.barra i,.barra svg{transition:none}}
+.bot{display:grid;grid-template-columns:26px 1fr;gap:14px}
+.bot>span svg{margin-top:5px;width:22px;height:22px}
+.bot h3{font-weight:600;font-size:1rem;margin:0 0 6px;letter-spacing:-.01em}
+.bot p{margin:0 0 10px}
+.eu{display:flex;justify-content:flex-end}
+.eu div{background:var(--sup2);border-radius:16px;padding:7px 14px;max-width:80%}
+.pensa{color:var(--suave);font-size:.88rem;padding-top:3px}
+.pensa ul{margin:0;padding:0}
+.pensa li{list-style:none;margin:3px 0;display:flex;gap:10px;align-items:center}
+.pensa i{width:6px;height:6px;border-radius:50%;background:var(--amarelo);flex:none}
+.pensa li.ok i{background:var(--suave);opacity:.5}
+table{border-collapse:collapse;width:100%;font-size:.9rem;margin:4px 0 12px}
+th,td{text-align:left;padding:7px 12px 7px 0;border-bottom:1px solid var(--linha);vertical-align:top}
+tr:last-child th,tr:last-child td{border-bottom:0}
+th{font-weight:400;color:var(--suave);width:34%}
+.pg{font-size:.78rem;color:var(--suave);margin-left:6px;white-space:nowrap;border-bottom:1px dotted var(--suave)}
+.ops{margin:12px 0 6px;border:1px solid var(--linha);border-radius:10px;overflow:hidden}
+.op{display:grid;grid-template-columns:22px 1fr;gap:12px;width:100%;text-align:left;border:0;border-top:1px solid var(--linha);background:none;padding:12px 14px;position:relative}
+.op:first-child{border-top:0}
+.op:hover:not(:disabled){background:var(--sup2)}
+.op:disabled{cursor:default;color:var(--suave)}
+.op.sel{color:var(--tinta);background:var(--sup2)}
+.op.sel::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--tinta)}
+.op .n{font-size:.82rem;color:var(--suave);font-variant-numeric:tabular-nums;padding-top:1px}
+.op.sel .n{color:var(--tinta);font-weight:600}
+.op b{font-weight:500}
+.op small{display:block;color:var(--suave);margin-top:2px;font-size:.84rem}
+.mais{display:block;font-size:.78rem;color:var(--suave);margin-top:5px}
+.nota{font-size:.82rem;color:var(--suave)}
+.alerta{border-left:3px solid var(--amarelo);padding:2px 0 2px 14px;margin:12px 0 16px}
+.alerta b{display:block;font-weight:600;margin-bottom:2px}
+.passou{font-size:.88rem;color:var(--suave)}
+.passou ul{margin:6px 0 0;padding:0;list-style:none}
+.passou li{margin:3px 0;padding-left:22px;position:relative}
+.passou li::before{content:"";position:absolute;left:3px;top:.42em;width:9px;height:5px;border-left:1.6px solid var(--verde);border-bottom:1.6px solid var(--verde);transform:rotate(-45deg)}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.chip{border:1px solid var(--linha);background:none;border-radius:20px;padding:4px 12px;font-size:.82rem;color:var(--suave)}
+.chip:hover{color:var(--tinta);border-color:var(--suave)}
+
+.caixa{padding:8px 32px 14px}
+.caixa form{max-width:720px;margin:0 auto;display:flex;gap:8px;background:var(--sup);border:1px solid var(--linha);border-radius:14px;padding:7px 7px 7px 16px}
+[data-theme="dark"] .caixa form{background:var(--sup)}
+.caixa form:focus-within{border-color:var(--suave)}
+.caixa input{flex:1;border:0;background:none;font:inherit;color:inherit;min-width:0;outline:none}
+.caixa input::placeholder{color:var(--suave)}
+.caixa p{max-width:720px;margin:8px auto 0;font-size:.74rem;color:var(--suave);text-align:center}
+
+/* painel */
+.painel{background:var(--fundo);border-left:1px solid var(--linha);display:flex;flex-direction:column;min-height:0}
+.abas{display:flex;gap:2px;padding:14px 16px 10px;align-items:center}
+.abas [data-aba]{border:0;background:none;padding:5px 11px;border-radius:6px;color:var(--suave);font-weight:500;font-size:.9rem}
+.abas [data-aba]:hover{color:var(--tinta)}
+.abas [data-aba][aria-selected="true"]{color:var(--tinta);background:var(--sup2)}
+.abas .copiar{margin-left:auto}
+.conteudo{flex:1;overflow:auto;padding:14px 26px 30px}
+.folha{font-family:var(--doc);font-size:1rem;line-height:1.65}
+.folha .cab{font-weight:600;margin:0 0 16px;letter-spacing:.01em}
+.folha h4{font-family:var(--doc);font-size:1rem;font-weight:600;margin:18px 0 4px}
+.folha p{margin:0 0 8px}
+.folha .novo{background:var(--marca);box-shadow:0 0 0 2px var(--marca);border-radius:1px}
+.folha .falta{color:var(--suave);font-family:var(--ui);font-size:.86rem}
+.reg{font-size:.82rem}
+.reg div{display:grid;grid-template-columns:44px 84px 1fr;gap:10px;padding:5px 0}
+.reg time{color:var(--suave);font-variant-numeric:tabular-nums}
+.reg em{font-style:normal;color:var(--suave)}
+.reg .escolha em,.reg .escolha span{color:var(--tinta);font-weight:500}
+.rodape-proto{font-size:.74rem;color:var(--suave);padding:0 26px 14px}
+.so-estreito{display:none}
+
+@media (max-width:1180px){
+  .app{grid-template-columns:232px minmax(0,1fr)}
+  .painel{position:fixed;right:0;top:0;bottom:0;width:min(430px,100vw);transform:translateX(100%);transition:transform .2s;z-index:5;box-shadow:-16px 0 48px -24px rgba(0,0,0,.6)}
+  .painel.aberto{transform:none}
+  .so-estreito{display:inline-block}
+}
+@media (max-width:760px){
+  .app{grid-template-columns:minmax(0,1fr)}
+  .lado{display:none}
+  .trilha,.fio,.caixa{padding-left:16px;padding-right:16px}
+  .passo{font-size:0}.passo.agora{font-size:.76rem}
+  .vazio h2{font-size:1.4rem}
+}
+
+/* demonstração */
+.ev{font-size:.74rem;margin-left:6px;white-space:nowrap}
+.ev.ok{color:var(--verde)}.ev.div{color:#B07A00}.ev.nao{color:var(--vermelho);font-weight:600}
+[data-theme="dark"] .ev.div{color:var(--amarelo)}
+.sigilo{display:flex;gap:10px;align-items:flex-start;font-size:.86rem;margin:0 0 16px;padding:10px 12px;border-radius:8px;background:var(--sup2)}
+.sigilo input{margin-top:3px}
+.cola{width:100%;min-height:160px;margin-top:12px;font:inherit;font-size:.86rem;border:1px solid var(--linha);border-radius:8px;padding:10px;background:var(--sup);color:var(--tinta)}
+.erro{border-left:3px solid var(--vermelho);padding:2px 0 2px 14px;margin:8px 0 12px}
+.erro b{display:block;font-weight:600}
+.alerta.alta{border-left-color:var(--vermelho)}
+.alerta small{display:block;color:var(--suave);font-size:.8rem;margin-top:2px}
+.aviso-op{display:block;font-size:.78rem;color:var(--vermelho);margin-top:4px}
+.fora{display:inline-block;font-size:.72rem;border:1px solid var(--amarelo);color:var(--tinta);border-radius:10px;padding:0 7px;margin-left:6px;vertical-align:1px}
+.ciencia{display:flex;gap:8px;align-items:center;font-size:.86rem;margin:12px 0 0}
+.parar{margin-top:6px}
+.btn:disabled{opacity:.4;cursor:default}
+.folha .ad{color:var(--vermelho)}
+.lista-oc td,.lista-oc th{font-size:.84rem}
+
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="lado" aria-label="Conversas">
+    <div class="marca">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><polygon fill="#FFB300" points="12,0 13.6,5.9 18,1.6 16.5,7.5 22.4,6 18.1,10.4 24,12 18.1,13.6 22.4,18 16.5,16.5 18,22.4 13.6,18.1 12,24 10.4,18.1 6,22.4 7.5,16.5 1.6,18 5.9,13.6 0,12 5.9,10.4 1.6,6 7.5,7.5 6,1.6 10.4,5.9"/></svg>
+      <h1>Assistente de Ementas</h1>
+      <p>Demonstração com Claude</p>
+    </div>
+    <button class="nova" id="nova"><svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M7 1v12M1 7h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>Nova ementa</button>
+    <nav class="hist">
+      <h2>Esta sessão</h2>
+      <button class="ativa" id="atual"><b id="atualNome">Nova ementa</b><span id="atualSit">Aguardando o voto</span></button>
+    </nav>
+    <div class="pe">
+      <span class="quem">Usuário</span>
+      <button class="mini" id="menor" aria-label="Diminuir a letra">A−</button>
+      <button class="mini" id="maior" aria-label="Aumentar a letra">A+</button>
+      <button class="mini" id="tema">Escuro</button>
+    </div>
+  </aside>
+
+  <main class="centro">
+    <div class="trilha"><div><div class="barra"><i id="resto"></i><span id="sol"></span></div><ol id="trilha"></ol></div></div>
+    <div class="fio" id="fio"><div class="col" id="col"></div></div>
+    <div class="caixa">
+      <form id="form" autocomplete="off">
+        <input id="txt" aria-label="Mensagem" placeholder="Envie o voto para começar">
+        <button type="button" class="btn sec so-estreito" id="abrePainel">Ementa</button>
+        <button class="btn" type="submit">Enviar</button>
+      </form>
+      <p>Demonstração: o conteúdo é gerado com auxílio de IA e deve ser revisado. Use apenas votos fictícios ou já publicados.</p>
+    </div>
+  </main>
+
+  <aside class="painel" id="painel" aria-label="Ementa em construção">
+    <div class="abas" role="tablist">
+      <button role="tab" aria-selected="true" data-aba="ementa">Ementa</button>
+      <button role="tab" aria-selected="false" data-aba="ficha">Ficha</button>
+      <button role="tab" aria-selected="false" data-aba="registro">Registro</button>
+      <button role="tab" aria-selected="false" data-aba="gabarito" id="abaGabarito" hidden>Publicada</button>
+      <button class="mini copiar" id="copiar">Copiar</button>
+      <button class="mini copiar so-estreito" id="fechaPainel" style="margin-left:6px">Fechar</button>
+    </div>
+    <div class="conteudo" id="conteudo"></div>
+  </aside>
+</div>
+<input type="file" id="arq" accept=".pdf,.docx,.odt,.txt" hidden>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="nucleo.js"></script>
+<script src="leitura.js"></script>
+<script src="prompts.js"></script>
+<script src="exemplo.js"></script>
+<script src="fluxo.js"></script>
+</body>
+</html>
