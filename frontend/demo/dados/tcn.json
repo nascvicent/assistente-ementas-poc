@@ -1,9 +1,7 @@
 {
- "versao": "20261117T134214Z",
- "fonte": "https://tesauro.irbcontas.org.br/vocab/services.php (exportação de 17/11/2026)",
- "avisos": [
-  "exportação incompleta: 74 termo(s) com filhos ainda não baixados"
- ],
+ "versao": "20261117T134909Z",
+ "fonte": "https://tesauro.irbcontas.org.br/vocab/services.php (exportação completa de 17/11/2026)",
+ "avisos": [],
  "termos": {
   "1": {
    "id": "1",
@@ -774,6 +772,19 @@
    "tr": [],
    "meta": false
   },
+  "1025": {
+   "id": "1025",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1025",
+   "rotulo": "Leilão",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1138"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "1026": {
    "id": "1026",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1026",
@@ -958,6 +969,42 @@
    "tr": [],
    "meta": false
   },
+  "105": {
+   "id": "105",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=105",
+   "rotulo": "IPTU",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "2500"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "107": {
+   "id": "107",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=107",
+   "rotulo": "Adicional",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1434"
+   ],
+   "te": [
+    "109",
+    "112",
+    "186",
+    "1877",
+    "189",
+    "3243",
+    "415285",
+    "87",
+    "96"
+   ],
+   "tr": [],
+   "meta": false
+  },
   "1081": {
    "id": "1081",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1081",
@@ -979,6 +1026,19 @@
    "nota_escopo": null,
    "tg": [
     "17"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "109": {
+   "id": "109",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=109",
+   "rotulo": "Adicional noturno",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "107"
    ],
    "te": [],
    "tr": [],
@@ -1227,6 +1287,19 @@
    "tr": [],
    "meta": false
   },
+  "112": {
+   "id": "112",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=112",
+   "rotulo": "Adicional por serviço extraordinário",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "107"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "1120": {
    "id": "1120",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1120",
@@ -1299,6 +1372,26 @@
    "tg": [
     "17"
    ],
+   "te": [
+    "3022",
+    "415105",
+    "415111",
+    "415179",
+    "415399",
+    "415774"
+   ],
+   "tr": [],
+   "meta": false
+  },
+  "113": {
+   "id": "113",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=113",
+   "rotulo": "IPI",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "164"
+   ],
    "te": [],
    "tr": [],
    "meta": false
@@ -1313,6 +1406,48 @@
     "17"
    ],
    "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "1132": {
+   "id": "1132",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1132",
+   "rotulo": "Pregão presencial",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1134"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "1133": {
+   "id": "1133",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1133",
+   "rotulo": "Pregão eletrônico",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1134"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "1134": {
+   "id": "1134",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1134",
+   "rotulo": "Pregão",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1138"
+   ],
+   "te": [
+    "1132",
+    "1133"
+   ],
    "tr": [],
    "meta": false
   },
@@ -1339,7 +1474,15 @@
    "tg": [
     "17"
    ],
-   "te": [],
+   "te": [
+    "1025",
+    "1134",
+    "1507",
+    "1740",
+    "440",
+    "517",
+    "521"
+   ],
    "tr": [],
    "meta": false
   },
@@ -1613,6 +1756,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "1479",
     "358",
     "12"
    ],
@@ -1708,7 +1852,9 @@
     "1672",
     "15"
    ],
-   "te": [],
+   "te": [
+    "415116"
+   ],
    "tr": [],
    "meta": false
   },
@@ -1774,6 +1920,19 @@
    "nota_escopo": null,
    "tg": [
     "10"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "119": {
+   "id": "119",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=119",
+   "rotulo": "IOF",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "164"
    ],
    "te": [],
    "tr": [],
@@ -2199,6 +2358,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "824",
     "15",
     "17"
    ],
@@ -2254,6 +2414,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "512",
     "12"
    ],
    "te": [],
@@ -2491,6 +2652,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "2610",
     "2",
     "15",
     "3"
@@ -2574,6 +2736,93 @@
     "236",
     "415"
    ],
+   "te": [
+    "1263",
+    "1264",
+    "1265",
+    "1266",
+    "3165"
+   ],
+   "tr": [],
+   "meta": false
+  },
+  "1263": {
+   "id": "1263",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1263",
+   "rotulo": "Pensão civil",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1261"
+   ],
+   "te": [
+    "1268",
+    "1269"
+   ],
+   "tr": [],
+   "meta": false
+  },
+  "1264": {
+   "id": "1264",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1264",
+   "rotulo": "Pensão especial",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1261"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "1265": {
+   "id": "1265",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1265",
+   "rotulo": "Pensão militar",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1261"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "1266": {
+   "id": "1266",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1266",
+   "rotulo": "Pensão previdenciária",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1261"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "1268": {
+   "id": "1268",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1268",
+   "rotulo": "Pensão temporária",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1263"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "1269": {
+   "id": "1269",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1269",
+   "rotulo": "Pensão vitalícia",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1263"
+   ],
    "te": [],
    "tr": [],
    "meta": false
@@ -2647,6 +2896,19 @@
    "te": [
     "415206"
    ],
+   "tr": [],
+   "meta": false
+  },
+  "128": {
+   "id": "128",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=128",
+   "rotulo": "Instrução normativa",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "330"
+   ],
+   "te": [],
    "tr": [],
    "meta": false
   },
@@ -2788,7 +3050,9 @@
     "1293",
     "15"
    ],
-   "te": [],
+   "te": [
+    "415265"
+   ],
    "tr": [],
    "meta": false
   },
@@ -3735,6 +3999,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "330",
     "2",
     "10"
    ],
@@ -3845,8 +4110,22 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "2610",
     "2",
     "3"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "1343": {
+   "id": "1343",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1343",
+   "rotulo": "Previdência complementar aberta",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1349"
    ],
    "te": [],
    "tr": [],
@@ -3861,7 +4140,38 @@
    "tg": [
     "648"
    ],
+   "te": [
+    "1357"
+   ],
+   "tr": [],
+   "meta": false
+  },
+  "1346": {
+   "id": "1346",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1346",
+   "rotulo": "Regime Próprio de Previdência Social",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1357"
+   ],
    "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "1349": {
+   "id": "1349",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1349",
+   "rotulo": "Regime da previdência complementar",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1357"
+   ],
+   "te": [
+    "1343",
+    "1356"
+   ],
    "tr": [],
    "meta": false
   },
@@ -3876,6 +4186,49 @@
     "3"
    ],
    "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "1353": {
+   "id": "1353",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1353",
+   "rotulo": "Regime Geral de Previdência Social",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1357"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "1356": {
+   "id": "1356",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1356",
+   "rotulo": "Previdência complementar fechada",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1349"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "1357": {
+   "id": "1357",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1357",
+   "rotulo": "Regime previdenciário",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1345"
+   ],
+   "te": [
+    "1346",
+    "1349",
+    "1353"
+   ],
    "tr": [],
    "meta": false
   },
@@ -4176,6 +4529,19 @@
    "tr": [],
    "meta": false
   },
+  "1406": {
+   "id": "1406",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1406",
+   "rotulo": "Viúvo",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "713"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "1408": {
    "id": "1408",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1408",
@@ -4309,6 +4675,19 @@
    "tr": [],
    "meta": false
   },
+  "1428": {
+   "id": "1428",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1428",
+   "rotulo": "VPNI",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1432"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "1431": {
    "id": "1431",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1431",
@@ -4334,7 +4713,9 @@
    "tg": [
     "3027"
    ],
-   "te": [],
+   "te": [
+    "1428"
+   ],
    "tr": [],
    "meta": false
   },
@@ -4362,7 +4743,13 @@
    "tg": [
     "3027"
    ],
-   "te": [],
+   "te": [
+    "107",
+    "220",
+    "338",
+    "341",
+    "627"
+   ],
    "tr": [],
    "meta": false
   },
@@ -4471,6 +4858,19 @@
    "tr": [],
    "meta": false
   },
+  "145": {
+   "id": "145",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=145",
+   "rotulo": "Indústria ferroviária",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "148"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "1450": {
    "id": "1450",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1450",
@@ -4484,6 +4884,19 @@
    "tr": [],
    "meta": false
   },
+  "1451": {
+   "id": "1451",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1451",
+   "rotulo": "Turismo rural",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1456"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "1453": {
    "id": "1453",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1453",
@@ -4492,6 +4905,19 @@
    "nota_escopo": null,
    "tg": [
     "10"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "1454": {
+   "id": "1454",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1454",
+   "rotulo": "Turismo cultural",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1456"
    ],
    "te": [],
    "tr": [],
@@ -4520,7 +4946,11 @@
    "tg": [
     "18"
    ],
-   "te": [],
+   "te": [
+    "1451",
+    "1454",
+    "415694"
+   ],
    "tr": [],
    "meta": false
   },
@@ -4564,6 +4994,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "148",
     "4"
    ],
    "te": [],
@@ -4645,6 +5076,22 @@
    "tg": [
     "1490"
    ],
+   "te": [
+    "1467",
+    "1477"
+   ],
+   "tr": [],
+   "meta": false
+  },
+  "1467": {
+   "id": "1467",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1467",
+   "rotulo": "Transporte rodoviário",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1466"
+   ],
    "te": [],
    "tr": [],
    "meta": false
@@ -4719,6 +5166,32 @@
    "tr": [],
    "meta": false
   },
+  "1475": {
+   "id": "1475",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1475",
+   "rotulo": "Transporte fluvial",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1483"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "1477": {
+   "id": "1477",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1477",
+   "rotulo": "Transporte ferroviário",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1466"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "1478": {
    "id": "1478",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1478",
@@ -4742,7 +5215,11 @@
    "tg": [
     "1490"
    ],
-   "te": [],
+   "te": [
+    "1173",
+    "2015",
+    "364"
+   ],
    "tr": [],
    "meta": false
   },
@@ -4755,7 +5232,10 @@
    "tg": [
     "18"
    ],
-   "te": [],
+   "te": [
+    "145",
+    "146"
+   ],
    "tr": [],
    "meta": false
   },
@@ -4795,7 +5275,9 @@
    "tg": [
     "1490"
    ],
-   "te": [],
+   "te": [
+    "1475"
+   ],
    "tr": [],
    "meta": false
   },
@@ -5179,6 +5661,19 @@
    "tr": [],
    "meta": true
   },
+  "1500": {
+   "id": "1500",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1500",
+   "rotulo": "Transferência de capital",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1729"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "1501": {
    "id": "1501",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1501",
@@ -5273,6 +5768,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "1138",
     "17"
    ],
    "te": [],
@@ -5300,6 +5796,21 @@
    "tr": [],
    "meta": false
   },
+  "1510": {
+   "id": "1510",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1510",
+   "rotulo": "Tomada de contas especial",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1512"
+   ],
+   "te": [
+    "415778"
+   ],
+   "tr": [],
+   "meta": false
+  },
   "1512": {
    "id": "1512",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1512",
@@ -5309,7 +5820,10 @@
    "tg": [
     "15"
    ],
-   "te": [],
+   "te": [
+    "1510",
+    "415286"
+   ],
    "tr": [],
    "meta": false
   },
@@ -5373,6 +5887,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "598",
     "9"
    ],
    "te": [],
@@ -5502,6 +6017,20 @@
     "1533",
     "3093"
    ],
+   "tr": [],
+   "meta": false
+  },
+  "1536": {
+   "id": "1536",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1536",
+   "rotulo": "Sociedade de economia mista",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "197",
+    "415572"
+   ],
+   "te": [],
    "tr": [],
    "meta": false
   },
@@ -5828,6 +6357,19 @@
    "tr": [],
    "meta": false
   },
+  "1579": {
+   "id": "1579",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1579",
+   "rotulo": "Risco de auditoria",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1580"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "158": {
    "id": "158",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=158",
@@ -5850,7 +6392,9 @@
    "tg": [
     "15"
    ],
-   "te": [],
+   "te": [
+    "1579"
+   ],
    "tr": [],
    "meta": false
   },
@@ -6083,7 +6627,10 @@
    "tg": [
     "218"
    ],
-   "te": [],
+   "te": [
+    "3088",
+    "415410"
+   ],
    "tr": [],
    "meta": false
   },
@@ -6192,7 +6739,11 @@
    "tg": [
     "1604"
    ],
-   "te": [],
+   "te": [
+    "3145",
+    "415103",
+    "415119"
+   ],
    "tr": [],
    "meta": false
   },
@@ -6215,6 +6766,19 @@
     "3143",
     "3144"
    ],
+   "tr": [],
+   "meta": false
+  },
+  "1608": {
+   "id": "1608",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1608",
+   "rotulo": "Resolução",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "330"
+   ],
+   "te": [],
    "tr": [],
    "meta": false
   },
@@ -6257,6 +6821,21 @@
     "10"
    ],
    "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "1618": {
+   "id": "1618",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1618",
+   "rotulo": "Serviço social autônomo",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "824"
+   ],
+   "te": [
+    "416047"
+   ],
    "tr": [],
    "meta": false
   },
@@ -6389,6 +6968,19 @@
    "tr": [],
    "meta": false
   },
+  "1631": {
+   "id": "1631",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1631",
+   "rotulo": "Senador",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "2892"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "1632": {
    "id": "1632",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1632",
@@ -6452,6 +7044,26 @@
     "1182"
    ],
    "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "164": {
+   "id": "164",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=164",
+   "rotulo": "Imposto federal",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "168"
+   ],
+   "te": [
+    "113",
+    "119",
+    "170",
+    "174",
+    "177",
+    "23"
+   ],
    "tr": [],
    "meta": false
   },
@@ -6662,6 +7274,19 @@
    "tr": [],
    "meta": false
   },
+  "1662": {
+   "id": "1662",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1662",
+   "rotulo": "Regulamento",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "330"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "1663": {
    "id": "1663",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1663",
@@ -6842,7 +7467,11 @@
    "tg": [
     "1457"
    ],
-   "te": [],
+   "te": [
+    "164",
+    "2499",
+    "2500"
+   ],
    "tr": [],
    "meta": false
   },
@@ -7201,6 +7830,21 @@
    "tr": [],
    "meta": true
   },
+  "170": {
+   "id": "170",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=170",
+   "rotulo": "Imposto de renda",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "164"
+   ],
+   "te": [
+    "416206"
+   ],
+   "tr": [],
+   "meta": false
+  },
   "1701": {
    "id": "1701",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1701",
@@ -7266,6 +7910,25 @@
    "nota_escopo": null,
    "tg": [
     "240"
+   ],
+   "te": [
+    "1709",
+    "2740",
+    "3221",
+    "3231",
+    "3232"
+   ],
+   "tr": [],
+   "meta": false
+  },
+  "1709": {
+   "id": "1709",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1709",
+   "rotulo": "Recurso inominado",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1708"
    ],
    "te": [],
    "tr": [],
@@ -7398,7 +8061,10 @@
    "tg": [
     "1731"
    ],
-   "te": [],
+   "te": [
+    "1729",
+    "1730"
+   ],
    "tr": [],
    "meta": false
   },
@@ -7413,6 +8079,39 @@
     "9"
    ],
    "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "1729": {
+   "id": "1729",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1729",
+   "rotulo": "Receita de capital",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1721"
+   ],
+   "te": [
+    "1500",
+    "224",
+    "562"
+   ],
+   "tr": [],
+   "meta": false
+  },
+  "1730": {
+   "id": "1730",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1730",
+   "rotulo": "Receita corrente",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1721"
+   ],
+   "te": [
+    "3238",
+    "415391"
+   ],
    "tr": [],
    "meta": false
   },
@@ -7481,6 +8180,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "1736",
     "9"
    ],
    "te": [],
@@ -7497,7 +8197,9 @@
     "13",
     "17"
    ],
-   "te": [],
+   "te": [
+    "1735"
+   ],
    "tr": [],
    "meta": false
   },
@@ -7515,6 +8217,19 @@
    "tr": [],
    "meta": false
   },
+  "174": {
+   "id": "174",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=174",
+   "rotulo": "Imposto de importação",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "164"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "1740": {
    "id": "1740",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1740",
@@ -7522,6 +8237,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "1138",
     "12"
    ],
    "te": [],
@@ -7655,7 +8371,9 @@
    "tg": [
     "1753"
    ],
-   "te": [],
+   "te": [
+    "416151"
+   ],
    "tr": [],
    "meta": false
   },
@@ -7851,6 +8569,19 @@
    "tr": [],
    "meta": false
   },
+  "177": {
+   "id": "177",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=177",
+   "rotulo": "Imposto de exportação",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "164"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "1770": {
    "id": "1770",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1770",
@@ -7886,7 +8617,9 @@
    "tg": [
     "1778"
    ],
-   "te": [],
+   "te": [
+    "416143"
+   ],
    "tr": [],
    "meta": false
   },
@@ -8027,6 +8760,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "824",
     "15"
    ],
    "te": [],
@@ -8171,6 +8905,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "2608",
     "9"
    ],
    "te": [],
@@ -8199,7 +8934,9 @@
    "tg": [
     "48"
    ],
-   "te": [],
+   "te": [
+    "47"
+   ],
    "tr": [],
    "meta": false
   },
@@ -8278,6 +9015,19 @@
    "nota_escopo": null,
    "tg": [
     "15"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "186": {
+   "id": "186",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=186",
+   "rotulo": "Adicional de insalubridade",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "107"
    ],
    "te": [],
    "tr": [],
@@ -8435,6 +9185,19 @@
    "tr": [],
    "meta": false
   },
+  "1877": {
+   "id": "1877",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1877",
+   "rotulo": "Adicional de qualificação",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "107"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "1879": {
    "id": "1879",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1879",
@@ -8482,6 +9245,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "2610",
     "2"
    ],
    "te": [],
@@ -8528,6 +9292,19 @@
    "tr": [],
    "meta": false
   },
+  "189": {
+   "id": "189",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=189",
+   "rotulo": "Adicional por tempo de serviço",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "107"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "1890": {
    "id": "1890",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1890",
@@ -8548,6 +9325,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "227",
     "17"
    ],
    "te": [],
@@ -8609,6 +9387,19 @@
    "te": [
     "822"
    ],
+   "tr": [],
+   "meta": false
+  },
+  "19": {
+   "id": "19",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=19",
+   "rotulo": "IVVC",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "2500"
+   ],
+   "te": [],
    "tr": [],
    "meta": false
   },
@@ -8738,6 +9529,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "2779",
     "9"
    ],
    "te": [],
@@ -9149,6 +9941,19 @@
    "tr": [],
    "meta": false
   },
+  "1958": {
+   "id": "1958",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1958",
+   "rotulo": "Auditoria externa",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "349"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "1960": {
    "id": "1960",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1960",
@@ -9162,6 +9967,45 @@
    "tr": [],
    "meta": false
   },
+  "1961": {
+   "id": "1961",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1961",
+   "rotulo": "Auditoria contábil",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "349"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "1963": {
+   "id": "1963",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1963",
+   "rotulo": "Auditoria de desempenho",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "349"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "1964": {
+   "id": "1964",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1964",
+   "rotulo": "Auditoria de fraudes",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "349"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "1965": {
    "id": "1965",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1965",
@@ -9169,7 +10013,34 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "349",
     "12"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "1966": {
+   "id": "1966",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1966",
+   "rotulo": "Auditoria de pessoal",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "349"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "1967": {
+   "id": "1967",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1967",
+   "rotulo": "Auditoria de recursos externos",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "349"
    ],
    "te": [],
    "tr": [],
@@ -9182,6 +10053,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "349",
     "6"
    ],
    "te": [],
@@ -9197,6 +10069,91 @@
    "tg": [
     "2401"
    ],
+   "te": [
+    "1536",
+    "357",
+    "415065",
+    "415543",
+    "721",
+    "821"
+   ],
+   "tr": [],
+   "meta": false
+  },
+  "1972": {
+   "id": "1972",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1972",
+   "rotulo": "Auditoria fiscal",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "349"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "1975": {
+   "id": "1975",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1975",
+   "rotulo": "Auditoria integrada",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "349"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "1976": {
+   "id": "1976",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1976",
+   "rotulo": "Auditoria interna",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "349"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "1977": {
+   "id": "1977",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1977",
+   "rotulo": "Auditoria não-programada",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "349"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "1978": {
+   "id": "1978",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1978",
+   "rotulo": "Auditoria patrimonial",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "349"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "1979": {
+   "id": "1979",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1979",
+   "rotulo": "Auditoria piloto",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "349"
+   ],
    "te": [],
    "tr": [],
    "meta": false
@@ -9209,6 +10166,48 @@
    "nota_escopo": null,
    "tg": [
     "10"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "1980": {
+   "id": "1980",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1980",
+   "rotulo": "Auditoria programada",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "349"
+   ],
+   "te": [
+    "1981",
+    "1982"
+   ],
+   "tr": [],
+   "meta": false
+  },
+  "1981": {
+   "id": "1981",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1981",
+   "rotulo": "Auditoria programada especificada",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1980"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "1982": {
+   "id": "1982",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=1982",
+   "rotulo": "Auditoria programada não especificada",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1980"
    ],
    "te": [],
    "tr": [],
@@ -9640,6 +10639,58 @@
    "tr": [],
    "meta": false
   },
+  "2000": {
+   "id": "2000",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=2000",
+   "rotulo": "Balanço consolidado",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "415163"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "2001": {
+   "id": "2001",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=2001",
+   "rotulo": "Balanço de pagamento",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "415163"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "2002": {
+   "id": "2002",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=2002",
+   "rotulo": "Balanço financeiro",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "415163"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "2003": {
+   "id": "2003",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=2003",
+   "rotulo": "Balanço orçamentário",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "415163"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "2004": {
    "id": "2004",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=2004",
@@ -9694,6 +10745,19 @@
    "tr": [],
    "meta": false
   },
+  "2015": {
+   "id": "2015",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=2015",
+   "rotulo": "BRT",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1479"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "2018": {
    "id": "2018",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=2018",
@@ -9701,6 +10765,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "416",
     "9",
     "3"
    ],
@@ -9728,6 +10793,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "416",
     "3"
    ],
    "te": [],
@@ -9755,6 +10821,19 @@
    "nota_escopo": null,
    "tg": [
     "13"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "2024": {
+   "id": "2024",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=2024",
+   "rotulo": "Calúnia",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "2607"
    ],
    "te": [],
    "tr": [],
@@ -9795,6 +10874,19 @@
    "nota_escopo": null,
    "tg": [
     "9"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "2030": {
+   "id": "2030",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=2030",
+   "rotulo": "Cargo isolado",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "429"
    ],
    "te": [],
    "tr": [],
@@ -10534,6 +11626,45 @@
    "tr": [],
    "meta": false
   },
+  "2098": {
+   "id": "2098",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=2098",
+   "rotulo": "Competência em razão da matéria",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "2105"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "2099": {
+   "id": "2099",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=2099",
+   "rotulo": "Competência em razão da pessoa",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "2105"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "2100": {
+   "id": "2100",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=2100",
+   "rotulo": "Competência em razão do valor",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "2105"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "2101": {
    "id": "2101",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=2101",
@@ -10596,7 +11727,13 @@
    "tg": [
     "492"
    ],
-   "te": [],
+   "te": [
+    "2098",
+    "2099",
+    "2100",
+    "495",
+    "497"
+   ],
    "tr": [],
    "meta": false
   },
@@ -11061,7 +12198,12 @@
    "tg": [
     "218"
    ],
-   "te": [],
+   "te": [
+    "2892",
+    "415499",
+    "416078",
+    "533"
+   ],
    "tr": [],
    "meta": false
   },
@@ -11113,7 +12255,9 @@
    "tg": [
     "13"
    ],
-   "te": [],
+   "te": [
+    "2612"
+   ],
    "tr": [],
    "meta": false
   },
@@ -11152,7 +12296,10 @@
    "tg": [
     "13"
    ],
-   "te": [],
+   "te": [
+    "2633",
+    "2634"
+   ],
    "tr": [],
    "meta": false
   },
@@ -11342,6 +12489,19 @@
    "tr": [],
    "meta": false
   },
+  "219": {
+   "id": "219",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=219",
+   "rotulo": "ICMS",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "2499"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "2190": {
    "id": "2190",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=2190",
@@ -11479,7 +12639,8 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
-    "151"
+    "151",
+    "1434"
    ],
    "te": [],
    "tr": [],
@@ -11992,9 +13153,14 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
-    "222"
+    "222",
+    "1729"
    ],
-   "te": [],
+   "te": [
+    "2436",
+    "2669",
+    "651"
+   ],
    "tr": [],
    "meta": false
   },
@@ -12425,7 +13591,10 @@
    "tg": [
     "17"
    ],
-   "te": [],
+   "te": [
+    "1892",
+    "229"
+   ],
    "tr": [],
    "meta": false
   },
@@ -12709,6 +13878,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "227",
     "17"
    ],
    "te": [],
@@ -12840,6 +14010,19 @@
    "nota_escopo": null,
    "tg": [
     "13"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "23": {
+   "id": "23",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=23",
+   "rotulo": "ITR",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "164"
    ],
    "te": [],
    "tr": [],
@@ -14053,6 +15236,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "415106",
     "10"
    ],
    "te": [
@@ -14091,7 +15275,10 @@
    "tg": [
     "17"
    ],
-   "te": [],
+   "te": [
+    "415828",
+    "415829"
+   ],
    "tr": [],
    "meta": false
   },
@@ -14318,6 +15505,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "224",
     "17"
    ],
    "te": [],
@@ -14347,6 +15535,19 @@
    "tg": [
     "10",
     "3"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "244": {
+   "id": "244",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=244",
+   "rotulo": "Habitação rural",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "259"
    ],
    "te": [],
    "tr": [],
@@ -14437,6 +15638,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "2610",
     "2"
    ],
    "te": [],
@@ -14670,6 +15872,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "415217",
     "10"
    ],
    "te": [],
@@ -14683,6 +15886,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "415217",
     "2"
    ],
    "te": [],
@@ -14715,6 +15919,19 @@
    "tg": [
     "10",
     "13"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "2475": {
+   "id": "2475",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=2475",
+   "rotulo": "Contrato verbal",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "415217"
    ],
    "te": [],
    "tr": [],
@@ -14878,6 +16095,19 @@
    "tr": [],
    "meta": false
   },
+  "249": {
+   "id": "249",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=249",
+   "rotulo": "Habitação popular",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "259"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "2490": {
    "id": "2490",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=2490",
@@ -14995,6 +16225,23 @@
    "tr": [],
    "meta": false
   },
+  "2499": {
+   "id": "2499",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=2499",
+   "rotulo": "Imposto estadual",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "168"
+   ],
+   "te": [
+    "219",
+    "27",
+    "98"
+   ],
+   "tr": [],
+   "meta": false
+  },
   "250": {
    "id": "250",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=250",
@@ -15006,6 +16253,24 @@
     "13"
    ],
    "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "2500": {
+   "id": "2500",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=2500",
+   "rotulo": "Imposto municipal",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "168"
+   ],
+   "te": [
+    "105",
+    "19",
+    "36",
+    "45"
+   ],
    "tr": [],
    "meta": false
   },
@@ -15296,6 +16561,19 @@
    "nota_escopo": null,
    "tg": [
     "10"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "2535": {
+   "id": "2535",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=2535",
+   "rotulo": "Injúria",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "2607"
    ],
    "te": [],
    "tr": [],
@@ -15739,6 +17017,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "2610",
     "601"
    ],
    "te": [],
@@ -15752,6 +17031,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "2610",
     "601"
    ],
    "te": [],
@@ -15780,7 +17060,12 @@
    "tg": [
     "16"
    ],
-   "te": [],
+   "te": [
+    "244",
+    "249",
+    "446",
+    "447"
+   ],
    "tr": [],
    "meta": false
   },
@@ -15835,6 +17120,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "2610",
     "3"
    ],
    "te": [],
@@ -15889,7 +17175,10 @@
    "tg": [
     "605"
    ],
-   "te": [],
+   "te": [
+    "2024",
+    "2535"
+   ],
    "tr": [],
    "meta": false
   },
@@ -15902,7 +17191,9 @@
    "tg": [
     "605"
    ],
-   "te": [],
+   "te": [
+    "1837"
+   ],
    "tr": [],
    "meta": false
   },
@@ -15929,7 +17220,17 @@
     "236",
     "415"
    ],
-   "te": [],
+   "te": [
+    "265",
+    "267",
+    "269",
+    "271",
+    "272",
+    "274",
+    "275",
+    "951",
+    "953"
+   ],
    "tr": [],
    "meta": false
   },
@@ -15942,7 +17243,18 @@
    "tg": [
     "605"
    ],
-   "te": [],
+   "te": [
+    "1251",
+    "1342",
+    "1883",
+    "2447",
+    "2587",
+    "2588",
+    "26",
+    "2639",
+    "2949",
+    "525"
+   ],
    "tr": [],
    "meta": false
   },
@@ -15966,6 +17278,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "2173",
     "17",
     "12"
    ],
@@ -16069,6 +17382,71 @@
    "tr": [],
    "meta": false
   },
+  "2624": {
+   "id": "2624",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=2624",
+   "rotulo": "Decisão agravada",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "660"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "2625": {
+   "id": "2625",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=2625",
+   "rotulo": "Decisão embargada",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "660"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "2626": {
+   "id": "2626",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=2626",
+   "rotulo": "Decisão interlocutória",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "660"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "2628": {
+   "id": "2628",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=2628",
+   "rotulo": "Decisão monocrática",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "660"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "2629": {
+   "id": "2629",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=2629",
+   "rotulo": "Decisão terminativa",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "660"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "2630": {
    "id": "2630",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=2630",
@@ -16116,6 +17494,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "2176",
     "10",
     "17"
    ],
@@ -16130,6 +17509,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "2176",
     "10"
    ],
    "te": [],
@@ -16143,6 +17523,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "330",
     "10"
    ],
    "te": [],
@@ -16170,6 +17551,19 @@
    "nota_escopo": null,
    "tg": [
     "3"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "2639": {
+   "id": "2639",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=2639",
+   "rotulo": "Denunciação caluniosa",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "2610"
    ],
    "te": [],
    "tr": [],
@@ -16309,6 +17703,19 @@
    "tr": [],
    "meta": false
   },
+  "265": {
+   "id": "265",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=265",
+   "rotulo": "Aposentadoria compulsória",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "261"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "2650": {
    "id": "2650",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=2650",
@@ -16435,7 +17842,21 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "224",
     "17"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "267": {
+   "id": "267",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=267",
+   "rotulo": "Aposentadoria especial",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "261"
    ],
    "te": [],
    "tr": [],
@@ -16643,6 +18064,19 @@
    "tr": [],
    "meta": false
   },
+  "269": {
+   "id": "269",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=269",
+   "rotulo": "Aposentadoria voluntária",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "261"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "2691": {
    "id": "2691",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=2691",
@@ -16695,6 +18129,37 @@
    "tr": [],
    "meta": false
   },
+  "27": {
+   "id": "27",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=27",
+   "rotulo": "ITCD",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "2499"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "2700": {
+   "id": "2700",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=2700",
+   "rotulo": "Direito administrativo",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "2709"
+   ],
+   "te": [
+    "415212",
+    "415279",
+    "415420",
+    "416168"
+   ],
+   "tr": [],
+   "meta": false
+  },
   "2701": {
    "id": "2701",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=2701",
@@ -16704,7 +18169,12 @@
    "tg": [
     "2661"
    ],
-   "te": [],
+   "te": [
+    "415168",
+    "415287",
+    "416037",
+    "416235"
+   ],
    "tr": [],
    "meta": false
   },
@@ -16721,6 +18191,81 @@
    "tr": [],
    "meta": false
   },
+  "2703": {
+   "id": "2703",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=2703",
+   "rotulo": "Direito constitucional",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "2709"
+   ],
+   "te": [
+    "415947",
+    "415948",
+    "416002",
+    "416009",
+    "416122"
+   ],
+   "tr": [],
+   "meta": false
+  },
+  "2704": {
+   "id": "2704",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=2704",
+   "rotulo": "Direito eleitoral",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "2709"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "2705": {
+   "id": "2705",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=2705",
+   "rotulo": "Direito financeiro",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "2709"
+   ],
+   "te": [
+    "415626"
+   ],
+   "tr": [],
+   "meta": false
+  },
+  "2706": {
+   "id": "2706",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=2706",
+   "rotulo": "Direito penal",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "2709"
+   ],
+   "te": [
+    "416135"
+   ],
+   "tr": [],
+   "meta": false
+  },
+  "2708": {
+   "id": "2708",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=2708",
+   "rotulo": "Direito previdenciário",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "2709"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "2709": {
    "id": "2709",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=2709",
@@ -16730,7 +18275,45 @@
    "tg": [
     "2661"
    ],
+   "te": [
+    "2700",
+    "2703",
+    "2704",
+    "2705",
+    "2706",
+    "2708",
+    "2710",
+    "751"
+   ],
+   "tr": [],
+   "meta": false
+  },
+  "271": {
+   "id": "271",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=271",
+   "rotulo": "Aposentadoria com proventos integrais",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "261"
+   ],
    "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "2710": {
+   "id": "2710",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=2710",
+   "rotulo": "Direito tributário",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "2709"
+   ],
+   "te": [
+    "415668",
+    "416143"
+   ],
    "tr": [],
    "meta": false
   },
@@ -16795,6 +18378,19 @@
    "nota_escopo": null,
    "tg": [
     "3"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "272": {
+   "id": "272",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=272",
+   "rotulo": "Aposentadoria por idade",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "261"
    ],
    "te": [],
    "tr": [],
@@ -16920,6 +18516,65 @@
    "tr": [],
    "meta": false
   },
+  "274": {
+   "id": "274",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=274",
+   "rotulo": "Aposentadoria por invalidez",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "261"
+   ],
+   "te": [
+    "955",
+    "961"
+   ],
+   "tr": [],
+   "meta": false
+  },
+  "2740": {
+   "id": "2740",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=2740",
+   "rotulo": "Embargos",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1708"
+   ],
+   "te": [
+    "2741",
+    "2742",
+    "800"
+   ],
+   "tr": [],
+   "meta": false
+  },
+  "2741": {
+   "id": "2741",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=2741",
+   "rotulo": "Embargos de divergência",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "2740"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "2742": {
+   "id": "2742",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=2742",
+   "rotulo": "Embargos infringentes",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "2740"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "2743": {
    "id": "2743",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=2743",
@@ -16957,6 +18612,19 @@
    "tg": [
     "17",
     "12"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "275": {
+   "id": "275",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=275",
+   "rotulo": "Aposentadoria por tempo de contribuição",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "261"
    ],
    "te": [],
    "tr": [],
@@ -17248,7 +18916,10 @@
    "tg": [
     "17"
    ],
-   "te": [],
+   "te": [
+    "1913",
+    "964"
+   ],
    "tr": [],
    "meta": false
   },
@@ -17611,6 +19282,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "415140",
     "18",
     "17"
    ],
@@ -18280,9 +19952,13 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "217",
     "2424"
    ],
-   "te": [],
+   "te": [
+    "1631",
+    "719"
+   ],
    "tr": [],
    "meta": false
   },
@@ -18433,6 +20109,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "415140",
     "2"
    ],
    "te": [],
@@ -18446,6 +20123,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "328",
     "10"
    ],
    "te": [],
@@ -18677,7 +20355,21 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
-    "605"
+    "605",
+    "2610"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "2954": {
+   "id": "2954",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=2954",
+   "rotulo": "Falsidade documental",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "415366"
    ],
    "te": [],
    "tr": [],
@@ -18815,6 +20507,19 @@
    "tr": [],
    "meta": false
   },
+  "2967": {
+   "id": "2967",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=2967",
+   "rotulo": "Fornecedor exclusivo",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "415977"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "2973": {
    "id": "2973",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=2973",
@@ -18823,6 +20528,19 @@
    "nota_escopo": null,
    "tg": [
     "10"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "2976": {
+   "id": "2976",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=2976",
+   "rotulo": "Fraude fiscal",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "753"
    ],
    "te": [],
    "tr": [],
@@ -19533,6 +21251,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "1129",
     "2"
    ],
    "te": [],
@@ -20234,6 +21953,22 @@
    "tr": [],
    "meta": false
   },
+  "3088": {
+   "id": "3088",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=3088",
+   "rotulo": "Militar",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1599"
+   ],
+   "te": [
+    "415177",
+    "415178"
+   ],
+   "tr": [],
+   "meta": false
+  },
   "309": {
    "id": "309",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=309",
@@ -20538,7 +22273,8 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
-    "592"
+    "592",
+    "3132"
    ],
    "te": [],
    "tr": [],
@@ -20557,6 +22293,19 @@
    "tr": [],
    "meta": false
   },
+  "3131": {
+   "id": "3131",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=3131",
+   "rotulo": "Segurado especial",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "3132"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "3132": {
    "id": "3132",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=3132",
@@ -20566,7 +22315,10 @@
    "tg": [
     "415926"
    ],
-   "te": [],
+   "te": [
+    "3129",
+    "3131"
+   ],
    "tr": [],
    "meta": false
   },
@@ -20684,6 +22436,19 @@
    "nota_escopo": null,
    "tg": [
     "1604"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "3145": {
+   "id": "3145",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=3145",
+   "rotulo": "Responsabilidade objetiva",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1603"
    ],
    "te": [],
    "tr": [],
@@ -20812,6 +22577,19 @@
    "tr": [],
    "meta": false
   },
+  "3165": {
+   "id": "3165",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=3165",
+   "rotulo": "Pensão alimentícia",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1261"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "3166": {
    "id": "3166",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=3166",
@@ -20821,7 +22599,10 @@
    "tg": [
     "415926"
    ],
-   "te": [],
+   "te": [
+    "415702",
+    "416215"
+   ],
    "tr": [],
    "meta": false
   },
@@ -20832,6 +22613,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "415140",
     "18",
     "17"
    ],
@@ -20987,6 +22769,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "330",
     "2"
    ],
    "te": [],
@@ -21331,6 +23114,19 @@
    "tr": [],
    "meta": false
   },
+  "3221": {
+   "id": "3221",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=3221",
+   "rotulo": "Recurso ordinário",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1708"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "3222": {
    "id": "3222",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=3222",
@@ -21466,6 +23262,32 @@
    "tr": [],
    "meta": false
   },
+  "3231": {
+   "id": "3231",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=3231",
+   "rotulo": "Recurso extraordinário",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1708"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "3232": {
+   "id": "3232",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=3232",
+   "rotulo": "Recurso especial",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1708"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "3233": {
    "id": "3233",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=3233",
@@ -21531,6 +23353,19 @@
    "tr": [],
    "meta": false
   },
+  "3238": {
+   "id": "3238",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=3238",
+   "rotulo": "Receita tributária",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1730"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "3239": {
    "id": "3239",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=3239",
@@ -21580,6 +23415,19 @@
    "nota_escopo": null,
    "tg": [
     "12"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "3243": {
+   "id": "3243",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=3243",
+   "rotulo": "Quinquênio",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "107"
    ],
    "te": [],
    "tr": [],
@@ -21844,6 +23692,35 @@
    "tg": [
     "1745"
    ],
+   "te": [
+    "3273",
+    "3274"
+   ],
+   "tr": [],
+   "meta": false
+  },
+  "3273": {
+   "id": "3273",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=3273",
+   "rotulo": "Promoção por antiguidade",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "3270"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "3274": {
+   "id": "3274",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=3274",
+   "rotulo": "Promoção por merecimento",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "3270"
+   ],
    "te": [],
    "tr": [],
    "meta": false
@@ -21856,6 +23733,22 @@
    "nota_escopo": null,
    "tg": [
     "17"
+   ],
+   "te": [
+    "3277",
+    "415289"
+   ],
+   "tr": [],
+   "meta": false
+  },
+  "3277": {
+   "id": "3277",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=3277",
+   "rotulo": "Proposta técnica",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "3275"
    ],
    "te": [],
    "tr": [],
@@ -21884,7 +23777,9 @@
    "tg": [
     "320"
    ],
-   "te": [],
+   "te": [
+    "2913"
+   ],
    "tr": [],
    "meta": false
   },
@@ -21966,7 +23861,14 @@
    "tg": [
     "320"
    ],
-   "te": [],
+   "te": [
+    "128",
+    "1331",
+    "1608",
+    "1662",
+    "2635",
+    "3187"
+   ],
    "tr": [],
    "meta": false
   },
@@ -22030,6 +23932,32 @@
    "tg": [
     "9",
     "17"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "338": {
+   "id": "338",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=338",
+   "rotulo": "Décimos",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1434"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "341": {
+   "id": "341",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=341",
+   "rotulo": "Quintos",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1434"
    ],
    "te": [],
    "tr": [],
@@ -22102,6 +24030,92 @@
    "tg": [
     "15"
    ],
+   "te": [
+    "1958",
+    "1961",
+    "1963",
+    "1964",
+    "1965",
+    "1966",
+    "1967",
+    "1968",
+    "1972",
+    "1975",
+    "1976",
+    "1977",
+    "1978",
+    "1979",
+    "1980",
+    "350",
+    "351",
+    "352",
+    "353",
+    "354"
+   ],
+   "tr": [],
+   "meta": false
+  },
+  "350": {
+   "id": "350",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=350",
+   "rotulo": "Auditoria de conformidade",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "349"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "351": {
+   "id": "351",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=351",
+   "rotulo": "Auditoria de regularidade",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "349"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "352": {
+   "id": "352",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=352",
+   "rotulo": "Auditoria financeira e orçamentária",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "349"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "353": {
+   "id": "353",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=353",
+   "rotulo": "Auditoria governamental",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "349"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "354": {
+   "id": "354",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=354",
+   "rotulo": "Auditoria operacional",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "349"
+   ],
    "te": [],
    "tr": [],
    "meta": false
@@ -22113,9 +24127,13 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "197",
     "1291"
    ],
-   "te": [],
+   "te": [
+    "415066",
+    "459"
+   ],
    "tr": [],
    "meta": false
   },
@@ -22154,6 +24172,19 @@
    "tr": [],
    "meta": false
   },
+  "36": {
+   "id": "36",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=36",
+   "rotulo": "ITBI",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "2500"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "360": {
    "id": "360",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=360",
@@ -22176,7 +24207,11 @@
    "tg": [
     "358"
    ],
-   "te": [],
+   "te": [
+    "365",
+    "366",
+    "367"
+   ],
    "tr": [],
    "meta": false
   },
@@ -22213,8 +24248,48 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "1479",
     "358",
     "12"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "365": {
+   "id": "365",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=365",
+   "rotulo": "Automóvel",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "361"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "366": {
+   "id": "366",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=366",
+   "rotulo": "Caminhão",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "361"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "367": {
+   "id": "367",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=367",
+   "rotulo": "Ônibus",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "361"
    ],
    "te": [],
    "tr": [],
@@ -22421,6 +24496,19 @@
    "tr": [],
    "meta": false
   },
+  "397": {
+   "id": "397",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=397",
+   "rotulo": "Balanço patrimonial",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "415163"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "398": {
    "id": "398",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=398",
@@ -22546,7 +24634,9 @@
     "399",
     "17"
    ],
-   "te": [],
+   "te": [
+    "415407"
+   ],
    "tr": [],
    "meta": false
   },
@@ -22931,6 +25021,32 @@
    "tr": [],
    "meta": false
   },
+  "415065": {
+   "id": "415065",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415065",
+   "rotulo": "Agência executiva",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "197"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "415066": {
+   "id": "415066",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415066",
+   "rotulo": "Agência reguladora",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "357"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "415067": {
    "id": "415067",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415067",
@@ -22998,6 +25114,19 @@
    "tr": [],
    "meta": false
   },
+  "415072": {
+   "id": "415072",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415072",
+   "rotulo": "Alegação de defesa",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "415106"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "415074": {
    "id": "415074",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415074",
@@ -23059,7 +25188,10 @@
    "tg": [
     "791"
    ],
-   "te": [],
+   "te": [
+    "415645",
+    "415837"
+   ],
    "tr": [],
    "meta": false
   },
@@ -23291,6 +25423,19 @@
    "tr": [],
    "meta": false
   },
+  "415103": {
+   "id": "415103",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415103",
+   "rotulo": "Responsabilidade civil do Estado",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1603"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "415104": {
    "id": "415104",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415104",
@@ -23299,6 +25444,19 @@
    "nota_escopo": null,
    "tg": [
     "752"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "415105": {
+   "id": "415105",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415105",
+   "rotulo": "Propaganda e publicidade",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1129"
    ],
    "te": [],
    "tr": [],
@@ -23313,7 +25471,11 @@
    "tg": [
     "15"
    ],
-   "te": [],
+   "te": [
+    "240",
+    "415072",
+    "660"
+   ],
    "tr": [],
    "meta": false
   },
@@ -23330,6 +25492,19 @@
    "tr": [],
    "meta": false
   },
+  "415111": {
+   "id": "415111",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415111",
+   "rotulo": "Agência de publicidade",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1129"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "415112": {
    "id": "415112",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415112",
@@ -23338,6 +25513,19 @@
    "nota_escopo": null,
    "tg": [
     "13"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "415116": {
+   "id": "415116",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415116",
+   "rotulo": "Multa-coerção",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1183"
    ],
    "te": [],
    "tr": [],
@@ -23364,6 +25552,19 @@
    "nota_escopo": null,
    "tg": [
     "473"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "415119": {
+   "id": "415119",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415119",
+   "rotulo": "Responsabilidade subjetiva",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1603"
    ],
    "te": [],
    "tr": [],
@@ -23510,7 +25711,17 @@
    "tg": [
     "1285"
    ],
-   "te": [],
+   "te": [
+    "2827",
+    "2911",
+    "3167",
+    "415453",
+    "415484",
+    "415572",
+    "415723",
+    "416038",
+    "820"
+   ],
    "tr": [],
    "meta": false
   },
@@ -23523,7 +25734,10 @@
    "tg": [
     "415142"
    ],
-   "te": [],
+   "te": [
+    "415143",
+    "415144"
+   ],
    "tr": [],
    "meta": false
   },
@@ -23539,6 +25753,32 @@
    "te": [
     "415141"
    ],
+   "tr": [],
+   "meta": false
+  },
+  "415143": {
+   "id": "415143",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415143",
+   "rotulo": "Atleta amador",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "415141"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "415144": {
+   "id": "415144",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415144",
+   "rotulo": "Atleta profissional",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "415141"
+   ],
+   "te": [],
    "tr": [],
    "meta": false
   },
@@ -23718,6 +25958,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "819",
     "693"
    ],
    "te": [],
@@ -23759,7 +26000,13 @@
    "tg": [
     "706"
    ],
-   "te": [],
+   "te": [
+    "2000",
+    "2001",
+    "2002",
+    "2003",
+    "397"
+   ],
    "tr": [],
    "meta": false
   },
@@ -23797,6 +26044,19 @@
    "nota_escopo": null,
    "tg": [
     "399"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "415168": {
+   "id": "415168",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415168",
+   "rotulo": "Benfeitoria",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "2701"
    ],
    "te": [],
    "tr": [],
@@ -23841,6 +26101,32 @@
    "tr": [],
    "meta": false
   },
+  "415177": {
+   "id": "415177",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415177",
+   "rotulo": "Bombeiro militar",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "3088"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "415178": {
+   "id": "415178",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415178",
+   "rotulo": "Policial militar",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "3088"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "415179": {
    "id": "415179",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415179",
@@ -23848,6 +26134,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "1129",
     "1649"
    ],
    "te": [],
@@ -24066,6 +26353,19 @@
    "tr": [],
    "meta": false
   },
+  "415196": {
+   "id": "415196",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415196",
+   "rotulo": "Comodato",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "569"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "415198": {
    "id": "415198",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415198",
@@ -24114,6 +26414,19 @@
    "nota_escopo": null,
    "tg": [
     "13"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "415202": {
+   "id": "415202",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415202",
+   "rotulo": "Cobertura contratual",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "415217"
    ],
    "te": [],
    "tr": [],
@@ -24212,6 +26525,19 @@
    "tr": [],
    "meta": false
   },
+  "415212": {
+   "id": "415212",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415212",
+   "rotulo": "Princípio da autotutela",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "2700"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "415213": {
    "id": "415213",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415213",
@@ -24247,7 +26573,15 @@
    "tg": [
     "17"
    ],
-   "te": [],
+   "te": [
+    "2471",
+    "2472",
+    "2475",
+    "415202",
+    "501",
+    "569",
+    "570"
+   ],
    "tr": [],
    "meta": false
   },
@@ -24528,6 +26862,58 @@
    "tr": [],
    "meta": false
   },
+  "415265": {
+   "id": "415265",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415265",
+   "rotulo": "PDTI",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1294"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "415266": {
+   "id": "415266",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415266",
+   "rotulo": "Vício formal",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "415323"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "415267": {
+   "id": "415267",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415267",
+   "rotulo": "Vício sanável",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "415323"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "415268": {
+   "id": "415268",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415268",
+   "rotulo": "Vício insanável",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "415323"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "415269": {
    "id": "415269",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415269",
@@ -24645,6 +27031,19 @@
    "tr": [],
    "meta": false
   },
+  "415279": {
+   "id": "415279",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415279",
+   "rotulo": "Cláusula de barreira",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "2700"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "415280": {
    "id": "415280",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415280",
@@ -24705,6 +27104,58 @@
    "nota_escopo": null,
    "tg": [
     "13"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "415285": {
+   "id": "415285",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415285",
+   "rotulo": "Anuênio",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "107"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "415286": {
+   "id": "415286",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415286",
+   "rotulo": "Tomada de contas anual",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1512"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "415287": {
+   "id": "415287",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415287",
+   "rotulo": "Ilícito civil",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "2701"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "415289": {
+   "id": "415289",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415289",
+   "rotulo": "Proposta de preço",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "3275"
    ],
    "te": [],
    "tr": [],
@@ -24775,6 +27226,51 @@
    "tr": [],
    "meta": false
   },
+  "415323": {
+   "id": "415323",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415323",
+   "rotulo": "Vício",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "751"
+   ],
+   "te": [
+    "415266",
+    "415267",
+    "415268",
+    "415324"
+   ],
+   "tr": [],
+   "meta": false
+  },
+  "415324": {
+   "id": "415324",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415324",
+   "rotulo": "Vício material",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "415581",
+    "415323"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "415346": {
+   "id": "415346",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415346",
+   "rotulo": "Interesse recursal",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "751"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "415350": {
    "id": "415350",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415350",
@@ -24783,6 +27279,19 @@
    "nota_escopo": null,
    "tg": [
     "9"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "415351": {
+   "id": "415351",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415351",
+   "rotulo": "Falsidade ideológica",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "415366"
    ],
    "te": [],
    "tr": [],
@@ -24902,7 +27411,10 @@
    "tg": [
     "605"
    ],
-   "te": [],
+   "te": [
+    "2954",
+    "415351"
+   ],
    "tr": [],
    "meta": false
   },
@@ -25128,6 +27640,19 @@
    "tr": [],
    "meta": false
   },
+  "415391": {
+   "id": "415391",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415391",
+   "rotulo": "Receita corrente líquida",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1730"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "415392": {
    "id": "415392",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415392",
@@ -25175,6 +27700,23 @@
    "nota_escopo": null,
    "tg": [
     "17"
+   ],
+   "te": [
+    "415399",
+    "415952"
+   ],
+   "tr": [],
+   "meta": false
+  },
+  "415399": {
+   "id": "415399",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415399",
+   "rotulo": "Serviço de conservação e limpeza",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1129",
+    "415398"
    ],
    "te": [],
    "tr": [],
@@ -25232,6 +27774,19 @@
    "tr": [],
    "meta": false
   },
+  "415407": {
+   "id": "415407",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415407",
+   "rotulo": "Imóvel tombado",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "401"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "415408": {
    "id": "415408",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415408",
@@ -25254,6 +27809,19 @@
    "tg": [
     "9",
     "15"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "415410": {
+   "id": "415410",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415410",
+   "rotulo": "Policial civil",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1599"
    ],
    "te": [],
    "tr": [],
@@ -25357,6 +27925,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "2700",
     "3"
    ],
    "te": [],
@@ -25553,6 +28122,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "415140",
     "17"
    ],
    "te": [],
@@ -25677,6 +28247,19 @@
    "tr": [],
    "meta": false
   },
+  "415466": {
+   "id": "415466",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415466",
+   "rotulo": "Erro grosseiro",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "415581"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "415467": {
    "id": "415467",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415467",
@@ -25684,6 +28267,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "593",
     "10",
     "13"
    ],
@@ -25810,6 +28394,19 @@
    "tr": [],
    "meta": false
   },
+  "415484": {
+   "id": "415484",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415484",
+   "rotulo": "Empresa controladora",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "415140"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "415487": {
    "id": "415487",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415487",
@@ -25883,6 +28480,19 @@
    "nota_escopo": null,
    "tg": [
     "3"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "415499": {
+   "id": "415499",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415499",
+   "rotulo": "Governador",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "217"
    ],
    "te": [],
    "tr": [],
@@ -26018,6 +28628,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "197",
     "1291"
    ],
    "te": [],
@@ -26196,6 +28807,24 @@
    "tr": [],
    "meta": false
   },
+  "415572": {
+   "id": "415572",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415572",
+   "rotulo": "Empresa estatal",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "415140"
+   ],
+   "te": [
+    "1536",
+    "415734",
+    "415738",
+    "821"
+   ],
+   "tr": [],
+   "meta": false
+  },
   "415575": {
    "id": "415575",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415575",
@@ -26216,9 +28845,15 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "751",
     "13"
    ],
-   "te": [],
+   "te": [
+    "415324",
+    "415466",
+    "856",
+    "861"
+   ],
    "tr": [],
    "meta": false
   },
@@ -26242,6 +28877,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "415977",
     "18"
    ],
    "te": [],
@@ -26486,6 +29122,19 @@
    "tr": [],
    "meta": false
   },
+  "415626": {
+   "id": "415626",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415626",
+   "rotulo": "Grupo econômico",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "2705"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "415630": {
    "id": "415630",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415630",
@@ -26572,6 +29221,19 @@
    "nota_escopo": null,
    "tg": [
     "791"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "415645": {
+   "id": "415645",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415645",
+   "rotulo": "Aluno-aprendiz",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "415078"
    ],
    "te": [],
    "tr": [],
@@ -26751,6 +29413,19 @@
    "tr": [],
    "meta": false
   },
+  "415668": {
+   "id": "415668",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415668",
+   "rotulo": "Princípio da legalidade tributária",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "2710"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "415669": {
    "id": "415669",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415669",
@@ -26857,6 +29532,32 @@
    "tr": [],
    "meta": false
   },
+  "415681": {
+   "id": "415681",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415681",
+   "rotulo": "Atividade-meio",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "429"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "415687": {
+   "id": "415687",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415687",
+   "rotulo": "Atividade-fim",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "429"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "415690": {
    "id": "415690",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415690",
@@ -26865,6 +29566,19 @@
    "nota_escopo": null,
    "tg": [
     "13"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "415691": {
+   "id": "415691",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415691",
+   "rotulo": "NOVACAP",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "821"
    ],
    "te": [],
    "tr": [],
@@ -26879,6 +29593,19 @@
    "tg": [
     "10",
     "13"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "415694": {
+   "id": "415694",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415694",
+   "rotulo": "Hospedagem",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1456"
    ],
    "te": [],
    "tr": [],
@@ -26943,7 +29670,8 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
-    "415006"
+    "415006",
+    "3166"
    ],
    "te": [],
    "tr": [],
@@ -26984,6 +29712,19 @@
    "nota_escopo": null,
    "tg": [
     "13"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "415723": {
+   "id": "415723",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415723",
+   "rotulo": "Empresa estrangeira",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "415140"
    ],
    "te": [],
    "tr": [],
@@ -27049,6 +29790,32 @@
    "nota_escopo": null,
    "tg": [
     "13"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "415734": {
+   "id": "415734",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415734",
+   "rotulo": "Empresa estatal independente",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "415572"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "415738": {
+   "id": "415738",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415738",
+   "rotulo": "Empresa estatal dependente",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "415572"
    ],
    "te": [],
    "tr": [],
@@ -27165,6 +29932,19 @@
    "tr": [],
    "meta": false
   },
+  "415774": {
+   "id": "415774",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415774",
+   "rotulo": "Serviço de alimentação",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1129"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "415777": {
    "id": "415777",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415777",
@@ -27172,8 +29952,22 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "593",
     "10",
     "13"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "415778": {
+   "id": "415778",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415778",
+   "rotulo": "Comissão de tomada de contas especial",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1510"
    ],
    "te": [],
    "tr": [],
@@ -27538,6 +30332,32 @@
    "tr": [],
    "meta": false
   },
+  "415828": {
+   "id": "415828",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415828",
+   "rotulo": "Capacidade técnico-profissional",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "2402"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "415829": {
+   "id": "415829",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415829",
+   "rotulo": "Capacidade técnico-operacional",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "2402"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "415836": {
    "id": "415836",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415836",
@@ -27546,6 +30366,19 @@
    "nota_escopo": null,
    "tg": [
     "13"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "415837": {
+   "id": "415837",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415837",
+   "rotulo": "Aluno com deficiência",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "415078"
    ],
    "te": [],
    "tr": [],
@@ -28201,7 +31034,21 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "2703",
     "1124"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "415948": {
+   "id": "415948",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415948",
+   "rotulo": "Princípio da aplicação imediata da lei",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "2703"
    ],
    "te": [],
    "tr": [],
@@ -28229,6 +31076,19 @@
    "tg": [
     "10",
     "15"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "415952": {
+   "id": "415952",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=415952",
+   "rotulo": "Serviço de manutenção e reparos",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "415398"
    ],
    "te": [],
    "tr": [],
@@ -28366,7 +31226,10 @@
    "tg": [
     "17"
    ],
-   "te": [],
+   "te": [
+    "2967",
+    "415588"
+   ],
    "tr": [],
    "meta": false
   },
@@ -28501,6 +31364,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "751",
     "10"
    ],
    "te": [],
@@ -28542,7 +31406,10 @@
    "tg": [
     "17"
    ],
-   "te": [],
+   "te": [
+    "2018",
+    "2020"
+   ],
    "tr": [],
    "meta": false
   },
@@ -28553,7 +31420,22 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "2703",
+    "751",
     "10"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "416009": {
+   "id": "416009",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=416009",
+   "rotulo": "Princípio da unidade de jurisdição",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "2703"
    ],
    "te": [],
    "tr": [],
@@ -28691,6 +31573,19 @@
    "tr": [],
    "meta": false
   },
+  "416031": {
+   "id": "416031",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=416031",
+   "rotulo": "Princípio da instrumentalidade",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "751"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "416032": {
    "id": "416032",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=416032",
@@ -28725,6 +31620,32 @@
    "nota_escopo": null,
    "tg": [
     "8"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "416037": {
+   "id": "416037",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=416037",
+   "rotulo": "Novação",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "2701"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "416038": {
+   "id": "416038",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=416038",
+   "rotulo": "Sociedade de propósito específico",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "415140"
    ],
    "te": [],
    "tr": [],
@@ -28784,6 +31705,19 @@
    "tr": [],
    "meta": false
   },
+  "416047": {
+   "id": "416047",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=416047",
+   "rotulo": "IGESDF",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1618"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "416049": {
    "id": "416049",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=416049",
@@ -28836,6 +31770,19 @@
    "tr": [],
    "meta": false
   },
+  "416055": {
+   "id": "416055",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=416055",
+   "rotulo": "Princípio pas de nullité sans grief",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "751"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "416058": {
    "id": "416058",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=416058",
@@ -28871,6 +31818,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "751",
     "2",
     "9"
    ],
@@ -29011,6 +31959,19 @@
    "tr": [],
    "meta": false
   },
+  "416078": {
+   "id": "416078",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=416078",
+   "rotulo": "Prefeito",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "217"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "416079": {
    "id": "416079",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=416079",
@@ -29058,6 +32019,19 @@
    "nota_escopo": null,
    "tg": [
     "522"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "416085": {
+   "id": "416085",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=416085",
+   "rotulo": "Avocação",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "751"
    ],
    "te": [],
    "tr": [],
@@ -29278,6 +32252,19 @@
    "tr": [],
    "meta": false
   },
+  "416122": {
+   "id": "416122",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=416122",
+   "rotulo": "Princípio da presunção da inocência",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "2703"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "416128": {
    "id": "416128",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=416128",
@@ -29317,6 +32304,19 @@
    "tr": [],
    "meta": false
   },
+  "416131": {
+   "id": "416131",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=416131",
+   "rotulo": "TERRACAP",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "821"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "416134": {
    "id": "416134",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=416134",
@@ -29325,6 +32325,19 @@
    "nota_escopo": null,
    "tg": [
     "13"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "416135": {
+   "id": "416135",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=416135",
+   "rotulo": "Teoria do fato consumado",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "2706"
    ],
    "te": [],
    "tr": [],
@@ -29364,6 +32377,20 @@
    "nota_escopo": null,
    "tg": [
     "10"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "416143": {
+   "id": "416143",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=416143",
+   "rotulo": "Execução fiscal",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "2710",
+    "1773"
    ],
    "te": [],
    "tr": [],
@@ -29416,6 +32443,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "1752",
     "13"
    ],
    "te": [],
@@ -29448,6 +32476,19 @@
    "tr": [],
    "meta": false
   },
+  "416162": {
+   "id": "416162",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=416162",
+   "rotulo": "Decisão administrativa",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "660"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "416163": {
    "id": "416163",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=416163",
@@ -29471,6 +32512,19 @@
    "tg": [
     "6",
     "18"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "416168": {
+   "id": "416168",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=416168",
+   "rotulo": "MROSC",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "2700"
    ],
    "te": [],
    "tr": [],
@@ -29535,6 +32589,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "593",
     "12"
    ],
    "te": [],
@@ -29686,6 +32741,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "170",
     "10",
     "3"
    ],
@@ -29745,6 +32801,19 @@
    "tr": [],
    "meta": false
   },
+  "416215": {
+   "id": "416215",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=416215",
+   "rotulo": "Filha maior solteira",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "3166"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "416216": {
    "id": "416216",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=416216",
@@ -29753,6 +32822,19 @@
    "nota_escopo": null,
    "tg": [
     "10"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "416221": {
+   "id": "416221",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=416221",
+   "rotulo": "Termo de compromisso",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "593"
    ],
    "te": [],
    "tr": [],
@@ -29850,6 +32932,19 @@
    "tr": [],
    "meta": false
   },
+  "416235": {
+   "id": "416235",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=416235",
+   "rotulo": "Duty To Mitigate The Loss",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "2701"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "416237": {
    "id": "416237",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=416237",
@@ -29926,6 +33021,19 @@
    "tr": [],
    "meta": false
   },
+  "428": {
+   "id": "428",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=428",
+   "rotulo": "Cargo de natureza especial",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "430"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "429": {
    "id": "429",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=429",
@@ -29935,7 +33043,11 @@
    "tg": [
     "427"
    ],
-   "te": [],
+   "te": [
+    "2030",
+    "415681",
+    "415687"
+   ],
    "tr": [],
    "meta": false
   },
@@ -29948,7 +33060,9 @@
    "tg": [
     "427"
    ],
-   "te": [],
+   "te": [
+    "428"
+   ],
    "tr": [],
    "meta": false
   },
@@ -29980,6 +33094,19 @@
    "tr": [],
    "meta": false
   },
+  "440": {
+   "id": "440",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=440",
+   "rotulo": "Convite",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1138"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "444": {
    "id": "444",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=444",
@@ -29989,6 +33116,45 @@
    "tg": [
     "2",
     "15"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "446": {
+   "id": "446",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=446",
+   "rotulo": "Apartamento",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "259"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "447": {
+   "id": "447",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=447",
+   "rotulo": "Casa",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "259"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "45": {
+   "id": "45",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=45",
+   "rotulo": "ISS",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "2500"
    ],
    "te": [],
    "tr": [],
@@ -30072,6 +33238,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "357",
     "3"
    ],
    "te": [],
@@ -30164,6 +33331,19 @@
    "nota_escopo": null,
    "tg": [
     "464"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "47": {
+   "id": "47",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=47",
+   "rotulo": "Ação civil pública",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1840"
    ],
    "te": [],
    "tr": [],
@@ -30350,6 +33530,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "713",
     "10"
    ],
    "te": [],
@@ -30446,6 +33627,19 @@
    "tr": [],
    "meta": false
   },
+  "495": {
+   "id": "495",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=495",
+   "rotulo": "Competência funcional",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "2105"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "496": {
    "id": "496",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=496",
@@ -30454,6 +33648,19 @@
    "nota_escopo": null,
    "tg": [
     "492"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "497": {
+   "id": "497",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=497",
+   "rotulo": "Competência territorial",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "2105"
    ],
    "te": [],
    "tr": [],
@@ -30514,6 +33721,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "415217",
     "17"
    ],
    "te": [],
@@ -30592,7 +33800,9 @@
    "tg": [
     "510"
    ],
-   "te": [],
+   "te": [
+    "1229"
+   ],
    "tr": [],
    "meta": false
   },
@@ -30622,6 +33832,19 @@
    "tr": [],
    "meta": false
   },
+  "517": {
+   "id": "517",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=517",
+   "rotulo": "Concorrência pública",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1138"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "520": {
    "id": "520",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=520",
@@ -30642,6 +33865,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "1138",
     "17"
    ],
    "te": [],
@@ -30697,6 +33921,19 @@
    "tr": [],
    "meta": false
   },
+  "525": {
+   "id": "525",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=525",
+   "rotulo": "Concussão",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "2610"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "526": {
    "id": "526",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=526",
@@ -30744,6 +33981,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "713",
     "10"
    ],
    "te": [],
@@ -30757,6 +33995,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "217",
     "10"
    ],
    "te": [],
@@ -31024,6 +34263,19 @@
    "tr": [],
    "meta": false
   },
+  "562": {
+   "id": "562",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=562",
+   "rotulo": "Operação de crédito",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "1729"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "564": {
    "id": "564",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=564",
@@ -31065,6 +34317,21 @@
    "tr": [],
    "meta": false
   },
+  "569": {
+   "id": "569",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=569",
+   "rotulo": "Contrato administrativo",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "415217"
+   ],
+   "te": [
+    "415196"
+   ],
+   "tr": [],
+   "meta": false
+  },
   "57": {
    "id": "57",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=57",
@@ -31085,6 +34352,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "415217",
     "3"
    ],
    "te": [],
@@ -31268,7 +34536,12 @@
    "tg": [
     "15"
    ],
-   "te": [],
+   "te": [
+    "415467",
+    "415777",
+    "416185",
+    "416221"
+   ],
    "tr": [],
    "meta": false
   },
@@ -31308,7 +34581,9 @@
    "tg": [
     "17"
    ],
-   "te": [],
+   "te": [
+    "1521"
+   ],
    "tr": [],
    "meta": false
   },
@@ -31653,6 +34928,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "1434",
     "2"
    ],
    "te": [
@@ -31936,6 +35212,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "224",
     "10"
    ],
    "te": [],
@@ -32024,7 +35301,32 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
-    "331"
+    "331",
+    "415106"
+   ],
+   "te": [
+    "2624",
+    "2625",
+    "2626",
+    "2628",
+    "2629",
+    "416162",
+    "662",
+    "664",
+    "666",
+    "667"
+   ],
+   "tr": [],
+   "meta": false
+  },
+  "662": {
+   "id": "662",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=662",
+   "rotulo": "Decisão definitiva",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "660"
    ],
    "te": [],
    "tr": [],
@@ -32038,6 +35340,45 @@
    "nota_escopo": null,
    "tg": [
     "6"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "664": {
+   "id": "664",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=664",
+   "rotulo": "Decisão judicial",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "660"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "666": {
+   "id": "666",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=666",
+   "rotulo": "Decisão normativa",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "660"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "667": {
+   "id": "667",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=667",
+   "rotulo": "Decisão preliminar",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "660"
    ],
    "te": [],
    "tr": [],
@@ -32138,6 +35479,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "713",
     "10"
    ],
    "te": [],
@@ -32190,6 +35532,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "713",
     "10"
    ],
    "te": [],
@@ -32415,7 +35758,15 @@
    "tg": [
     "415926"
    ],
-   "te": [],
+   "te": [
+    "1406",
+    "488",
+    "532",
+    "686",
+    "691",
+    "806",
+    "809"
+   ],
    "tr": [],
    "meta": false
   },
@@ -32450,6 +35801,19 @@
    "tr": [],
    "meta": false
   },
+  "719": {
+   "id": "719",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=719",
+   "rotulo": "Deputado",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "2892"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "720": {
    "id": "720",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=720",
@@ -32470,6 +35834,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "197",
     "1291"
    ],
    "te": [],
@@ -32583,6 +35948,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "853",
     "2",
     "15"
    ],
@@ -32739,6 +36105,19 @@
    "tr": [],
    "meta": false
   },
+  "746": {
+   "id": "746",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=746",
+   "rotulo": "Fraude processual",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "753"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "747": {
    "id": "747",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=747",
@@ -32792,6 +36171,29 @@
    "tr": [],
    "meta": false
   },
+  "751": {
+   "id": "751",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=751",
+   "rotulo": "Direito processual",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "2709"
+   ],
+   "te": [
+    "415323",
+    "415346",
+    "415581",
+    "415995",
+    "416002",
+    "416031",
+    "416055",
+    "416060",
+    "416085"
+   ],
+   "tr": [],
+   "meta": false
+  },
   "752": {
    "id": "752",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=752",
@@ -32822,7 +36224,10 @@
    "tg": [
     "605"
    ],
-   "te": [],
+   "te": [
+    "2976",
+    "746"
+   ],
    "tr": [],
    "meta": false
   },
@@ -33342,6 +36747,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "2740",
     "15"
    ],
    "te": [],
@@ -33400,6 +36806,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "713",
     "10"
    ],
    "te": [],
@@ -33426,6 +36833,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "713",
     "10"
    ],
    "te": [
@@ -33530,7 +36938,9 @@
    "tg": [
     "2982"
    ],
-   "te": [],
+   "te": [
+    "415160"
+   ],
    "tr": [],
    "meta": false
   },
@@ -33541,10 +36951,28 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "415140",
     "18",
     "17"
    ],
    "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "821": {
+   "id": "821",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=821",
+   "rotulo": "Empresa pública",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "197",
+    "415572"
+   ],
+   "te": [
+    "415691",
+    "416131"
+   ],
    "tr": [],
    "meta": false
   },
@@ -33571,7 +36999,11 @@
    "tg": [
     "1285"
    ],
-   "te": [],
+   "te": [
+    "1224",
+    "1618",
+    "1790"
+   ],
    "tr": [],
    "meta": false
   },
@@ -33625,7 +37057,9 @@
    "tg": [
     "2799"
    ],
-   "te": [],
+   "te": [
+    "838"
+   ],
    "tr": [],
    "meta": false
   },
@@ -33636,6 +37070,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "834",
     "8"
    ],
    "te": [],
@@ -33718,6 +37153,21 @@
    "tg": [
     "416061"
    ],
+   "te": [
+    "730"
+   ],
+   "tr": [],
+   "meta": false
+  },
+  "856": {
+   "id": "856",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=856",
+   "rotulo": "Erro acidental",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "415581"
+   ],
    "te": [],
    "tr": [],
    "meta": false
@@ -33743,6 +37193,19 @@
    "nota_escopo": null,
    "tg": [
     "3"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "861": {
+   "id": "861",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=861",
+   "rotulo": "Erro essencial",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "415581"
    ],
    "te": [],
    "tr": [],
@@ -33810,6 +37273,19 @@
    "nota_escopo": null,
    "tg": [
     "9"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "87": {
+   "id": "87",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=87",
+   "rotulo": "Adicional de férias",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "107"
    ],
    "te": [],
    "tr": [],
@@ -34368,6 +37844,71 @@
    "tr": [],
    "meta": false
   },
+  "951": {
+   "id": "951",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=951",
+   "rotulo": "Aposentadoria com proventos proporcionais",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "261"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "953": {
+   "id": "953",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=953",
+   "rotulo": "Aposentadoria por tempo de serviço",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "261"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "955": {
+   "id": "955",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=955",
+   "rotulo": "Aposentadoria por invalidez qualificada",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "274"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "96": {
+   "id": "96",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=96",
+   "rotulo": "Adicional de periculosidade",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "107"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "961": {
+   "id": "961",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=961",
+   "rotulo": "Aposentadoria por invalidez simples",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "274"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
   "964": {
    "id": "964",
    "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=964",
@@ -34375,6 +37916,7 @@
    "alternativos": [],
    "nota_escopo": null,
    "tg": [
+    "2779",
     "2"
    ],
    "te": [],
@@ -34482,6 +38024,19 @@
    "tg": [
     "1558",
     "7"
+   ],
+   "te": [],
+   "tr": [],
+   "meta": false
+  },
+  "98": {
+   "id": "98",
+   "uri": "https://tesauro.irbcontas.org.br/vocab/index.php?tema=98",
+   "rotulo": "IPVA",
+   "alternativos": [],
+   "nota_escopo": null,
+   "tg": [
+    "2499"
    ],
    "te": [],
    "tr": [],

@@ -49,11 +49,10 @@ e escolha; "Exportar a conversa" baixa tudo, com a ficha em JSON.
 - **Sem gateway (regra 8 do CLAUDE.md, princípio 8 do documento 01).** A página
   chama o Claude direto. Os prompts, porém, são os mesmos arquivos de
   `backend/app/prompts/`, embutidos pelo script de geração.
-- **TCN parcial (pendência P4).** A cópia local (`dados/tcn.json`, 2.360 termos,
-  exportação de 17/11/2026 do serviço do IRB) só tem os dois primeiros níveis
-  abaixo das categorias; 74 ramos (Auditoria, Controle externo, Multa, Tomada de
-  contas…) ainda não têm os filhos, e não há remissivas nem notas de escopo. A
-  escolha já é em conjunto fechado; o que faltar entra como fora do tesauro.
+- **TCN sem remissivas nem notas.** A cópia local (`dados/tcn.json`, 2.594 termos,
+  exportação completa de 17/11/2026 do serviço do IRB, hierarquia até 5 níveis)
+  não traz termos remissivos (USE/UP) nem notas de escopo. Assuntos que o TCN não
+  cobre (ex.: vacinação, duodécimo) entram como fora do tesauro.
 - **Busca só por palavras.** Sem busca por significado (pgvector), o Claude
   sugere expressões de busca antes; a escolha final continua restrita à base.
 - **Sem banco do Tribunal.** As sessões e o registro de eventos ficam no
