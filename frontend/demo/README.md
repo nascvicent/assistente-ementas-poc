@@ -26,8 +26,13 @@ referências normativas e os precedentes (art. 10, § 1º), montadas por código
 ## Avaliação
 
 A aba **Avaliação** compara, por código (`avaliacao.js`), a ementa do fluxo e a do
-**prompt único do AuroraChat** (`prompt_unico_aurorachat`, documento 04, Parte A,
-rodado sobre o mesmo voto sem a ementa publicada) com a **publicada**: semelhança
+**prompt atual do AuroraChat** (`prompt_unico_aurorachat`, versão B-1.0: o
+"prompt-mestre" recebido em 17/11/2026; a versão A-0.1 era a adaptação da Parte A
+do documento 04), rodado sobre o mesmo voto sem a ementa publicada, com a
+**publicada**. A saída do AuroraChat é posta no formato publicado antes de medir
+(`normalizarFormato`: "EMENTA:", itens numerados, teses em itens); os ajustes
+feitos e os pontos do linter no texto como saiu aparecem em linhas próprias.
+Medidas: semelhança
 geral e por seção, termos do cabeçalho em comum, mesmo resultado no dispositivo,
 pontos do linter, normas e valores sem suporte no voto, quantidade de itens. Tem
 nota do revisor (1 a 5) para cada lado e "Copiar resumo da avaliação", em colunas

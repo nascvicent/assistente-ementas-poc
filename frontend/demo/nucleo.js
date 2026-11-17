@@ -267,7 +267,8 @@
   const RE_ITEM = /^\s*(?<numero>\d+)\s*[.)]\s+(?<resto>.*)$/;
   const RE_NUMERO_DUPLICADO = /^\s*(\d+)\s*\.\s+(\d+)\s*\.\s/;
   // Bloco final opcional (Portaria 322/2026, art. 10, § 1º): fica fora das seções numeradas.
-  const RE_RODAPE = /^\s*(Refer[êe]ncias normativas|Precedentes citados)\s*:.*$/gim;
+  // Aceita também os títulos do Manual do CNJ, que o prompt atual do AuroraChat usa.
+  const RE_RODAPE = /^\s*(Refer[êe]ncias normativas|Precedentes citados|Dispositivos relevantes citados|Jurisprud[êe]ncia relevante citada)\s*:.*$/gim;
 
   function analisar(texto) {
     texto = texto.replace(/\r\n/g, "\n").trim();

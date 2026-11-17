@@ -228,3 +228,17 @@ def test_tesauro_paridade_tcn():
                  "repasse de duodécimo à câmara municipal", "contratação temporária de pessoal sem concurso", "nepotismo",
                  "armazenamento de vacinas", "obra pública superfaturamento", "previdência própria aposentadoria"]
     _comparar_tesauro(termos, "tcn", consultas, ["764", "248", "15"])
+
+
+def test_normaliza_formato_do_prompt_do_aurorachat():
+    saida = ("AUDITORIA ESPECIAL. SAÚDE. REGULARIDADE COM RESSALVAS.\n\nI. CASO EM EXAME\n\nAuditoria especial de conformidade na rede municipal.\n\n"
+             "II. RAZÕES DE DECIDIR\n\nO uso de geladeiras domésticas contraria a RDC ANVISA nº 197/2017, art. 75.\n\nA correção afasta a multa.\n\n"
+             "III. DISPOSITIVO\n\nJulgamento pela regularidade com ressalvas do objeto da Auditoria Especial.\n\nIV. TESE DE JULGAMENTO\n\n"
+             "“1. Vacinas exigem equipamento exclusivo, nos termos do art. 75. 2. A correção tempestiva afasta a multa.”\n\n"
+             "Dispositivos relevantes citados: RDC ANVISA nº 197/2017.")
+    r = rodar_js([{"op": "normalizar", "texto": saida}])[0]
+    e = linter_ementa.analisar(r["texto"])
+    assert [i.numero for s in e.secoes for i in s.itens] == [1, 2, 3, 4, 5, 6]
+    assert e.secoes[3].itens[0].texto.endswith("art. 75.")
+    assert "teses em bloco entre aspas" in r["ajustes"] and "cabeçalho sem “EMENTA:”" in r["ajustes"]
+    assert linter_ementa.verificar(r["texto"]) == []

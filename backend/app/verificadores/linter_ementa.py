@@ -71,7 +71,11 @@ _RE_TITULO_SECAO = re.compile(
 _RE_ITEM = re.compile(r"^\s*(?P<numero>\d+)\s*[.)]\s+(?P<resto>.*)$")
 _RE_NUMERO_DUPLICADO = re.compile(r"^\s*(\d+)\s*\.\s+(\d+)\s*\.\s")
 # Bloco final opcional (Portaria 322/2026, art. 10, § 1º): fica fora das seções numeradas.
-_RE_RODAPE = re.compile(r"^\s*(Refer[êe]ncias normativas|Precedentes citados)\s*:.*$", re.MULTILINE | re.IGNORECASE)
+# Aceita também os títulos do Manual do CNJ, que o prompt atual do AuroraChat usa.
+_RE_RODAPE = re.compile(
+    r"^\s*(Refer[êe]ncias normativas|Precedentes citados|Dispositivos relevantes citados|Jurisprud[êe]ncia relevante citada)\s*:.*$",
+    re.MULTILINE | re.IGNORECASE,
+)
 
 
 @dataclass

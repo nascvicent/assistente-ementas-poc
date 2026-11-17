@@ -285,3 +285,10 @@ def test_referencias_conferidas_no_voto():
     texto = EMENTA_VALIDA + "\nReferências normativas: Lei nº 8.666/1993.\n"
     e12 = [a for a in verificar(texto, ContextoLinter(texto_voto=voto_texto())) if a.codigo == "E12"]
     assert [a.referencia for a in e12] == ["Lei nº 8.666/1993"]
+
+
+def test_referencias_com_titulos_do_cnj():
+    texto = EMENTA_VALIDA + "\nDispositivos relevantes citados: RDC ANVISA nº 197/2017.\nJurisprudência relevante citada: TCE-PE, Acórdão T.C. nº 9999/2025.\n"
+    e = analisar(texto)
+    assert e.rodape.startswith("Dispositivos relevantes citados") and "Jurisprudência" in e.rodape
+    assert verificar(texto) == []

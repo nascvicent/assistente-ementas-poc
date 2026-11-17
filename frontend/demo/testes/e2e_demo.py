@@ -63,7 +63,7 @@ VERIF = {"divergencias": [
          "alcance_teses": [{"tese": 1, "situacao": "fiel", "explicacao": "ok", "trecho": "", "pagina": 2}]}
 
 CORRIGE = {"correcoes": [{"caminho": "ocorrencias[oc1].precedentes[0]", "remover": True}]}
-UNICO = "Segue a ementa.\n\n**EMENTA:** AUDITORIA ESPECIAL. SAÚDE. REGULARIDADE COM RESSALVAS.\n\nI. CASO EM EXAME\n1. Trata-se de auditoria especial na Secretaria de Saúde.\n\nII. RAZÕES DE DECIDIR\n2. O uso de geladeiras domésticas viola a Lei nº 14.133/2021.\n\nIII. DISPOSITIVO\n3. Julgamento pela regularidade com ressalvas.\n\nIV. TESE DE JULGAMENTO\n4. Vacinas exigem refrigeração adequada.\n\nPARA CONFERIR\na) nada a registrar"
+UNICO = "AUDITORIA ESPECIAL. SAÚDE. VACINAÇÃO. REGULARIDADE COM RESSALVAS.\n\nI. CASO EM EXAME\n\nTrata-se de auditoria especial na Secretaria de Saúde. Discute-se se houve falha no armazenamento.\n\nII. RAZÕES DE DECIDIR\n\nO uso de geladeiras domésticas viola a Lei nº 14.133/2021.\n\nIII. DISPOSITIVO\n\nJulgamento pela regularidade com ressalvas do objeto da Auditoria Especial.\n\nIV. TESE DE JULGAMENTO\n\n“1. Vacinas exigem refrigeração adequada. 2. A correção tempestiva afasta a multa.”\n\nDispositivos relevantes citados: RDC ANVISA nº 197/2017."
 INIT = """
 window.__prompts = [];
 const resp = %s;
@@ -107,7 +107,7 @@ function escolhe(t){
   if (t.includes("não encontrou literalmente")) return resp.corrige;
   throw {code:"invalid_json", message:"?"};
 }
-const fake = async (t, o) => { window.__prompts.push(t); const text = t.startsWith("PAPEL") ? resp.unico : "O voto trata disso na fundamentação (Voto, p. 2)."; if (o && o.onText) o.onText({text, delta:text}); return {text, truncated:false}; };
+const fake = async (t, o) => { window.__prompts.push(t); const text = t.includes("PROMPT-MESTRE") ? resp.unico : "O voto trata disso na fundamentação (Voto, p. 2)."; if (o && o.onText) o.onText({text, delta:text}); return {text, truncated:false}; };
 fake.json = async (t, o) => { window.__prompts.push(t); await new Promise(r=>setTimeout(r,50)); return JSON.parse(JSON.stringify(escolhe(t))); };
 window.claude = { use: async (n) => n==="sample" ? fake : n==="downloads" ? {save: async () => { window.__salvo = true; }} :
   n==="db" ? { doc: docRef, collection: colRef } : n==="user" ? { id: async () => "u_teste" } : null };
@@ -201,9 +201,10 @@ async def main():
 
         await pg.click("[data-aba=avaliacao]")
         await pg.click("#rodaUnico")
-        await pg.wait_for_selector("text=Ver a ementa do prompt único")
+        await pg.wait_for_selector("text=Ver a ementa do prompt do AuroraChat")
         aval = await pg.inner_text("#conteudo")
-        assert "Prompt único" in aval and "Semelhança com a publicada" in aval
+        assert "Prompt do AuroraChat" in aval and "Semelhança com a publicada" in aval
+        assert "Ajustes de formato antes de medir" in aval and "teses em bloco entre aspas" in aval, aval
         await pg.select_option("[data-nota=nota]", "4")
         await pg.screenshot(path=str(SAIDA / "e2e_aval.png"))
 

@@ -33,6 +33,8 @@ process.stdin.on("end", () => {
         return N.montarReferencias(c.ficha, c.ids);
       case "comparar":
         return AV.comparar(c.gerada, c.referencia, {});
+      case "normalizar":
+        return AV.normalizarFormato(c.texto);
       case "texto_livre":
         return AV.extrairDoTextoLivre(c.texto);
       case "tesauro": {

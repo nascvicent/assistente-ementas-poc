@@ -865,7 +865,7 @@
       `<div class="passou">Regras atendidas<ul>${atendidas}</ul></div>` +
       (altas ? `<label class="ciencia"><input type="checkbox" id="ciente" ${S.ciencia ? "checked" : ""}> Li e conferi os ${altas} ponto(s) de gravidade alta.</label>` : "") +
       `<label class="ciencia"><input type="checkbox" id="refs" ${S.referencias ? "checked" : ""}> Incluir ao final as referências normativas e os precedentes citados (art. 10, § 1º).</label>` +
-      `<p class="nota">Na aba <b>Avaliação</b> do painel, compare esta ementa ${S.doc.bloco ? "com a publicada e " : ""}com a do prompt único do AuroraChat, e dê sua nota.</p>` +
+      `<p class="nota">Na aba <b>Avaliação</b> do painel, compare esta ementa ${S.doc.bloco ? "com a publicada e " : ""}com a do prompt atual do AuroraChat, e dê sua nota.</p>` +
       `<div class="acoes" style="margin-top:18px"><button class="btn" id="copiaFinal" ${S.ciencia ? "" : "disabled"}>Copiar a ementa final</button><button class="btn sec" id="exportar">Exportar a conversa</button><button class="btn sec" id="novaFinal">Começar nova ementa</button></div>`);
     const ciente = d.querySelector("#ciente");
     if (ciente) ciente.onchange = () => { S.ciencia = ciente.checked; d.querySelector("#copiaFinal").disabled = !ciente.checked; if (ciente.checked) reg("escolha", "Ciência dos pontos de gravidade alta"); salvar(); };
@@ -944,7 +944,7 @@
   function dadosAvaliacao() {
     const ref = S.doc && S.doc.bloco ? S.doc.bloco.texto : null;
     const ctx = { ficha: S.ficha || undefined, textoVoto: textoVoto() };
-    const cols = [["Fluxo em etapas", S.ementa ? textoEmenta() : null], ["Prompt único", S.avaliacao.unico ? S.avaliacao.unico.ementa : null]];
+    const cols = [["Fluxo em etapas", S.ementa ? textoEmenta() : null], ["Prompt do AuroraChat", S.avaliacao.unico ? S.avaliacao.unico.ementa : null]];
     if (ref) cols.push(["Publicada", ref]);
     const comp = cols.map(([n, t]) => (t && ref && n !== "Publicada" ? AV.comparar(t, ref, ctx) : null));
     const lint = cols.map(([, t]) => (t ? AV.resumoLinter(t, ctx) : null));
@@ -961,12 +961,20 @@
     linhas.push(["Normas sem suporte no voto", lint.map((l) => (l ? String(l.normasSemSuporte.length) : "—"))]);
     linhas.push(["Valores ou datas sem suporte", lint.map((l) => (l ? String(l.valoresSemSuporte.length) : "—"))]);
     linhas.push(["Itens nas razões · teses", parte.map((x) => (x ? `${x.itensRazoes} · ${x.teses.length}` : "—"))]);
+    const u = S.avaliacao.unico;
+    if (u && u.ajustes) {
+      const orig = AV.resumoLinter(u.ementaOriginal || "", ctx);
+      linhas.push(["Ajustes de formato antes de medir", cols.map(([n]) => (n === "Prompt do AuroraChat" ? String(u.ajustes.length) : n === "Fluxo em etapas" ? "0" : "—"))]);
+      linhas.push(["Pontos do linter no texto como saiu", cols.map(([n]) => (n === "Prompt do AuroraChat" ? `${orig.alta} · ${orig.media} · ${orig.baixa}` : "—"))]);
+    }
     return { cols: cols.map(([n]) => n), linhas, lint };
   }
   function resumoAvaliacao() {
     const d = dadosAvaliacao(), a = S.avaliacao;
     return ["Avaliação — " + (S.doc ? S.doc.nome : ""), ["Critério", ...d.cols].join("\t"), ...d.linhas.map(([r, v]) => [r, ...v].join("\t")),
-      `Nota do revisor (fluxo): ${a.nota || "—"}`, `Nota do revisor (prompt único): ${a.notaUnico || "—"}`, `Comentário: ${a.comentario || "—"}`].join("\n");
+      `Nota do revisor (fluxo): ${a.nota || "—"}`, `Nota do revisor (prompt do AuroraChat): ${a.notaUnico || "—"}`,
+      `Prompt do AuroraChat: versão ${PROMPTS.prompt_unico_aurorachat.versao}` + (a.unico && a.unico.ajustes ? `; ajustes de formato: ${a.unico.ajustes.join("; ") || "nenhum"}` : ""),
+      `Comentário: ${a.comentario || "—"}`].join("\n");
   }
   function painelAvaliacao(c) {
     if (!S.doc) { c.innerHTML = `<p class="nota">A avaliação aparece aqui depois da leitura do voto.</p>`; return; }
@@ -976,17 +984,18 @@
       <table><tr><th style="width:auto">Critério</th>${d.cols.map((n) => `<th style="width:auto">${n}</th>`).join("")}</tr>
       ${d.linhas.map(([r, v]) => `<tr><td>${esc(r)}</td>${v.map((x) => `<td>${esc(x)}</td>`).join("")}${d.cols.length > v.length ? "<td>—</td>" : ""}</tr>`).join("")}</table>
       ${!S.ementa ? `<p class="nota">A coluna do fluxo é preenchida quando a ementa for montada.</p>` : ""}
-      <h4 style="margin:18px 0 6px">Prompt único do AuroraChat</h4>
-      <p class="nota">O mesmo voto, sem a ementa publicada, no prompt adaptado da Fase 0 (documento 04, Parte A). Uma chamada.</p>
-      ${a.unico ? `<details><summary>Ver a ementa do prompt único</summary><div class="folha" style="white-space:pre-wrap;margin-top:8px">${esc(a.unico.ementa)}</div>${a.unico.paraConferir ? `<p class="nota" style="white-space:pre-wrap">PARA CONFERIR\n${esc(a.unico.paraConferir)}</p>` : ""}</details>` : ""}
+      <h4 style="margin:18px 0 6px">Prompt do AuroraChat</h4>
+      <p class="nota">O mesmo voto, sem a ementa publicada, no prompt-mestre atual do AuroraChat (versão ${esc(PROMPTS.prompt_unico_aurorachat.versao)}). Uma chamada. Antes de medir, a saída é posta no formato publicado (com "EMENTA:", itens numerados em sequência, teses em itens), para comparar conteúdo; os ajustes aparecem na tabela e abaixo.</p>
+      ${a.unico ? `<details><summary>Ver a ementa do prompt do AuroraChat, como saiu</summary><div class="folha" style="white-space:pre-wrap;margin-top:8px">${esc(a.unico.ementaOriginal || a.unico.ementa)}</div>${a.unico.paraConferir ? `<p class="nota" style="white-space:pre-wrap">PARA CONFERIR\n${esc(a.unico.paraConferir)}</p>` : ""}</details>
+        ${a.unico.ajustes && a.unico.ajustes.length ? `<p class="nota">Ajustes de formato feitos antes de medir: ${esc(a.unico.ajustes.join("; "))}.</p>` : ""}` : ""}
       ${a.erroUnico ? `<div class="erro"><b>${esc(a.erroUnico)}</b></div>` : ""}
-      <div class="acoes" style="margin:10px 0 18px"><button class="btn sec" id="rodaUnico" ${a.rodandoUnico ? "disabled" : ""}>${a.rodandoUnico ? "Rodando o prompt único…" : a.unico ? "Rodar de novo" : "Rodar o prompt único"}</button></div>
+      <div class="acoes" style="margin:10px 0 18px"><button class="btn sec" id="rodaUnico" ${a.rodandoUnico ? "disabled" : ""}>${a.rodandoUnico ? "Rodando o prompt do AuroraChat…" : a.unico ? "Rodar de novo" : "Rodar o prompt do AuroraChat"}</button></div>
       <h4 style="margin:0 0 6px">Nota do revisor (1 a 5)</h4>
-      <p>Fluxo em etapas ${nota("nota", a.nota)} &nbsp; Prompt único ${nota("notaUnico", a.notaUnico)}</p>
+      <p>Fluxo em etapas ${nota("nota", a.nota)} &nbsp; Prompt do AuroraChat ${nota("notaUnico", a.notaUnico)}</p>
       <textarea class="cola" id="comentario" rows="3" style="min-height:70px" placeholder="Comentário: o que precisou corrigir, o que faltou">${esc(a.comentario)}</textarea>
       <div class="acoes" style="margin-top:8px"><button class="btn sec" id="copiaAval">Copiar resumo da avaliação</button></div>`;
     c.querySelector("#rodaUnico").onclick = () => rodarPromptUnico(!!a.unico);
-    c.querySelectorAll("[data-nota]").forEach((sel) => (sel.onchange = () => { a[sel.dataset.nota] = sel.value || null; reg("escolha", `Nota do revisor (${sel.dataset.nota === "nota" ? "fluxo" : "prompt único"}): ${sel.value || "—"}`); salvar(); }));
+    c.querySelectorAll("[data-nota]").forEach((sel) => (sel.onchange = () => { a[sel.dataset.nota] = sel.value || null; reg("escolha", `Nota do revisor (${sel.dataset.nota === "nota" ? "fluxo" : "prompt do AuroraChat"}): ${sel.value || "—"}`); salvar(); }));
     c.querySelector("#comentario").onchange = (e) => { a.comentario = e.target.value; reg("escolha", "Comentário do revisor registrado"); salvar(); };
     c.querySelector("#copiaAval").onclick = (e) => {
       const b = e.target, o = b.textContent;
@@ -1001,8 +1010,9 @@
     try {
       const r = await chamar("prompt_unico_aurorachat", { texto_integral: S.doc.paginas.map((p) => p.texto).join("\n\n").slice(0, LIMITE_VOTO) },
         { json: false, cache: refazer ? false : undefined });
-      a.unico = { ...AV.extrairDoTextoLivre(r.text), bruto: r.text };
-      reg("avaliação", "Prompt único executado sobre o mesmo voto");
+      const x = AV.extrairDoTextoLivre(r.text), nf = AV.normalizarFormato(x.ementa);
+      a.unico = { ...x, ementaOriginal: x.ementa, ementa: nf.texto, ajustes: nf.ajustes, bruto: r.text, versaoPrompt: PROMPTS.prompt_unico_aurorachat.versao };
+      reg("avaliação", "Prompt do AuroraChat executado sobre o mesmo voto");
     } catch (e) {
       if (e && e.code === "descartado") return;
       a.erroUnico = ERROS[e && e.code] || "Falha na chamada ao Claude.";
@@ -1054,7 +1064,7 @@
       "\n\n--- PONTOS A CONFERIR ---\n" + (S.alertas.map((a) => `[${a.gravidade}] ${a.titulo}${a.detalhe ? " — " + a.detalhe : ""}`).join("\n") || "nenhum") +
       "\n\n--- REGISTRO ---\n" + S.reg.map((r) => r.join("  ")).join("\n") +
       "\n\n--- AVALIAÇÃO ---\n" + (S.doc ? resumoAvaliacao() : "—") +
-      (S.avaliacao.unico ? "\n\n--- PROMPT ÚNICO (saída completa) ---\n" + S.avaliacao.unico.bruto : "") +
+      (S.avaliacao.unico ? "\n\n--- PROMPT DO AURORACHAT (saída completa) ---\n" + S.avaliacao.unico.bruto : "") +
       "\n\n--- EVENTOS ---\n" + JSON.stringify(S.eventos, null, 1) +
       "\n\n--- FICHA ---\n" + JSON.stringify(S.ficha, null, 1);
     try {
