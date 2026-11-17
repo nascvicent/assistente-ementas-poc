@@ -12,3 +12,4 @@ dados/
 node_modules/
 dist/
 frontend/demo/testes/vendor/
+!frontend/demo/dados/

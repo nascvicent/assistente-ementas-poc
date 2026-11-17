@@ -22,6 +22,7 @@ class Termo:
     tg: list[str] = field(default_factory=list)  # termos genéricos (broader)
     te: list[str] = field(default_factory=list)  # termos específicos (narrower)
     tr: list[str] = field(default_factory=list)  # termos relacionados
+    meta: bool = False  # metatermo (categoria do TemaTres): organiza a árvore, não indexa
 
     def para_dict(self) -> dict:
         return self.__dict__.copy()

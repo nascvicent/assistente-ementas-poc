@@ -17,7 +17,16 @@ from pathlib import Path
 RAIZ = Path(__file__).resolve().parents[1]
 DEMO = RAIZ / "frontend" / "demo"
 PROMPTS = RAIZ / "backend" / "app" / "prompts"
-ARQUIVOS = ["index.html", "nucleo.js", "avaliacao.js", "leitura.js", "fluxo.js"]
+ARQUIVOS = ["index.html", "nucleo.js", "avaliacao.js", "tesauro.js", "leitura.js", "fluxo.js"]
+SNAPSHOT_TCN = DEMO / "dados" / "tcn.json"
+
+
+def tesauro_compacto(caminho: Path) -> dict:
+    """Snapshot da carga (scripts/carregar_tesauro.py) → formato compacto lido por tesauro.js."""
+    dados = json.loads(caminho.read_text(encoding="utf-8"))
+    termos = [[t["id"], t["rotulo"], 1 if t.get("meta") else 0, t.get("tg", []), t.get("alternativos", [])]
+              for t in dados["termos"].values()]
+    return {"versao": dados["versao"], "fonte": dados["fonte"], "avisos": dados.get("avisos", []), "termos": termos}
 
 
 def carregar_prompts() -> dict:
@@ -38,6 +47,10 @@ def main() -> int:
         shutil.copy(DEMO / nome, saida / nome)
     prompts = carregar_prompts()
     (saida / "prompts.js").write_text("window.PROMPTS = " + json.dumps(prompts, ensure_ascii=False, indent=1) + ";\n", encoding="utf-8")
+    if SNAPSHOT_TCN.exists():
+        tcn = tesauro_compacto(SNAPSHOT_TCN)
+        (saida / "tcn.js").write_text("window.TESAURO_DADOS = " + json.dumps(tcn, ensure_ascii=False, separators=(",", ":")) + ";\n", encoding="utf-8")
+        print(f"tesauro: {len(tcn['termos'])} termos ({tcn['versao']})")
     exemplo = (DEMO / "exemplo-voto.txt").read_text(encoding="utf-8")
     (saida / "exemplo.js").write_text("window.VOTO_EXEMPLO = " + json.dumps(exemplo, ensure_ascii=False) + ";\n", encoding="utf-8")
     print(f"demo gerada em {saida} ({len(prompts)} prompts: " + ", ".join(f"{k}@{v['versao']}" for k, v in prompts.items()) + ")")

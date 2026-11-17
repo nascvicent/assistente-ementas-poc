@@ -95,6 +95,12 @@ window.__store = store;
 function escolhe(t){
   if (t.includes("preencher uma ficha estruturada")) return resp.ficha;
   if (t.includes("quatro redações de tese")) return resp.teses;
+  if (t.includes("expressões de busca")) return { consultas: ["vacina", "imunização", "controle de estoque", "almoxarifado"] };
+  if (t.includes("escolher, numa lista de candidatos")) {
+    const ids = [...t.split("<candidatos>")[1].matchAll(/^(\d+) \| /gm)].map((m) => m[1]);
+    window.__candidatosTCN = ids;
+    return { escolhas: [{ id: ids[0], justificativa: "teste" }, { id: "999999999", justificativa: "inventado" }, { id: ids[1], justificativa: "teste" }], sugestao_livre: "Rede de frio" };
+  }
   if (t.includes("termos de indexação")) return resp.termos;
   if (t.includes("redigir duas partes")) return resp.redacao;
   if (t.includes("divergências materiais")) return resp.verif;
@@ -155,8 +161,15 @@ async def main():
         await pg.wait_for_selector("text=Usar mesmo assim")
         await pg.click("button.ok >> nth=-1")
         await pg.wait_for_selector("text=Digitar outro termo")
-        await ops().locator(".op[data-i='2']").click()                      # digitar termo
+        await pg.screenshot(path=str(SAIDA / "e2e_termos.png"))
+        txt_termos = await ops().inner_text()
+        assert txt_termos.count("TCN") >= 2 and "fora do tesauro" in txt_termos and "Buscar no tesauro" in txt_termos, txt_termos
+        await pg.click("[data-aba=registro]")
+        assert "identificador(es) fora da lista descartado(s): 999999999" in await pg.inner_text("#conteudo")
+        await ops().locator(".op[data-i='4']").click()                      # digitar termo
         await pg.fill("textarea.cola >> nth=-1", "Vacinação > Rede de frio")
+        await pg.click("button.ok >> nth=-1")
+        await pg.wait_for_selector("text=não existe na cópia do TCN")
         await pg.click("button.ok >> nth=-1")
         await pg.wait_for_function("document.querySelectorAll('.ops').length >= 3")
         await pg.fill("#txt", "sim"); await pg.press("#txt", "Enter")
@@ -165,7 +178,10 @@ async def main():
         await pg.wait_for_function("document.querySelectorAll('.ops').length >= 5")
         await pg.fill("#txt", "dispensar a tese"); await pg.press("#txt", "Enter")
         await pg.wait_for_function("document.querySelectorAll('.ops').length >= 6")
-        await ops().locator(".op[data-i='1']").click()                      # Controle de estoque
+        await ops().locator(".op[data-i='3']").click()                      # buscar no tesauro
+        await pg.fill(".resultados >> xpath=preceding-sibling::input", "restos a pagar")
+        await pg.wait_for_selector(".resultados [data-id]")
+        await pg.click(".resultados [data-id] >> nth=0")
         await pg.wait_for_function("document.querySelectorAll('.ops').length >= 7")
         await ops().locator(".op[data-i='2']").click()                      # retirar
         await pg.wait_for_function("document.querySelectorAll('.ops').length >= 8")

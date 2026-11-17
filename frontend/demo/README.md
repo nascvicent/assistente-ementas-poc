@@ -12,7 +12,7 @@ compartilhada). Só funciona aberta pelo Claude, porque usa a conta de quem abre
 | Ficha | Claude + código | prompt `extracao_ficha`; enumerações saneadas e **cada trecho conferido na página** (`nucleo.js`) |
 | Ponto | usuário | escolha numerada; atalho quando só há um ponto |
 | Tese | Claude + código | prompt `propor_teses`; verificador barra nomes do caso, valores e normas que não estão no voto; dispensar ou pedir outras redações |
-| Termo | Claude + usuário | prompt `sugerir_termos_sem_tesauro`; todos marcados **fora do tesauro** |
+| Termo | Claude + código + usuário | prompt `consultas_tesauro` (expressões de busca) → busca na **cópia local do TCN** (`tesauro.js`) → prompt `ranquear_termos` escolhe **identificadores** entre os candidatos → código descarta o que não estiver na lista; a tela mostra o rótulo da base. Também: busca manual no TCN, sugestão fora do tesauro (marcada) e termo digitado (reconhecido se existir no TCN) |
 | Ementa | Claude + código | prompt `redacao_caso_razoes` para caso e razões; cabeçalho, dispositivo, numeração e títulos **por código** |
 | Alerta | código + Claude | linter E01–E21, evidências não confirmadas, dispositivo A DEFINIR; prompt `verificacao_final` com trechos conferidos; ciência obrigatória nos alertas altos |
 | Conversa | Claude | prompt `conversa`, com as páginas mais relacionadas à pergunta; não avança a etapa |
@@ -49,8 +49,13 @@ e escolha; "Exportar a conversa" baixa tudo, com a ficha em JSON.
 - **Sem gateway (regra 8 do CLAUDE.md, princípio 8 do documento 01).** A página
   chama o Claude direto. Os prompts, porém, são os mesmos arquivos de
   `backend/app/prompts/`, embutidos pelo script de geração.
-- **Sem base do TCN (pendência P4).** Os termos são sugestões do Claude, sempre
-  marcadas como fora do tesauro e confirmadas pelo usuário (art. 4º, III).
+- **TCN parcial (pendência P4).** A cópia local (`dados/tcn.json`, 2.360 termos,
+  exportação de 17/11/2026 do serviço do IRB) só tem os dois primeiros níveis
+  abaixo das categorias; 74 ramos (Auditoria, Controle externo, Multa, Tomada de
+  contas…) ainda não têm os filhos, e não há remissivas nem notas de escopo. A
+  escolha já é em conjunto fechado; o que faltar entra como fora do tesauro.
+- **Busca só por palavras.** Sem busca por significado (pgvector), o Claude
+  sugere expressões de busca antes; a escolha final continua restrita à base.
 - **Sem banco do Tribunal.** As sessões e o registro de eventos ficam no
   armazenamento da página, não na tabela `evento`; exporta-se em arquivo.
 - **Núcleo duplicado em JavaScript.** `nucleo.js` é porte do Python; a paridade é
@@ -75,6 +80,11 @@ python frontend/demo/testes/e2e_demo.py    # navegador, Claude e armazenamento s
 Depois, republicar os arquivos de `dist/` no mesmo endereço.
 
 ## Tesauro do IRB
+
+Atualizar a cópia local: `python scripts/carregar_tesauro.py <exportação.json> --saida frontend/demo/dados/tcn.json`
+(aceita o JSON do TemaTres e SKOS) e gerar a demo de novo. O relatório da carga
+mostra termos novos, alterados e removidos em relação à anterior.
+
 
 O TCN tem serviço web aberto do TemaTres em
 `https://tesauro.irbcontas.org.br/vocab/services.php`, feito para integração com

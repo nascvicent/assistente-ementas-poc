@@ -113,3 +113,62 @@ def test_carga_snapshot_e_script(tmp_path):
     )
     assert "Termos preferidos: 11" in r.stdout
     assert "0 novos, 0 alterados, 0 removidos" not in r.stdout  # sem diferenças, a linha não aparece
+
+
+# --- exportação JSON do TemaTres (formato do TCN do IRB) ---------------------
+
+from app.tesauro import tematres_json
+from app.tesauro.indice import semelhanca_token
+
+FIXTURE_JSON = Path(__file__).parent / "fixtures" / "tcn_tematres_ficticio.json"
+
+
+def test_le_exportacao_tematres():
+    termos, info = tematres_json.ler(FIXTURE_JSON)
+    assert len(termos) == 9 and not info.completo and info.pendentes == ["30"]
+    assert termos["1"].meta and not termos["10"].meta
+    assert termos["11"].tg == ["10", "1"]  # genérico não-meta primeiro
+    assert termos["11"].uri == "https://exemplo.invalid/vocab/index.php?tema=11"
+    assert "99" not in termos and termos["30"].te == []  # relação para termo ausente é ignorada
+
+
+def test_semelhanca_por_prefixo():
+    assert semelhanca_token("vacina", "vacina") == 1
+    assert semelhanca_token("vacina", "vacinacao") > 0
+    assert semelhanca_token("licitacao", "licitacoe") > 0
+    assert semelhanca_token("lei", "leilao") == 0  # curto demais
+    assert semelhanca_token("contrato", "contabil") == 0
+
+
+def test_busca_no_tcn_ignora_metatermos_e_casa_prefixo():
+    termos, _ = tematres_json.ler(FIXTURE_JSON)
+    idx = IndiceTesauro(termos)
+    ids = [i for i, _ in idx.busca_lexical("vacinação em salas de vacina")]
+    assert ids[0] == "21"
+    assert "2" not in [i for i, _ in idx.busca_lexical("saúde")]  # metatermo fora
+    cands = {c.id: c for c in idx.candidatos("dispensa de licitação")}
+    assert "11" in cands and "1" not in cands  # expansão não traz metatermo
+    assert cands["11"].tg_rotulo == "Licitação"
+    assert idx.ordenar_amplo_especifico(["21", "22", "20"]) == ["22", "20", "21"]
+
+
+def test_carga_da_exportacao_json(tmp_path):
+    rel = carregar(str(FIXTURE_JSON), tmp_path / "t.json")
+    assert rel.total == 9 and rel.metatermos == 2 and rel.varios_genericos == 1
+    assert any("incompleta" in a for a in rel.avisos)
+    assert "AVISO: exportação incompleta" in rel.texto()
+    _, termos = ler_snapshot(tmp_path / "t.json")
+    assert termos["1"].meta is True
+
+
+def test_modificadores_nao_indexam_sozinhos():
+    import copy
+    termos, _ = tematres_json.ler(FIXTURE_JSON)
+    termos = copy.deepcopy(termos)
+    from app.tesauro.skos import Termo
+    termos["3"] = Termo("3", "", "Especificador / Modificador", meta=True)
+    termos["40"] = Termo("40", "", "cancelamento", tg=["3"])
+    termos["10"].tg.append("3")  # Licitação também é modificador, mas tem outra categoria
+    idx = IndiceTesauro(termos)
+    assert not idx.indexavel("40") and idx.indexavel("10")
+    assert "40" not in [i for i, _ in idx.busca_lexical("cancelamento de licitação")]

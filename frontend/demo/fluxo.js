@@ -579,38 +579,112 @@
   }
 
   // ------------------------------------------------------ 5. termo
+  // Base local do TCN (frontend/demo/dados/tcn.json, carregada por scripts/carregar_tesauro.py).
+  const TCN = window.TESAURO_DADOS && window.Tesauro ? new window.Tesauro.Indice(window.TESAURO_DADOS) : null;
+  const pontoTexto = () => `${S.ponto.titulo}: ${S.ponto.resumo || ""}`;
+  function caminhoTCN(id) {
+    return [...TCN.ancestrais(id)].reverse().map((i) => TCN.termo(i).rotulo).concat(TCN.termo(id).rotulo).join(" › ");
+  }
+  function termoTCN(id, justificativa) {
+    const t = TCN.termo(id), pai = t.tg.find((p) => TCN.indexavel(p));
+    return { id, rotulo: t.rotulo, generico: pai ? TCN.termo(pai).rotulo : "", generico_id: pai || null, tcn: true, caminho: caminhoTCN(id), justificativa: justificativa || "" };
+  }
+  function avisoBase() {
+    if (!TCN) return "";
+    const parcial = TCN.avisos.length ? ` Base ainda parcial (${esc(TCN.avisos.join("; "))}): se faltar o termo certo, use a busca ou um termo fora do tesauro.` : "";
+    return `<p class="nota">Termos do Tesauro de Contas Nacional, da cópia local com ${TCN.tamanho} termos.${parcial}</p>`;
+  }
+
   async function buscaTermos() {
-    sit("Sugerindo termos"); dica("Sugerindo termos…");
+    if (!TCN) return buscaTermosSemTesauro();
+    sit("Buscando no tesauro"); dica("Buscando no tesauro…");
     const pr = progresso();
-    pr.linha("Pedindo ao Claude termos de indexação para o ponto");
-    let r;
+    pr.linha("Pedindo ao Claude expressões de busca para o ponto");
+    let consultas = [S.ponto.titulo, S.teseAtual].filter(Boolean);
     try {
-      r = await chamar("sugerir_termos_sem_tesauro", { ponto: `${S.ponto.titulo}: ${S.ponto.resumo || ""}`, tese: S.teseAtual || "(tese dispensada)" }, { signal: pr.signal });
+      const r1 = await chamar("consultas_tesauro", { ponto: pontoTexto(), tese: S.teseAtual || "(tese dispensada)" }, { signal: pr.signal, tier: "quick" });
+      consultas = consultas.concat(((r1 && r1.consultas) || []).map(String).filter((x) => x.trim()).slice(0, 8));
+    } catch (e) {
+      if (e && (e.code === "descartado" || e.code === "cancelled")) { pr.fim(); return falha(e, () => buscaTermos()); }
+      reg("aviso", "Expressões de busca indisponíveis; busca feita com o título e a tese");
+    }
+    const cands = TCN.candidatosDeConsultas(consultas, 12, 40);
+    pr.linha(`Buscando no TCN local: ${cands.length} candidato(s) para ${consultas.length} expressão(ões)`);
+    pr.linha("Pedindo ao Claude que escolha entre os candidatos, pelo identificador");
+    let r2;
+    try {
+      r2 = await chamar("ranquear_termos", {
+        ponto: pontoTexto(), tese: S.teseAtual || "(tese dispensada)",
+        candidatos: cands.length ? cands.map((c) => `${c.id} | ${c.rotulo} | ${c.tg_rotulo || "—"}`).join("\n") : "(nenhum candidato encontrado)",
+      }, { signal: pr.signal });
     } catch (e) { pr.fim(); return falha(e, () => buscaTermos()); }
-    const termos = (r && Array.isArray(r.termos) ? r.termos : []).filter((t) => t && t.rotulo).slice(0, 5)
-      .map((t) => ({ rotulo: String(t.rotulo).trim(), generico: String(t.generico || "").trim(), justificativa: String(t.justificativa || "") }));
-    const verbos = termos.filter((t) => N.verificar(`EMENTA: CONSULTA. ${t.rotulo.toUpperCase()}.`).some((a) => a.codigo === "E18"));
-    reg("verificação", `${termos.length} termos sugeridos, todos marcados fora do tesauro${verbos.length ? `; ${verbos.length} com possível verbo` : ""}`);
+    const escolhas = (r2 && Array.isArray(r2.escolhas) ? r2.escolhas : []).filter((x) => x && x.id != null);
+    const just = new Map(escolhas.map((x) => [String(x.id).trim(), String(x.justificativa || "")]));
+    const v = window.Tesauro.validarIds(escolhas.map((x) => x.id), cands, 5);
+    const livre = r2 && r2.sugestao_livre ? String(r2.sugestao_livre).trim().replace(/\.$/, "") : "";
+    reg("verificação", `TCN: ${consultas.length} busca(s), ${cands.length} candidato(s), ${v.aceitos.length} escolhido(s)` +
+      (v.rejeitados.length ? `; ${v.rejeitados.length} identificador(es) fora da lista descartado(s): ${v.rejeitados.join(", ")}` : "") + (livre ? "; 1 sugestão fora do tesauro" : ""));
     pr.fim();
     disparar("CONCLUIR");
-    S.termos = termos;
+    S.termos = v.aceitos.map((id) => termoTCN(id, just.get(id)));
+    S.termoLivre = livre && !TCN.porRotulo(livre) ? livre : "";
+    if (livre && TCN.porRotulo(livre)) S.termos.push(termoTCN(TCN.porRotulo(livre).id, "sugerido pelo Claude; existe no TCN"));
     mostrarTermos();
   }
+
   function mostrarTermos() {
     sit("Aguardando o termo"); dica("Digite o número do termo, \"voltar\" ou pergunte sobre o caso");
-    const ts = S.termos;
+    const ts = S.termos || [], livre = TCN ? S.termoLivre : "";
     S.tela = "Termos sugeridos: " + ts.map((t, i) => `${i + 1}. ${t.rotulo}`).join("; ");
-    bot(`<p>Termos sugeridos para este ponto. Ao escolher, você confirma o uso como termo fora do tesauro (art. 4º, III).</p>` +
-      opcoes(ts.map((t) => `<b>${esc(t.rotulo)}</b><span class="fora">fora do tesauro</span><small>Termo genérico: ${esc(t.generico || "—")} · ${esc(t.justificativa)}</small>`)
-        .concat([`<b>Digitar outro termo</b><small>Também entra como fora do tesauro.</small>`,
-          `<b>Seguir sem termo para este ponto</b><small>O cabeçalho fica só com a modalidade, os termos dos outros pontos e o resultado.</small>`]), (k) => {
-        if (k === ts.length) return digitarTermo();
-        const termo = k < ts.length ? ts[k] : null;
-        S.itens.push({ oc: S.ponto, tese: S.teseAtual, termo });
-        S.novo = S.ponto.id;
-        reg("escolha", termo ? `Termo: ${termo.rotulo} (fora do tesauro, confirmado)` : "Sem termo");
-        disparar("ESCOLHER"); monta();
-      }) + `<p class="nota">A base do Tesauro de Contas Nacional ainda não está carregada nesta demonstração: os termos são sugestões do Claude e precisam ser conferidos no TCN. Na versão definitiva o Claude só escolhe entre termos que existem na base.</p>`);
+    const lista = ts.map((t) => t.tcn
+      ? `<b>${esc(t.rotulo)}</b><span class="tcn">TCN</span><small>${esc(t.caminho)}${t.justificativa ? " · " + esc(t.justificativa) : ""}</small>`
+      : `<b>${esc(t.rotulo)}</b><span class="fora">fora do tesauro</span><small>Termo genérico: ${esc(t.generico || "—")} · ${esc(t.justificativa)}</small>`);
+    const extras = [];
+    if (livre) extras.push(["livre", `<b>${esc(livre)}</b><span class="fora">fora do tesauro</span><small>Sugestão do Claude para o que o TCN não cobre (art. 4º, III). Ao escolher, você confirma o uso.</small>`]);
+    if (TCN) extras.push(["buscar", `<b>Buscar no tesauro</b><small>Procure você mesmo na cópia local do TCN.</small>`]);
+    extras.push(["digitar", `<b>Digitar outro termo</b><small>Se existir no TCN, é reconhecido; se não, entra como fora do tesauro.</small>`]);
+    extras.push(["nenhum", `<b>Seguir sem termo para este ponto</b><small>O cabeçalho fica só com a modalidade, os termos dos outros pontos e o resultado.</small>`]);
+    const intro = TCN
+      ? (ts.length ? `<p>Termos do Tesauro de Contas Nacional para este ponto:</p>` : `<p>Nenhum termo do TCN serviu para este ponto.</p>`)
+      : `<p>Termos sugeridos para este ponto. Ao escolher, você confirma o uso como termo fora do tesauro (art. 4º, III).</p>`;
+    bot(intro + opcoes(lista.concat(extras.map((x) => x[1])), (k) => {
+      if (k < ts.length) return escolherTermo(ts[k], ts[k].tcn ? `Termo do TCN: ${ts[k].rotulo} (id ${ts[k].id})` : `Termo: ${ts[k].rotulo} (fora do tesauro, confirmado)`);
+      const acao = extras[k - ts.length][0];
+      if (acao === "livre") return escolherTermo({ rotulo: livre, generico: "", justificativa: "sugestão do Claude", tcn: false }, `Termo fora do tesauro: ${livre} (confirmado)`);
+      if (acao === "buscar") return buscarNoTesauro();
+      if (acao === "digitar") return digitarTermo();
+      escolherTermo(null, "Sem termo");
+    }) + (TCN ? avisoBase() : `<p class="nota">A base do Tesauro de Contas Nacional não está carregada: os termos são sugestões do Claude e precisam ser conferidos no TCN.</p>`));
+  }
+
+  function escolherTermo(termo, textoRegistro) {
+    S.itens.push({ oc: S.ponto, tese: S.teseAtual, termo });
+    S.novo = S.ponto.id;
+    reg("escolha", textoRegistro);
+    disparar("ESCOLHER"); monta();
+  }
+
+  function buscarNoTesauro() {
+    const d = bot(`<p>Busque na cópia local do TCN (${TCN.tamanho} termos):</p>
+      <input class="cola" style="min-height:0" placeholder="Ex.: dispensa de licitação, restos a pagar, acumulação de cargo">
+      <div class="resultados"></div><div class="acoes" style="margin-top:8px"><button class="btn sec cancela">Voltar às opções</button></div>`);
+    const inp = d.querySelector("input"), res = d.querySelector(".resultados");
+    inp.focus();
+    inp.oninput = () => {
+      const v = inp.value.trim();
+      if (v.length < 3) { res.innerHTML = ""; return; }
+      const achados = TCN.buscaLexical(v, 10);
+      res.innerHTML = achados.length ? achados.map(([id]) => `<button class="op" data-id="${esc(id)}"><span class="n">·</span><span><b>${esc(TCN.termo(id).rotulo)}</b><small>${esc(caminhoTCN(id))}</small></span></button>`).join("")
+        : `<p class="nota">Nada encontrado nesta cópia do TCN.</p>`;
+    };
+    res.onclick = (e) => {
+      const b = e.target.closest("[data-id]"); if (!b) return;
+      d.querySelectorAll("button,input").forEach((x) => (x.disabled = true)); b.classList.add("sel");
+      const t = termoTCN(b.dataset.id, "escolhido na busca manual");
+      eu(t.rotulo);
+      escolherTermo(t, `Termo do TCN (busca manual): ${t.rotulo} (id ${t.id})`);
+    };
+    d.querySelector(".cancela").onclick = () => { d.remove(); mostrarTermos(); };
   }
 
   function digitarTermo() {
@@ -621,19 +695,35 @@
         const p = [], rot = v.split(">").pop().trim();
         if (rot.split(" ").length > 6) p.push("mais de 6 palavras");
         if (N.verificar(`EMENTA: CONSULTA. ${rot.toUpperCase()}.`).some((a) => a.codigo === "E18")) p.push("parece conter verbo ou oração (art. 4º, II)");
+        if (TCN && !TCN.porRotulo(rot)) p.push("não existe na cópia do TCN; entra como fora do tesauro");
         return p;
       },
       aceitar: (v) => {
         const partes = v.split(">").map((x) => x.trim()).filter(Boolean);
-        const termo = { rotulo: partes.pop(), generico: partes.pop() || "", justificativa: "digitado pelo usuário" };
-        eu(termo.rotulo);
-        S.itens.push({ oc: S.ponto, tese: S.teseAtual, termo });
-        S.novo = S.ponto.id;
-        reg("escolha", `Termo digitado: ${termo.rotulo} (fora do tesauro, confirmado)`);
-        disparar("ESCOLHER"); monta();
+        const rot = partes.pop(), noTCN = TCN && TCN.porRotulo(rot);
+        eu(rot);
+        if (noTCN) return escolherTermo(termoTCN(noTCN.id, "digitado pelo usuário; existe no TCN"), `Termo do TCN (digitado): ${noTCN.rotulo} (id ${noTCN.id})`);
+        escolherTermo({ rotulo: rot, generico: partes.pop() || "", justificativa: "digitado pelo usuário", tcn: false }, `Termo digitado: ${rot} (fora do tesauro, confirmado)`);
       },
       cancelar: () => mostrarTermos(),
     });
+  }
+
+  // Sem base do tesauro (fallback): sugestões livres, todas marcadas fora do tesauro.
+  async function buscaTermosSemTesauro() {
+    sit("Sugerindo termos"); dica("Sugerindo termos…");
+    const pr = progresso();
+    pr.linha("Pedindo ao Claude termos de indexação para o ponto");
+    let r;
+    try {
+      r = await chamar("sugerir_termos_sem_tesauro", { ponto: pontoTexto(), tese: S.teseAtual || "(tese dispensada)" }, { signal: pr.signal });
+    } catch (e) { pr.fim(); return falha(e, () => buscaTermos()); }
+    S.termos = (r && Array.isArray(r.termos) ? r.termos : []).filter((t) => t && t.rotulo).slice(0, 5)
+      .map((t) => ({ rotulo: String(t.rotulo).trim(), generico: String(t.generico || "").trim(), justificativa: String(t.justificativa || ""), tcn: false }));
+    reg("verificação", `${S.termos.length} termos sugeridos, todos marcados fora do tesauro`);
+    pr.fim();
+    disparar("CONCLUIR");
+    mostrarTermos();
   }
 
   // ----------------------------------------------------- 6. montagem
@@ -652,7 +742,7 @@
       .sort((a, b) => (ordem.get(a.oc) ?? 99) - (ordem.get(b.oc) ?? 99));
     const disp = N.montarDispositivo(S.ficha);
     S.ementa = {
-      cab: N.montarCabecalho(S.ficha, S.itens.filter((x) => x.termo).map((x) => x.termo)),
+      cab: N.montarCabecalho(S.ficha, termosParaCabecalho()),
       caso: [].concat(r.caso_em_exame).map(String).filter((x) => x.trim()),
       razoes, disp,
       teses: S.itens.filter((x) => x.tese).map((x) => ({ texto: x.tese, oc: x.oc.id })),
@@ -697,7 +787,16 @@
     return N.montarEmenta({ cabecalho: E.cab, caso: E.caso, razoes: E.razoes.map((r) => r.texto), dispositivo: E.disp.texto, teses: E.teses.map((t) => t.texto),
       referencias: S.referencias ? N.montarReferencias(S.ficha, S.itens.map((x) => x.oc.id)) : [] });
   }
-  const termosCabecalho = () => S.itens.filter((x) => x.termo).map((x) => ({ rotulo: x.termo.rotulo, fora_do_tesauro: true, confirmado_pelo_usuario: true }));
+  /** Termos do TCN em ordem do mais amplo ao mais específico (pela hierarquia), depois os livres. */
+  function termosParaCabecalho() {
+    const ts = S.itens.map((x) => x.termo).filter(Boolean);
+    const ids = [];
+    for (const t of ts) if (t.tcn && TCN && TCN.termo(t.id)) { if (t.generico_id) ids.push(t.generico_id); ids.push(t.id); }
+    const doTCN = TCN ? TCN.ordenarAmploEspecifico(ids).map((id) => ({ rotulo: TCN.termo(id).rotulo, generico: "" })) : [];
+    return doTCN.concat(ts.filter((t) => !t.tcn));
+  }
+  const termosCabecalho = () => termosParaCabecalho().map((t) => ({
+    rotulo: t.rotulo, fora_do_tesauro: !(TCN && TCN.porRotulo(t.rotulo) && TCN.porRotulo(t.rotulo).rotulo === t.rotulo), confirmado_pelo_usuario: true }));
 
   // ---------------------------------------------------------- 7. alerta
   const NOMES_REGRAS = {
@@ -706,6 +805,7 @@
     E09: "Dispositivo igual ao resultado da ficha", E10: "Teses sem nomes, valores ou número de processo",
     E11: "Teses sem marcas de caso concreto", E12: "Normas da ementa localizadas no voto", E13: "Valores e datas localizados no voto",
     E18: "Cabeçalho só com termos nominais (art. 4º, II)", E20: "Sem nomes de pessoas naturais (art. 10, § 2º)",
+    E14: "Termos marcados como do TCN existem na base, com o rótulo exato", E21: "Termos fora do tesauro confirmados pelo usuário",
   };
   async function verifica() {
     S.novo = null;
@@ -713,7 +813,7 @@
     const pr = progresso();
     pr.linha("Aplicando as regras da Portaria Normativa TC nº 322/2026 (E01 a E21)");
     const texto = textoEmenta();
-    const lint = N.verificar(texto, { ficha: S.ficha, textoVoto: textoVoto(), termosCabecalho: termosCabecalho() });
+    const lint = N.verificar(texto, { ficha: S.ficha, textoVoto: textoVoto(), termosCabecalho: termosCabecalho(), rotulosTesauro: TCN ? TCN.rotulosPreferidos() : undefined });
     const alertas = lint.map((a) => ({ gravidade: a.gravidade, titulo: `${a.codigo} · ${a.mensagem}`, detalhe: a.referencia }));
     if (S.ementa.disp.a_definir) alertas.unshift({ gravidade: "alta", titulo: "Dispositivo sem expressão padronizada", detalhe: "A tabela de expressões para esta modalidade ainda não foi definida (pendência P1). Redija o dispositivo a partir da parte dispositiva do voto." });
     for (const x of S.itens) for (const [c, ev] of N.evidencias({ ocorrencias: [x.oc] })) if (ev.status === "nao_confirmada") alertas.push({ gravidade: "media", titulo: `Trecho não localizado no voto (${x.oc.titulo})`, detalhe: `${caminhoLegivel(c)}: "${String(ev.trecho).slice(0, 140)}"` });

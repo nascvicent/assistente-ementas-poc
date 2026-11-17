@@ -21,6 +21,10 @@ STOPWORDS = {
 
 BuscaVetorial = Callable[[str, int], list[tuple[str, float]]]
 
+# Metatermos cujos filhos são qualificadores para combinar com outros termos
+# ("armazenamento", "cancelamento"): não indexam sozinhos.
+METATERMOS_MODIFICADORES = {"especificador / modificador"}
+
 
 def _radical(palavra: str) -> str:
     """Radical simplificado (plural e gênero), suficiente para rótulos curtos."""
@@ -36,6 +40,27 @@ def _radical(palavra: str) -> str:
 
 def tokens(texto: str) -> list[str]:
     return [_radical(t) for t in re.findall(r"[a-z0-9]+", normalizar_para_busca(texto)) if t not in STOPWORDS]
+
+
+PREFIXO_MINIMO = 5
+PESO_PREFIXO = 0.6
+
+
+def semelhanca_token(a: str, b: str) -> float:
+    """1 para igual; PESO_PREFIXO quando um começa pelo outro ou compartilham 6+ letras iniciais
+    ("vacina" × "vacinacao", "licitacao" × "licitacoe"); 0 caso contrário."""
+    if a == b:
+        return 1.0
+    if min(len(a), len(b)) < PREFIXO_MINIMO:
+        return 0.0
+    comum = 0
+    for x, y in zip(a, b):
+        if x != y:
+            break
+        comum += 1
+    if comum == min(len(a), len(b)) or comum >= 6:
+        return PESO_PREFIXO
+    return 0.0
 
 
 @dataclass(frozen=True)
@@ -72,6 +97,11 @@ class IndiceTesauro:
             df.update(set(doc))
         n = max(1, len(termos))
         self._idf = {tok: math.log(1 + n / f) for tok, f in df.items()}
+        modificadores = {i for i, t in termos.items() if t.meta and t.rotulo.strip().lower() in METATERMOS_MODIFICADORES}
+        self.nao_indexaveis = {i for i, t in termos.items() if t.meta or (t.tg and set(t.tg) <= modificadores)}
+
+    def indexavel(self, termo_id: str) -> bool:
+        return termo_id in self.termos and termo_id not in self.nao_indexaveis
 
     # --- consulta direta ------------------------------------------------------
 
@@ -89,22 +119,31 @@ class IndiceTesauro:
 
     # --- busca -----------------------------------------------------------------
 
-    def busca_lexical(self, consulta: str, k: int = 30) -> list[tuple[str, float]]:
-        q = tokens(consulta)
+    def busca_lexical(self, consulta: str, k: int = 30, incluir_meta: bool = False) -> list[tuple[str, float]]:
+        q = sorted(set(tokens(consulta)))
         if not q:
             return []
         frase = normalizar_para_busca(consulta)
         resultados = []
         for tid, doc in self._docs.items():
-            score = sum(doc[tok] * self._idf.get(tok, 0) for tok in set(q) if tok in doc)
+            t = self.termos[tid]
+            if tid in self.nao_indexaveis and not incluir_meta:
+                continue
+            score = 0.0
+            for tq in q:
+                melhor = 0.0
+                for td in sorted(doc):
+                    w = semelhanca_token(tq, td)
+                    if w:
+                        melhor = max(melhor, doc[td] * self._idf.get(td, 0) * w)
+                score += melhor
             if not score:
                 continue
-            t = self.termos[tid]
             rotulos = [normalizar_para_busca(r) for r in [t.rotulo, *t.alternativos]]
             if any(r and r in frase for r in rotulos):
                 score *= 2  # o rótulo inteiro aparece na consulta
             resultados.append((tid, score))
-        resultados.sort(key=lambda x: (-x[1], self.termos[x[0]].rotulo))
+        resultados.sort(key=lambda x: (-round(x[1], 9), self.termos[x[0]].rotulo, x[0]))
         return resultados[:k]
 
     def candidatos(self, consulta: str, k: int = 30, expandir: bool = True) -> list[Candidato]:
@@ -119,7 +158,7 @@ class IndiceTesauro:
         if expandir:
             for c in list(vistos.values()):
                 for pai in self.termos[c.id].tg:
-                    if pai in self.termos and pai not in vistos:
+                    if self.indexavel(pai) and pai not in vistos:
                         vistos[pai] = self._candidato(pai, 0.0, "expansao_tg")
         return list(vistos.values())
 

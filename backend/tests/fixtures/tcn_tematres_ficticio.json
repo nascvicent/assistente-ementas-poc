@@ -1,0 +1,30 @@
+{
+  "fonte": "https://exemplo.invalid/vocab/services.php",
+  "inicio": "2026-11-17T13:33:42Z",
+  "exportado": "2026-11-17T13:38:36Z",
+  "completo": false,
+  "termos": [
+    {"id": "1", "nome": "Licitações e contratos", "meta": true, "idioma": "pt-BR"},
+    {"id": "2", "nome": "Saúde", "meta": true, "idioma": "pt-BR"},
+    {"id": "10", "nome": "Licitação", "meta": false, "idioma": null},
+    {"id": "11", "nome": "Dispensa de licitação", "meta": false, "idioma": null},
+    {"id": "12", "nome": "Inexigibilidade de licitação", "meta": false, "idioma": null},
+    {"id": "20", "nome": "Imunização", "meta": false, "idioma": null},
+    {"id": "21", "nome": "Vacina", "meta": false, "idioma": null},
+    {"id": "22", "nome": "Saúde", "meta": false, "idioma": null},
+    {"id": "30", "nome": "Contratação", "meta": false, "idioma": null}
+  ],
+  "relacoes": [
+    {"pai": "1", "filho": "10", "tipo": "NT"},
+    {"pai": "1", "filho": "11", "tipo": "NT"},
+    {"pai": "10", "filho": "11", "tipo": "NT"},
+    {"pai": "1", "filho": "12", "tipo": "NT"},
+    {"pai": "2", "filho": "22", "tipo": "NT"},
+    {"pai": "22", "filho": "20", "tipo": "NT"},
+    {"pai": "20", "filho": "21", "tipo": "NT"},
+    {"pai": "1", "filho": "30", "tipo": "NT"},
+    {"pai": "30", "filho": "99", "tipo": "NT"}
+  ],
+  "consultados": ["1", "2", "10", "22", "20"],
+  "pendentes": ["30"]
+}

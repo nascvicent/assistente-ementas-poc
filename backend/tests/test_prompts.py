@@ -14,6 +14,8 @@ VARIAVEIS = {
     "conversa": {"etapa", "conteudo_em_tela", "ficha", "trechos", "pergunta"},
     "corrigir_evidencias": {"itens", "voto_paginado"},
     "prompt_unico_aurorachat": {"texto_integral"},
+    "consultas_tesauro": {"ponto", "tese"},
+    "ranquear_termos": {"ponto", "tese", "candidatos"},
 }
 
 

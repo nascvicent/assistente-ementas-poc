@@ -4,6 +4,7 @@ from dataclasses import dataclass, field
 from datetime import datetime, timezone
 from pathlib import Path
 
+from app.tesauro import tematres_json
 from app.tesauro.skos import Termo, ler
 
 
@@ -18,14 +19,18 @@ class RelatorioCarga:
     novos: list[str] = field(default_factory=list)
     alterados: list[str] = field(default_factory=list)
     removidos: list[str] = field(default_factory=list)
+    metatermos: int = 0
+    varios_genericos: int = 0
+    avisos: list[str] = field(default_factory=list)
 
     def texto(self) -> str:
         linhas = [
             f"Carga do tesauro {self.versao} — fonte: {self.fonte}",
-            f"Termos preferidos: {self.total} (sem termo genérico: {self.sem_termo_generico})",
+            f"Termos preferidos: {self.total} (sem termo genérico: {self.sem_termo_generico}; metatermos: {self.metatermos}; com mais de um genérico: {self.varios_genericos})",
             f"Relações apontando para termo inexistente: {len(self.relacoes_quebradas)}",
             f"Ciclos de hierarquia: {len(self.ciclos)}",
         ]
+        linhas += [f"AVISO: {a}" for a in self.avisos]
         if self.novos or self.alterados or self.removidos:
             linhas.append(f"Em relação à carga anterior: {len(self.novos)} novos, {len(self.alterados)} alterados, {len(self.removidos)} removidos")
         return "\n".join(linhas)
@@ -57,7 +62,9 @@ def gerar_relatorio(termos: dict[str, Termo], fonte: str, versao: str, anterior:
         versao=versao,
         fonte=fonte,
         total=len(termos),
-        sem_termo_generico=sum(1 for t in termos.values() if not t.tg),
+        sem_termo_generico=sum(1 for t in termos.values() if not t.tg and not t.meta),
+        metatermos=sum(1 for t in termos.values() if t.meta),
+        varios_genericos=sum(1 for t in termos.values() if len(t.tg) > 1),
         relacoes_quebradas=quebradas,
         ciclos=sorted(set(ciclos)),
     )
@@ -69,11 +76,12 @@ def gerar_relatorio(termos: dict[str, Termo], fonte: str, versao: str, anterior:
     return rel
 
 
-def salvar_snapshot(termos: dict[str, Termo], caminho: Path, versao: str, fonte: str) -> None:
+def salvar_snapshot(termos: dict[str, Termo], caminho: Path, versao: str, fonte: str, avisos: list[str] | None = None) -> None:
     caminho.parent.mkdir(parents=True, exist_ok=True)
     caminho.write_text(json.dumps({
         "versao": versao,
         "fonte": fonte,
+        "avisos": avisos or [],
         "termos": {i: t.para_dict() for i, t in sorted(termos.items())},
     }, ensure_ascii=False, indent=1), encoding="utf-8")
 
@@ -110,16 +118,28 @@ def gravar_postgres(termos: dict[str, Termo], database_url: str, versao: str) ->
             )
 
 
+def ler_fonte(fonte: str, formato: str | None = None):
+    """SKOS (RDF/Turtle) ou exportação JSON do TemaTres. Devolve (termos, avisos)."""
+    if formato == "tematres-json" or (formato is None and fonte.lower().endswith(".json")):
+        termos, info = tematres_json.ler(fonte)
+        avisos = []
+        if not info.completo:
+            avisos.append(f"exportação incompleta: {len(info.pendentes)} termo(s) com filhos ainda não baixados")
+        return termos, avisos
+    return ler(fonte, formato), []
+
+
 def carregar(fonte: str, saida: Path | None = None, database_url: str | None = None, formato: str | None = None) -> RelatorioCarga:
     versao = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
-    termos = ler(fonte, formato)
+    termos, avisos = ler_fonte(fonte, formato)
     anterior = None
     if saida and saida.exists():
         _, antigos = ler_snapshot(saida)
         anterior = {i: t.para_dict() for i, t in antigos.items()}
     relatorio = gerar_relatorio(termos, fonte, versao, anterior)
+    relatorio.avisos = avisos
     if saida:
-        salvar_snapshot(termos, saida, versao, fonte)
+        salvar_snapshot(termos, saida, versao, fonte, avisos)
     if database_url:
         gravar_postgres(termos, database_url, versao)
     return relatorio

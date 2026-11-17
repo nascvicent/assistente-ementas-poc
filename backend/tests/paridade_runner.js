@@ -3,6 +3,8 @@
 const path = require("path");
 const N = require(path.resolve(__dirname, "../../frontend/demo/nucleo.js"));
 const AV = require(path.resolve(__dirname, "../../frontend/demo/avaliacao.js"));
+const TS = require(path.resolve(__dirname, "../../frontend/demo/tesauro.js"));
+const indices = new Map();
 
 let entrada = "";
 process.stdin.on("data", (d) => (entrada += d));
@@ -33,6 +35,15 @@ process.stdin.on("end", () => {
         return AV.comparar(c.gerada, c.referencia, {});
       case "texto_livre":
         return AV.extrairDoTextoLivre(c.texto);
+      case "tesauro": {
+        if (!indices.has(c.chave)) indices.set(c.chave, new TS.Indice(c.dados));
+        const ix = indices.get(c.chave);
+        return {
+          busca: ix.buscaLexical(c.consulta, 15).map(([id, s]) => [id, Math.round(s * 1e6) / 1e6]),
+          candidatos: ix.candidatos(c.consulta, 15).map((x) => [x.id, x.origem, x.tg_rotulo]),
+          ordem: ix.ordenarAmploEspecifico(c.ordenar || []),
+        };
+      }
       case "tese":
         return N.verificarTese(c.tese, c.ficha, c.textoVoto);
       default:

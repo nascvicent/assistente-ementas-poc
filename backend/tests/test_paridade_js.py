@@ -191,3 +191,40 @@ def test_avaliacao_compara_com_a_publicada():
 def test_avaliacao_extrai_ementa_do_texto_livre():
     r = rodar_js([{"op": "texto_livre", "texto": "Segue:\n\n**EMENTA:** CONSULTA. X.\nI. CASO EM EXAME\n1. a.\n\nPARA CONFERIR\na) nada a registrar"}])[0]
     assert r == {"ementa": "EMENTA: CONSULTA. X.\nI. CASO EM EXAME\n1. a.", "paraConferir": "a) nada a registrar"}
+
+
+# --- tesauro (frontend/demo/tesauro.js × app/tesauro/indice.py) ------------
+
+def _compacto(termos):
+    return {"versao": "t", "fonte": "t", "avisos": [],
+            "termos": [[t.id, t.rotulo, 1 if t.meta else 0, t.tg, t.alternativos] for t in termos.values()]}
+
+
+def _comparar_tesauro(termos, chave, consultas, ordenar=()):
+    from app.tesauro.indice import IndiceTesauro
+    idx = IndiceTesauro(termos)
+    dados = _compacto(termos)
+    obtido = rodar_js([{"op": "tesauro", "chave": chave, "dados": dados, "consulta": q, "ordenar": list(ordenar)} for q in consultas])
+    for q, o in zip(consultas, obtido):
+        assert o["busca"] == [[i, round(s, 6)] for i, s in idx.busca_lexical(q, 15)], q
+        assert o["candidatos"] == [[c.id, c.origem, c.tg_rotulo] for c in idx.candidatos(q, 15)], q
+        assert o["ordem"] == idx.ordenar_amplo_especifico(list(ordenar))
+
+
+def test_tesauro_paridade_fixture():
+    from app.tesauro import tematres_json
+    termos, _ = tematres_json.ler(Path(__file__).parent / "fixtures" / "tcn_tematres_ficticio.json")
+    _comparar_tesauro(termos, "fixture", ["dispensa de licitação", "vacinação em salas de vacina", "saúde", "contratação", "x"], ["21", "22", "20"])
+
+
+TCN = Path(__file__).resolve().parents[2] / "frontend" / "demo" / "dados" / "tcn.json"
+
+
+@pytest.mark.skipif(not TCN.exists(), reason="snapshot do TCN ausente")
+def test_tesauro_paridade_tcn():
+    from app.tesauro.carga import ler_snapshot
+    _, termos = ler_snapshot(TCN)
+    consultas = ["dispensa de licitação emergencial", "cancelamento de restos a pagar FUNDEB", "acumulação de cargos públicos",
+                 "repasse de duodécimo à câmara municipal", "contratação temporária de pessoal sem concurso", "nepotismo",
+                 "armazenamento de vacinas", "obra pública superfaturamento", "previdência própria aposentadoria"]
+    _comparar_tesauro(termos, "tcn", consultas, ["764", "248", "15"])
